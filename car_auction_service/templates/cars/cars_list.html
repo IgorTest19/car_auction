@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+My auction service
+{% endblock %}
+
+{% block content %}
+	<h1>Listed cars</h1>
+	{% for car in cars %}
+<!--		<p>{{ car }}</p>-->
+		<div>
+			<p>
+				<a href = '{% url "cars:car_detail" pk=car.pk %}'>{{ car }}</a>
+			</p>
+		</div>
+<!--		<p>{{ car.brand }} {{ car.model }} {{ car.year }}</p>-->
+	{% endfor %}
+
+{% endblock %}

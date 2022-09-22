@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+<!--	<link href="{% static "css/cars.css" %}" rel="stylesheet">-->
+</head>
+<body>
+	<div id="content">
+	{% block content %}
+	{% endblock %}
+	</div>
+	<div id="sidebar">
+	<h2>Car auction service</h2>
+		<p>Welcome to car auction service</p>
+	</div>
+</body>
+</html>

@@ -14,17 +14,6 @@
 	
 	{% include 'navbar.html' %}
 	
-	<div id="content">
-		{% if user.is_authenticated %}
-			<p>Hello {{ user.username }}</p>
-			<p><a href = "{% url 'users:logout' %}">Logout</a></p> # jest tutdaj
-		{% else %}
-			<p>You are not logged in</p>
-			<p><a href="{% url 'users:login' %}">Log In</a></p>
-		{% endif %}
-		{% block content %}
-		{% endblock %}
-	</div>
 	<div id="sidebar">
 	<h2>Car auction service (bar)</h2>
 		<p>Welcome to car auction service</p>

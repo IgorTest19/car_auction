@@ -14,6 +14,11 @@
 	
 	{% include 'navbar.html' %}
 	
+	<div id="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+	
 	<div id="sidebar">
 	<h2>Car auction service (bar)</h2>
 		<p>Welcome to car auction service</p>

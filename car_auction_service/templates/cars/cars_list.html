@@ -6,7 +6,8 @@ My auction service
 
 {% block content %}
 	<h2>Add new car</h2>
-	<form action="." method="post">
+<!--	<form action="." method="POST" class="post-form">-->
+		<form method="POST" class="post-form">
 		{{ car_add_form.as_p }}
 		{% csrf_token %}
 		<p><input type="submit" value="Dodaj samochód"></p>

@@ -24,6 +24,7 @@ def cars_list(request):
         if car_add_form.is_valid():
             print("-----5-------DID SAVE")
             car_add_form.save()
+            car_add_form = CarForm()
             return render(request, 'cars/cars_list.html', {'cars': cars,
                                                            'car_add_form': car_add_form})
     else:

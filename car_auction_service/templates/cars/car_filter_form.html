@@ -1,0 +1,9 @@
+
+<div class="car_filter_form">
+	<h2>Search car</h2>
+	<form method="GET">
+		{{ cars.form.as_p }}
+		{% csrf_token %}
+		<button type="submit">Search</button>
+	</form>
+</div>

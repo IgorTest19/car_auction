@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Car
-from .forms import CarForm
+from .forms import CarForm, CarSearchForm
 
 # Create your views here.
 
@@ -30,8 +30,20 @@ def cars_list(request):
     else:
         car_add_form = CarForm()
 
+    car_search_form = CarSearchForm()
+    query = None
+    if 'query' in request.GET:
+        car_search_form = CarSearchForm(data=request.GET)
+        if car_search_form.is_valid():
+            query = car_search_form.cleaned_data['query']
+            cars = Cars.objects.annotate(search)
+            # car_search_form.save()
+    else:
+        car_search_form = CarSearchForm()
+
     return render(request, 'cars/cars_list.html', {'cars': cars,
-                                                   'car_add_form':car_add_form})
+                                                   'car_add_form':car_add_form,
+                                                   'car_search_form':car_search_form})
 
 
 def car_detail(request, pk):

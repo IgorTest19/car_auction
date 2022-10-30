@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Car
-from .forms import CarForm, CarSearchForm
+from .forms import CarForm
+from .filters import CarSearchFilter
 
 # Create your views here.
 
@@ -8,6 +9,9 @@ from .forms import CarForm, CarSearchForm
 def cars_list(request):
     # getting all cars
     cars = Car.objects.all()
+    print("---------------------cars object type")
+    print(type(cars))
+    print(cars)
 
     # creating form for adding cars
     print("-----1---request.method is")
@@ -30,20 +34,24 @@ def cars_list(request):
     else:
         car_add_form = CarForm()
 
-    car_search_form = CarSearchForm()
-    query = None
-    if 'query' in request.GET:
-        car_search_form = CarSearchForm(data=request.GET)
-        if car_search_form.is_valid():
-            query = car_search_form.cleaned_data['query']
-            cars = Cars.objects.annotate(search)
-            # car_search_form.save()
-    else:
-        car_search_form = CarSearchForm()
+    # if request.method == 'GET':
+    cars = CarSearchFilter(request.GET, queryset=cars)
+    print("--------------type of cars when filtered")
+    print(type(cars))
+    print(cars)
+    # car_search_form = CarSearchForm()
+    # query = None
+    # if 'query' in request.GET:
+    #     car_search_form = CarSearchForm(data=request.GET)
+    #     if car_search_form.is_valid():
+    #         query = car_search_form.cleaned_data['query']
+    #         cars = Cars.objects.annotate(search)
+    #         # car_search_form.save()
+    # else:
+    #     car_search_form = CarSearchForm()
 
     return render(request, 'cars/cars_list.html', {'cars': cars,
-                                                   'car_add_form':car_add_form,
-                                                   'car_search_form':car_search_form})
+                                                   'car_add_form':car_add_form})
 
 
 def car_detail(request, pk):

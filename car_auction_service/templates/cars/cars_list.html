@@ -5,30 +5,22 @@ My auction service
 {% endblock %}
 
 {% block content %}
-	<div class="car_search_form">
-		<h2>Search car</h2>
-		<form method="GET" action=".">
-			{{ car_search_form.as_p }}
-			{% csrf_token %}
-			<p><input type="submit" value="Szukaj"></p>
-		</form>
-	</div>
-	<div class="car_add_form">
-		<h2>Add new car</h2>
-	<!--	<form action="." method="POST" class="post-form">-->
-		<form method="POST">
-			{{ car_add_form.as_p }}
-			{% csrf_token %}
-			<p><input type="submit" value="Dodaj samochód"></p>
-		</form>
-	</div>
+<!--	<div class="car_search_form">-->
+<!--		<h2>Search car</h2>-->
+<!--		<form method="GET" action=".">-->
+<!--			{{ car_search_form.as_p }}-->
+<!--			{% csrf_token %}-->
+<!--			<p><input type="submit" value="Szukaj"></p>-->
+<!--		</form>-->
+<!--	</div>-->
 	<h1>Listed cars</h1>
-	{% for car in cars %}
+
+	  {% for car in cars.qs %}
 		<div>
 			<p>
 				<a href = '{% url "cars:car_detail" pk=car.pk %}'>{{ car }}</a>
 			</p>
 		</div>
-	{% endfor %}
+	  {% endfor %}
 
 {% endblock %}

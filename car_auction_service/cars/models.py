@@ -7,5 +7,8 @@ class Car(models.Model):
     model = models.CharField(max_length=250)
     year = models.IntegerField()
 
+    class Meta:
+        verbose_name_plural = 'cars'
+
     def __str__(self):
         return f'{self.brand} {self.model}'

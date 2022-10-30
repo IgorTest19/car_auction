@@ -8,6 +8,7 @@ class Car(models.Model):
     year = models.IntegerField()
 
     class Meta:
+        verbose_name = 'car'
         verbose_name_plural = 'cars'
 
     def __str__(self):

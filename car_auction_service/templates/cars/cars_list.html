@@ -13,6 +13,7 @@ My auction service
 <!--			<p><input type="submit" value="Szukaj"></p>-->
 <!--		</form>-->
 <!--	</div>-->
+	{% include 'cars/car_filter_form.html' %}
 	<h1>Listed cars</h1>
 
 	  {% for car in cars.qs %}

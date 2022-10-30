@@ -1,9 +1,13 @@
 <nav class="flex times-center justify-between px-4 px-6 bg-teal-800">
-<div id="content">
+	<div>
+		<a href="/cars" class="text-xl text-white">Car Auction</a>
+	</div>
+	
+	<div>
 		{% if user.is_authenticated %}
-			<p>Hello {{ user.username }} <a href = "{% url 'users:logout' %}">Logout</a></p>
+			<p>Hello {{ user.username }} <a href = "{% url 'users:logout' %}" class="text-white hover:text-gray-400">Logout</a></p>
 		{% else %}
-			<p>You are not logged in <a href="{% url 'users:login' %}">Log In</a></p>
+			<p>You are not logged in <a href="{% url 'users:login' %}" class="text-white hover:text-gray-400">Log In</a></p>
 		{% endif %}
 		{% block content %}
 		{% endblock %}

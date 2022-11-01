@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+from django.utils import timezone
 # Create your models here.
 
 class Car(models.Model):
@@ -19,9 +20,13 @@ class Car(models.Model):
     # )
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    brand = models.CharField(max_length=250)
-    model = models.CharField(max_length=250)
+    brand = models.CharField(max_length=250, default="Brand like Volvo")
+    model = models.CharField(max_length=250, default="Brand like V60")
     year = models.IntegerField()
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         verbose_name = 'car'

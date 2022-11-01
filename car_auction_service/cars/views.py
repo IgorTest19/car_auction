@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Car
-from .forms import CarForm
+from .forms import CarAddForm
 from .filters import CarSearchFilter
 
 # Create your views here.
@@ -22,17 +22,17 @@ def cars_list(request):
         print(request.method)
         print("------3--------data=request.POST")
         print(request.POST)
-        car_add_form = CarForm(data=request.POST)
+        car_add_form = CarAddForm(data=request.POST)
         print("------4--------car_add_form")
         print(car_add_form)
         if car_add_form.is_valid():
             print("-----5-------DID SAVE")
             car_add_form.save()
-            car_add_form = CarForm()
+            car_add_form = CarAddForm()
             return render(request, 'cars/cars_list.html', {'cars': cars,
                                                            'car_add_form': car_add_form})
     else:
-        car_add_form = CarForm()
+        car_add_form = CarAddForm()
 
     # if request.method == 'GET':
     cars = CarSearchFilter(request.GET, queryset=cars)
@@ -57,3 +57,15 @@ def cars_list(request):
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     return render(request, 'cars/car_detail.html', {'car':car})
+
+def car_add(request):
+    if request.method == 'POST':
+        car_add_form = CarAddForm(data=request.POST)
+        if car_add_form.is_valid():
+            car_add_form.save()
+            # return render(request, 'cars/car_add.html')
+    else:
+        car_add_form = CarAddForm()
+
+    return render(request, 'cars/car_add.html', {
+                                                'car_add_form': car_add_form})

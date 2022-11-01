@@ -58,14 +58,18 @@ def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     return render(request, 'cars/car_detail.html', {'car':car})
 
-def car_add(request):
+def dashboard(request):
+    cars = Car.objects.all()
+    # cars = CarSearchFilter(request.GET, queryset=cars)
     if request.method == 'POST':
         car_add_form = CarAddForm(data=request.POST)
         if car_add_form.is_valid():
+            car = car_add_form.save(commit=False)
+            car.owner = request.user
             car_add_form.save()
             # return render(request, 'cars/car_add.html')
     else:
         car_add_form = CarAddForm()
 
-    return render(request, 'cars/car_add.html', {
-                                                'car_add_form': car_add_form})
+    return render(request, 'cars/user_dashboard.html', {'cars': cars,
+                                                         'car_add_form': car_add_form})

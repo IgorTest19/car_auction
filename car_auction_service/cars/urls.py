@@ -20,5 +20,6 @@ app_name = 'cars'
 
 urlpatterns = [
     path('cars', views.cars_list, name='cars_list'),
-    path('car/<int:pk>', views.car_detail, name='car_detail')
+    path('car/<int:pk>', views.car_detail, name='car_detail'),
+    path('car_add', views.car_add, name='car_add')
 ]

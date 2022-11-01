@@ -3,8 +3,9 @@
 		<a href="/cars" class="text-xl text-white">Car Auction</a>
 	</div>
 	
-	<div>
+	<div class="flex items-center space-x-4">
 		{% if user.is_authenticated %}
+			<a href = "{% url 'cars:car_add' %}" class="text-white hover:text-gray-400">Add a car</a>
 			<p>Hello {{ user.username }} <a href = "{% url 'users:logout' %}" class="text-white hover:text-gray-400">Logout</a></p>
 		{% else %}
 			<p>You are not logged in <a href="{% url 'users:login' %}" class="text-white hover:text-gray-400">Log In</a></p>

@@ -18,9 +18,8 @@ class Car(models.Model):
     #     ('3 series', '3 Series'),
     # )
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    brand = models.CharField(max_length=250)
-    model = models.CharField(max_length=250)
-    year = models.IntegerField()
+    brand = models.CharField(max_length=250, default='Brand like Volvo')
+    model = models.CharField(max_length=250, default='Model like V60')
 
     class Meta:
         verbose_name = 'car'

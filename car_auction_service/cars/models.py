@@ -17,11 +17,10 @@ class Car(models.Model):
     #     ('v60', 'V60'),
     #     ('3 series', '3 Series'),
     # )
-
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     brand = models.CharField(max_length=250)
     model = models.CharField(max_length=250)
     year = models.IntegerField()
-    # owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'car'

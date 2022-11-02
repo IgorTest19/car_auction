@@ -4,6 +4,9 @@
 	<form method="POST">
 		{{ car_add_form.as_p }}
 		{% csrf_token %}
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
+		<p>.....</p>
+		<button type="submit" class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
 		<p><input type="submit" value="Dodaj samochód"></p>
 	</form>
 </div>

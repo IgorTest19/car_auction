@@ -26,11 +26,13 @@ class Car(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
+    photo = models.ImageField(upload_to='cars/', blank=True)
 
 
     class Meta:
         verbose_name = 'car'
         verbose_name_plural = 'cars'
+        ordering = ('-publish',)
 
     def __str__(self):
         return f'{self.brand} {self.model}'

@@ -59,7 +59,7 @@ def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     return render(request, 'cars/car_detail.html', {'car':car})
 
-@login.required
+@login_required
 def dashboard(request):
     cars = Car.objects.all()
     # cars = CarSearchFilter(request.GET, queryset=cars)

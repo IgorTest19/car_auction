@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Car
 from .forms import CarAddForm
 from .filters import CarSearchFilter
@@ -58,6 +59,7 @@ def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     return render(request, 'cars/car_detail.html', {'car':car})
 
+@login.required
 def dashboard(request):
     cars = Car.objects.all()
     # cars = CarSearchFilter(request.GET, queryset=cars)

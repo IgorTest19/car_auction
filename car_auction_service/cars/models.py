@@ -26,7 +26,7 @@ class Car(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    photo = models.ImageField(upload_to='cars/', blank=True)
+    photo = models.ImageField(upload_to='images/', blank=True, null=True)
 
 
     class Meta:
@@ -36,3 +36,9 @@ class Car(models.Model):
 
     def __str__(self):
         return f'{self.brand} {self.model}'
+
+    def get_image(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
+        else:
+            return None

@@ -21,7 +21,7 @@ class Car(models.Model):
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     brand = models.CharField(max_length=250, default="Brand like Volvo")
-    model = models.CharField(max_length=250, default="Brand like V60")
+    model = models.CharField(max_length=250, default="Model like V60")
     year = models.IntegerField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)

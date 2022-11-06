@@ -62,13 +62,20 @@ def car_detail(request, pk):
 @login_required
 def dashboard(request):
     cars = Car.objects.all()
-    # cars = CarSearchFilter(request.GET, queryset=cars)
+    # cars = CarSearchFilter(request.GET, queryset=cars) data=request.POST, request
     if request.method == 'POST':
-        car_add_form = CarAddForm(data=request.POST)
+        car_add_form = CarAddForm(request.POST, request.FILES)
+        print("----------request.FILES")
+        print(request.FILES)
+
+
         if car_add_form.is_valid():
             car = car_add_form.save(commit=False)
+            car.photo = request.FILES['photo']
             car.owner = request.user
             car_add_form.save()
+            print("-------request.car")
+            # print(request.body)
             # return render(request, 'cars/car_add.html')
     else:
         car_add_form = CarAddForm()

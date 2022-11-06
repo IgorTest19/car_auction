@@ -19,7 +19,7 @@ My auction service
 	  {% for car in cars.qs %}
 		<div>
 			<p>
-				<a href = '{% url "cars:car_detail" pk=car.pk %}'>{{ car }}</a>
+				<a href = '{% url "cars:car_detail" pk=car.pk %}'>{{car.id}} {{ car }}</a>
 			</p>
 		</div>
 	  {% endfor %}

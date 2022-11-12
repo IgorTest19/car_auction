@@ -7,11 +7,13 @@
 {% block content %}
 	<p>To jest samochód {{ car }}</p>
 	
+	
 	{% if car.photo %}
 		<img src = "{{ car.photo}}" width="250px" height="250px" alt="img">
 	{% else %}
 		<p>No car picture</p>
 	{% endif %}
+	<p>Data opublikowania: {{ car.publish }}</p>
 
 	{% if car.photo %}
 		<img src = "{{ car.photo.url }}" width="250px" height="250px" alt="img">

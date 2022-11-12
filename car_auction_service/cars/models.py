@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils import timezone
 # Create your models here.
 
+
 class Car(models.Model):
 
     # BRAND_CHOICES = (
@@ -27,7 +28,7 @@ class Car(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
     photo = models.ImageField(upload_to='images/', blank=True, null=True)
-
+    valid = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'car'

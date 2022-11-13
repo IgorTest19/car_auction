@@ -11,15 +11,6 @@ My auction service
 	{% include 'cars/car_add.html' %}
 	<h1>My Listed cars</h1>
 
-	{% for car in cars %}
-		{% if car.owner == request.user %}
-			<div>
-				<p>
-					<a href = '{% url "cars:car_detail" pk=car.pk %}'>{{car.id}} {{ car }}</a>
-          <a href = '{% url "cars:car_detail" pk=car.pk %}'><img src = "{{ car.photo.url }}" width="250px" height="250px" alt="img"></a>
-				</p>
-			</div>
-		{% endif %}
-	{% endfor %}
+	{% include 'cars/cars_list2.html' %}
 
 {% endblock %}

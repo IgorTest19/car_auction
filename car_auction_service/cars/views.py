@@ -68,7 +68,6 @@ def dashboard(request):
         print("----------request.FILES")
         print(request.FILES)
 
-
         if car_add_form.is_valid():
             car = car_add_form.save(commit=False)
             car.photo = request.FILES['photo']

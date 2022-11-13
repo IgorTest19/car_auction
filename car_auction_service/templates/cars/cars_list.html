@@ -1,0 +1,24 @@
+{% block content %}
+	<p> bob</p>
+		{% if cars.qs %}
+			{% for car in cars.qs %}
+			<p> CARS QUERY SET</p>
+			<div>
+				<p>
+					<a href = '{% url "cars:car_detail" pk=car.pk %}'>{{car.id}} {{ car }}</a>
+					<a href = '{% url "cars:car_detail" pk=car.pk %}'><img src = "{{ car.photo.url }}" width="250px" height="250px" alt="img"></a>
+				</p>
+			</div>
+		  {% endfor %}
+		{% elif cars %}
+			{% for car in cars %}
+			<p>CAR LIST</p>
+			<div>
+				<p>
+					<a href = '{% url "cars:car_detail" pk=car.pk %}'>{{car.id}} {{ car }}</a>
+					<a href = '{% url "cars:car_detail" pk=car.pk %}'><img src = "{{ car.photo.url }}" width="250px" height="250px" alt="img"></a>
+				</p>
+			</div>
+		  {% endfor %}
+		{% endif %}
+{% endblock %}

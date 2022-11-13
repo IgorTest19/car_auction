@@ -19,7 +19,7 @@ from . import views
 app_name = 'cars'
 
 urlpatterns = [
-    path('cars', views.cars_list, name='cars_list'),
+    path('cars', views.cars_list, name='cars_main'),
     path('car/<int:pk>', views.car_detail, name='car_detail'),
     path('dashboard', views.dashboard, name='dashboard')
 ]

@@ -30,7 +30,7 @@ def cars_list(request):
     #         print("-----5-------DID SAVE")
     #         car_add_form.save()
     #         car_add_form = CarAddForm()
-    #         return render(request, 'cars/cars_list.html', {'cars': cars,
+    #         return render(request, 'cars/cars_main.html', {'cars': cars,
     #                                                        'car_add_form': car_add_form})
     # else:
     #     car_add_form = CarAddForm()
@@ -51,7 +51,7 @@ def cars_list(request):
     # else:
     #     car_search_form = CarSearchForm()
 
-    return render(request, 'cars/cars_list.html', {'cars': cars,})
+    return render(request, 'cars/cars_main.html', {'cars': cars,})
                                                    # 'car_add_form':car_add_form})
 
 

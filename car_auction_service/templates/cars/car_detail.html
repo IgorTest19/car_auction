@@ -16,6 +16,7 @@
 	{% else %}
 		<p>No car picture 2</p>
 	{% endif %}
+	<a class="btn btn-danger" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</a>
 
 	<p>Więcej treści już w krótce.</p>
 

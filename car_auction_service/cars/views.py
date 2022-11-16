@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Car
 from .forms import CarAddForm
@@ -54,11 +54,6 @@ def cars_list(request):
     return render(request, 'cars/cars_main.html', {'cars': cars,})
                                                    # 'car_add_form':car_add_form})
 
-
-def car_detail(request, pk):
-    car = get_object_or_404(Car, pk=pk)
-    return render(request, 'cars/car_detail.html', {'car':car})
-
 @login_required
 def dashboard(request):
     cars = Car.objects.all()
@@ -70,7 +65,7 @@ def dashboard(request):
 
         if car_add_form.is_valid():
             car = car_add_form.save(commit=False)
-            car.photo = request.FILES['photo']
+            # car.photo = request.FILES['photo']
             car.owner = request.user
             car_add_form.save()
             print("-------request.car")
@@ -81,3 +76,14 @@ def dashboard(request):
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
                                                          'car_add_form': car_add_form})
+
+
+def car_detail(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    return render(request, 'cars/car_detail.html', {'car':car})
+
+
+def car_delete(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    car.delete()
+    return redirect('cars/user_dashboard')

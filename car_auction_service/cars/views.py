@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Car
 from .forms import CarAddForm
@@ -81,3 +81,17 @@ def dashboard(request):
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
                                                          'car_add_form': car_add_form})
+
+
+def car_detail(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    return render(request, 'cars/car_detail.html', {'car':car})
+
+
+def car_delete(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    car.delete()
+    return redirect('cars/user_dashboard')
+
+    def test(request):
+        pass

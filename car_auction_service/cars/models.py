@@ -43,3 +43,8 @@ class Car(models.Model):
             return self.photo.url
         else:
             return None
+
+
+class Image(models.Model):
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)

@@ -81,3 +81,6 @@ def dashboard(request):
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
                                                          'car_add_form': car_add_form})
+
+    def test(request):
+        pass

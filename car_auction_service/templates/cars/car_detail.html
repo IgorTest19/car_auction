@@ -6,28 +6,17 @@
 
 {% block content %}
 	<p>To jest samochód {{ car }}</p>
-	
-	
-	{% if car.photo %}
-		<img src = "{{ car.photo}}" width="250px" height="250px" alt="img">
-	{% else %}
-		<p>No car picture</p>
-	{% endif %}
+
 	<p>Data opublikowania: {{ car.publish }}</p>
 
 	{% if car.photo %}
-		<img src = "{{ car.photo.url }}" width="500px" height="500px" alt="img">
+		<img src = "{{ car.get_image}}" width="500px" height="500px" alt="img">
 		<p> {{ car.photo }}</p>
 		<p> {{ car.photo.url }}</p>
 	{% else %}
-		<p>No car picture</p>
-	{% endif %}
-
-	{% if car.photo %}
-		<img src = "{{ car.get_image}}" width="250px" height="250px" alt="img">
-	{% else %}
 		<p>No car picture 2</p>
 	{% endif %}
+	<a class="btn btn-danger" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</a>
 
 	<p>Więcej treści już w krótce.</p>
 

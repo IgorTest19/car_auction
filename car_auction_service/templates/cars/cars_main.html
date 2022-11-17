@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+My auction service
+{% endblock %}
+
+{% block content %}
+<!--	<div class="car_search_form">-->
+<!--		<h2>Search car</h2>-->
+<!--		<form method="GET" action=".">-->
+<!--			{{ car_search_form.as_p }}-->
+<!--			{% csrf_token %}-->
+<!--			<p><input type="submit" value="Szukaj"></p>-->
+<!--		</form>-->
+<!--	</div>-->
+	{% include 'cars/car_filter_form.html' %}
+	<h1>Listed cars</h1>
+	{% include 'cars/cars_list.html' %}
+
+{% endblock %}

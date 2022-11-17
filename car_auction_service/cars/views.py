@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Car, Image
@@ -19,22 +19,22 @@ def cars_list(request):
     print("-----1---request.method is")
     print(request.method)
 
-    if request.method == 'POST':
-        print("-----2-----request.method == POST")
-        print(request.method)
-        print("------3--------data=request.POST")
-        print(request.POST)
-        car_add_form = CarAddForm(data=request.POST)
-        print("------4--------car_add_form")
-        print(car_add_form)
-        if car_add_form.is_valid():
-            print("-----5-------DID SAVE")
-            car_add_form.save()
-            car_add_form = CarAddForm()
-            return render(request, 'cars/cars_list.html', {'cars': cars,
-                                                           'car_add_form': car_add_form})
-    else:
-        car_add_form = CarAddForm()
+    # if request.method == 'POST':
+    #     print("-----2-----request.method == POST")
+    #     print(request.method)
+    #     print("------3--------data=request.POST")
+    #     print(request.POST)
+    #     car_add_form = CarAddForm(data=request.POST)
+    #     print("------4--------car_add_form")
+    #     print(car_add_form)
+    #     if car_add_form.is_valid():
+    #         print("-----5-------DID SAVE")
+    #         car_add_form.save()
+    #         car_add_form = CarAddForm()
+    #         return render(request, 'cars/cars_main.html', {'cars': cars,
+    #                                                        'car_add_form': car_add_form})
+    # else:
+    #     car_add_form = CarAddForm()
 
     # if request.method == 'GET':
     cars = CarSearchFilter(request.GET, queryset=cars)
@@ -52,8 +52,8 @@ def cars_list(request):
     # else:
     #     car_search_form = CarSearchForm()
 
-    return render(request, 'cars/cars_list.html', {'cars': cars,
-                                                   'car_add_form':car_add_form})
+    return render(request, 'cars/cars_main.html', {'cars': cars,})
+                                                   # 'car_add_form':car_add_form})
 
 
 def car_detail(request, pk):
@@ -71,6 +71,7 @@ def dashboard(request):
         image_form = ImageForm
         print("----------request.FILES")
         print(request.FILES)
+
         files = request.FILES.getlist('image')
         if car_add_form.is_valid():
             new_car = car_add_form.save(commit=False)
@@ -83,7 +84,7 @@ def dashboard(request):
             messages.success(request, 'New car added')
             print("-------request.car")
             # print(request.body)
-            # return render(request, 'cars/car_add.html')
+            # return render(request, 'cars/car_add.html')W
         else:
             print(car_add_form.errors)
     else:

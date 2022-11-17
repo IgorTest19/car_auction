@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Car
-from .forms import CarAddForm
+from django.contrib import messages
+from .models import Car, Image
+from .forms import CarAddForm, ImageForm
 from .filters import CarSearchFilter
 
 # Create your views here.
@@ -62,36 +63,34 @@ def car_detail(request, pk):
 @login_required
 def dashboard(request):
     cars = Car.objects.all()
+
     # cars = CarSearchFilter(request.GET, queryset=cars) data=request.POST, request
     if request.method == 'POST':
-        car_add_form = CarAddForm(request.POST, request.FILES)
+        # car_add_form = CarAddForm(request.POST, request.FILES)
+        car_add_form = CarAddForm(request.POST)
+        image_form = ImageForm
         print("----------request.FILES")
         print(request.FILES)
 
+        files = request.FILES.getlist('image')
         if car_add_form.is_valid():
-            car = car_add_form.save(commit=False)
-            car.photo = request.FILES['photo']
-            car.owner = request.user
-            car_add_form.save()
+            new_car = car_add_form.save(commit=False)
+            # car.photo = request.FILES['photo']
+            new_car.owner = request.user
+            # car_add_form.save()
+            new_car.save()
+            for file in files:
+                Image.objects.create(car=new_car, image=file)
+            messages.success(request, 'New car added')
             print("-------request.car")
             # print(request.body)
-            # return render(request, 'cars/car_add.html')
+            # return render(request, 'cars/car_add.html')W
+        else:
+            print(car_add_form.errors)
     else:
         car_add_form = CarAddForm()
+        image_form = ImageForm
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
-                                                         'car_add_form': car_add_form})
-
-
-def car_detail(request, pk):
-    car = get_object_or_404(Car, pk=pk)
-    return render(request, 'cars/car_detail.html', {'car':car})
-
-
-def car_delete(request, pk):
-    car = get_object_or_404(Car, pk=pk)
-    car.delete()
-    return redirect('cars/user_dashboard')
-
-    def test(request):
-        pass
+                                                         'car_add_form': car_add_form,
+                                                         'image_form':image_form})

@@ -1,9 +1,21 @@
 <div class="car_add_form">
 	<h2>Add new car</h2>
 <!--	<form action="." method="POST" class="post-form">-->
-	<form method="POST" enctype="multipart/form-data" class="post-form">
+<!--	<form method="POST" enctype="multipart/form-data" class="post-form">-->
+<!--		{% csrf_token %}-->
+<!--		{{ car_add_form.as_p }}-->
+<!--		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>-->
+<!--		<p>.....</p>-->
+<!--		<button type="submit" class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>-->
+<!--		<p><input type="submit" value="Dodaj samochód"></p>-->
+<!--	</form>-->
+		<form method="POST" enctype="multipart/form-data" class="post-form">
 		{% csrf_token %}
 		{{ car_add_form.as_p }}
+		{{ image_form.as_p }}
+<!--		{% for form in image_form %}-->
+<!--			{{ form }}-->
+<!--		{% endfor %}-->
 		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
 		<p>.....</p>
 		<button type="submit" class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>

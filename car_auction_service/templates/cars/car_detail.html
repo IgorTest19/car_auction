@@ -8,7 +8,7 @@
 	<p>To jest samochód {{ car }}</p>
 
 	<p>Data opublikowania: {{ car.publish }}</p>
-
+	
 	{% if car.photo %}
 		<img src = "{{ car.get_image}}" width="500px" height="500px" alt="img">
 		<p> {{ car.photo }}</p>
@@ -16,8 +16,10 @@
 	{% else %}
 		<p>No car picture 2</p>
 	{% endif %}
-	<a class="btn btn-danger" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</a>
-
+	{% if request.user == car.owner %}
+		<a class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</a>
+		<button type="delete" class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</button>
+	{% endif %}
 	<p>Więcej treści już w krótce.</p>
 
 {% endblock %}

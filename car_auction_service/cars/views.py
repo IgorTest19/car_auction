@@ -59,6 +59,11 @@ def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     return render(request, 'cars/car_detail.html', {'car':car})
 
+def car_delete(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    car.delete()
+    return redirect('cars/user_dashboard')
+
 @login_required
 def dashboard(request):
     cars = Car.objects.all()
@@ -81,17 +86,3 @@ def dashboard(request):
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
                                                          'car_add_form': car_add_form})
-
-
-def car_detail(request, pk):
-    car = get_object_or_404(Car, pk=pk)
-    return render(request, 'cars/car_detail.html', {'car':car})
-
-
-def car_delete(request, pk):
-    car = get_object_or_404(Car, pk=pk)
-    car.delete()
-    return redirect('cars/user_dashboard')
-
-    def test(request):
-        pass

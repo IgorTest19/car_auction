@@ -18,7 +18,7 @@
 	{% endif %}
 	{% if request.user == car.owner %}
 		<a class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</a>
-		<button type="delete" class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</button>
+		<button type="submit" class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</button>
 	{% endif %}
 	<p>Więcej treści już w krótce.</p>
 

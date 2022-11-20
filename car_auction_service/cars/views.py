@@ -63,11 +63,12 @@ def car_detail(request, pk):
 def car_delete(request, pk):
     car = get_object_or_404(Car, pk=pk)
     car.delete()
-    return redirect('cars/user_dashboard')
+    return redirect('cars/user_dashboard.html')
 
 @login_required
 def dashboard(request):
     cars = Car.objects.all()
+    cars = CarSearchFilter(request.GET, queryset=cars)
 
     # cars = CarSearchFilter(request.GET, queryset=cars) data=request.POST, request
     if request.method == 'POST':

@@ -17,8 +17,9 @@
 		<p>No car picture 2</p>
 	{% endif %}
 	{% if request.user == car.owner %}
-		<a class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</a>
-		<button type="submit" class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE</button>
+		<a href="{% url 'cars:car_delete' pk=car.pk %}"><button class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">DELETE 1</button></a>
+		<a class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE 2</a>
+		<button type="button" class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" href="{% url 'cars:car_delete' pk=car.pk %}">DELETE 3</button>
 	{% endif %}
 	<p>Więcej treści już w krótce.</p>
 

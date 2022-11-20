@@ -78,16 +78,17 @@ def dashboard(request):
         print("----------request.FILES")
         print(request.FILES)
 
-        files = request.FILES.getlist('image')
+        # files = request.FILES.getlist('image')
         if car_add_form.is_valid():
             new_car = car_add_form.save(commit=False)
-            # car.photo = request.FILES['photo']
+            new_car.photo = request.FILES['photo']
             new_car.owner = request.user
             # car_add_form.save()
             new_car.save()
-            for file in files:
-                Image.objects.create(car=new_car, image=file)
-            messages.success(request, 'New car added')
+            car_add_form = CarAddForm() # clearing form
+            # for file in files:
+            #     Image.objects.create(car=new_car, image=file)
+            # messages.success(request, 'New car added')
             print("-------request.car")
             # print(request.body)
             # return render(request, 'cars/car_add.html')W
@@ -95,8 +96,8 @@ def dashboard(request):
             print(car_add_form.errors)
     else:
         car_add_form = CarAddForm()
-        image_form = ImageForm
+        # image_form = ImageForm
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
-                                                         'car_add_form': car_add_form,
-                                                         'image_form':image_form})
+                                                        'car_add_form': car_add_form})
+                                                        # 'image_form':image_form})

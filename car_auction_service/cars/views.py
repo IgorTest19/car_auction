@@ -65,6 +65,44 @@ def car_delete(request, pk):
     car.delete()
     return redirect('cars/user_dashboard.html')
 
+#for single image
+# @login_required
+# def dashboard(request):
+#     cars = Car.objects.all()
+#     cars = CarSearchFilter(request.GET, queryset=cars)
+#
+#     # cars = CarSearchFilter(request.GET, queryset=cars) data=request.POST, request
+#     if request.method == 'POST':
+#         # car_add_form = CarAddForm(request.POST, request.FILES)
+#         car_add_form = CarAddForm(request.POST)
+#         image_form = ImageForm
+#         print("----------request.FILES")
+#         print(request.FILES)
+#
+#         # files = request.FILES.getlist('image')
+#         if car_add_form.is_valid():
+#             new_car = car_add_form.save(commit=False)
+#             new_car.photo = request.FILES['photo'] # for single photo
+#             new_car.owner = request.user
+#             new_car.save()
+#             car_add_form = CarAddForm() # clearing form
+#             # for file in files:
+#             #     Image.objects.create(car=new_car, image=file)
+#             # messages.success(request, 'New car added')
+#             print("-------request.car")
+#             # print(request.body)
+#             # return render(request, 'cars/car_add.html')W
+#         else:
+#             print(car_add_form.errors)
+#     else:
+#         car_add_form = CarAddForm()
+#         # image_form = ImageForm
+#
+#     return render(request, 'cars/user_dashboard.html', {'cars': cars,
+#                                                         'car_add_form': car_add_form})
+#                                                         # 'image_form':image_form})
+
+# for multiple images
 @login_required
 def dashboard(request):
     cars = Car.objects.all()
@@ -81,9 +119,8 @@ def dashboard(request):
         # files = request.FILES.getlist('image')
         if car_add_form.is_valid():
             new_car = car_add_form.save(commit=False)
-            new_car.photo = request.FILES['photo']
+            new_car.images = request.FILES.getlist('images')
             new_car.owner = request.user
-            # car_add_form.save()
             new_car.save()
             car_add_form = CarAddForm() # clearing form
             # for file in files:
@@ -100,4 +137,4 @@ def dashboard(request):
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
                                                         'car_add_form': car_add_form})
-                                                        # 'image_form':image_form})
+#                                                         # 'image_form':image_form})

@@ -8,6 +8,7 @@
 	<p>To jest samochód {{ car }}</p>
 
 	<p>Data opublikowania: {{ car.publish }}</p>
+
 	{% if car.owner == request.user %}
 		{% if car.update %}
 			<p>Zaktualizowano {{ car.update }}</p>

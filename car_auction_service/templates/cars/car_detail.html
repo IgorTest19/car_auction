@@ -8,6 +8,16 @@
 	<p>To jest samochód {{ car }}</p>
 
 	<p>Data opublikowania: {{ car.publish }}</p>
+	{% if user.is_authenticated %}
+		{% if car.update %}
+			<p>Zaktualizowano {{ car.update }}</p>
+		{% endif %}
+	{% endif %}
+	{% if user.is_authenticated %}
+		{% if car.update %}
+			<p>Ważność ogłoszenia {{ car.valid }}</p>
+		{% endif %}
+	{% endif %}
 	
 	{% if car.photo %}
 		<img src = "{{ car.get_image}}" width="500px" height="500px" alt="img">

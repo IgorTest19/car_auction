@@ -60,6 +60,7 @@ def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     return render(request, 'cars/car_detail.html', {'car':car})
 
+@login_required
 def car_delete(request, pk):
     car = get_object_or_404(Car, pk=pk)
     car.delete()

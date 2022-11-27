@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from .models import Car, Image
 
 class CarAddForm(forms.ModelForm):
@@ -16,3 +17,9 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ["image"]
+
+
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Repeat password", widget=forms.PasswordInput)
+

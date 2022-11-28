@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Car, Image
-from .forms import CarAddForm, ImageForm, UserRegistrationForm
+from .forms import CarAddForm, ImageForm
 from .filters import CarSearchFilter
 
 # Create your views here.

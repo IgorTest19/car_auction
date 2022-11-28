@@ -19,10 +19,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("admin/", admin.site.urls), # admin panel
-    path('users/', include('users.urls', namespace='users')), # users app
-    path('', include('cars.urls', namespace='cars')), # cars app
-    path('__debug__/', include('debug_toolbar.urls')), # django debug panel
+    path("admin/", admin.site.urls),
+    path('users/', include('users.urls', namespace='users')),
+    path('', include('cars.urls', namespace='cars')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 if settings.DEBUG:

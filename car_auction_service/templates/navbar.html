@@ -9,6 +9,8 @@
 			<p>Hello {{ user.username }} <a href = "{% url 'users:logout' %}" class="text-white hover:text-gray-400">Logout</a></p>
 		{% else %}
 			<p>You are not logged in <a href="{% url 'users:login' %}" class="text-white hover:text-gray-400">Log In</a></p>
+			<p>|</p>
+			<p><a href="{% url 'users:register' %}" class="text-white hover:text-gray-400">Register</a></p>
 		{% endif %}
 		{% block content %}
 		{% endblock %}

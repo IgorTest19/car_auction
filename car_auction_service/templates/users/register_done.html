@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %} Registration successful {% endblock %}
+
+{% block content %}
+	<h1>Success! Your account has been created. Now you can log in</h1>
+	<p><a href="{% url 'users:login' %}" class="text-white hover:text-gray-400">Log In</a></p>
+{% endblock %}

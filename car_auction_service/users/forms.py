@@ -16,7 +16,7 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password2']
 
 
-#change for allauth
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+#change for allauth !!!!!!!
+# class LoginForm(forms.Form):
+#     username = forms.CharField()
+#     password = forms.CharField(widget=forms.PasswordInput)

@@ -2,7 +2,9 @@
 <div class="car_filter_form">
 	<h2>Search car</h2>
 	<form method="GET">
-		{{ cars.form.as_p }}
+<!--		{{ cars.form.as_p }}-->
+		<p> Brand contains 22 {{ cars.form.brand }}</p>
+		<p> Model contains  22 {{ cars.form.model }}</p>
 		{% csrf_token %}
 		<button type="submit">Search</button>
 	</form>

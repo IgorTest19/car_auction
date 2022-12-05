@@ -12,11 +12,17 @@ class UserRegistrationForm(forms.ModelForm):
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
-            raise forms.ValidationError('Passwordsare not the same!')
+            raise forms.ValidationError('Passwords are not the same!')
         return cd['password2']
 
 
 #change for allauth !!!!!!!
-# class LoginForm(forms.Form):
-#     username = forms.CharField()
-#     password = forms.CharField(widget=forms.PasswordInput)
+class UserLoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+
+# class UserLoginForm(forms.ModelForm):
+#     class Meta:
+#         model = User
+#         fields = ('username', 'password')

@@ -21,6 +21,7 @@ app_name = 'users'
 
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
-    path("accounts/register", views.register, name='register'),
-    path("accounts/login", auth_views.LoginView.as_view(template_name='users/login.html')), # usunąć to i zrobić nie jako z django auth tylko samemu zaimplementować
+    path("accounts/register", views.user_register, name='register'),
+    # path("accounts/login", auth_views.LoginView.as_view(template_name='users/login.html')), # usunąć to i zrobić nie jako z django auth tylko samemu zaimplementować
+    path("accounts/login", views.user_login, name='login')
 ]

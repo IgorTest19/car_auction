@@ -27,7 +27,8 @@ class Car(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    photo = models.ImageField(upload_to='images/', blank=True, null=True)
+    # photo = models.ImageField(upload_to='images/', blank=True, null=True)
+    photo = models.ImageField(blank=True, null=True)
     valid = models.BooleanField(default=True)
 
     class Meta:
@@ -48,3 +49,6 @@ class Car(models.Model):
 class Image(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
+
+    def __str__(self):
+        return self.car.__str__

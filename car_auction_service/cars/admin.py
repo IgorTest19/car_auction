@@ -11,10 +11,13 @@ class CarAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ['image_id', 'car_id', 'car', 'image']
-
-    def image_id(self, obj):
-        return obj.id
+    class Meta:
+        model = Image
+        fields = ['image_id', 'car_id', 'car', 'image']
+    # list_display = ['image_id', 'car_id', 'car', 'image']
+    #
+    # def image_id(self, obj):
+    #     return obj.id
 
     # image_id.short_description = 'image id'
 

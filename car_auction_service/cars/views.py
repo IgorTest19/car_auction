@@ -104,6 +104,8 @@ def car_delete(request, pk):
 #                                                         # 'image_form':image_form})
 
 # for multiple images
+# https://www.youtube.com/watch?v=HnxFAx1-jyU&ab_channel=StudyGyaan
+
 @login_required
 def dashboard(request):
     cars = Car.objects.all()
@@ -113,20 +115,18 @@ def dashboard(request):
     if request.method == 'POST':
         # car_add_form = CarAddForm(request.POST, request.FILES)
         car_add_form = CarAddForm(request.POST)
-        image_form = ImageForm
         print("----------request.FILES")
         print(request.FILES)
 
         # files = request.FILES.getlist('image')
         if car_add_form.is_valid():
             new_car = car_add_form.save(commit=False)
-            new_car.images = request.FILES.getlist('images')
             new_car.owner = request.user
+            image_files= request.FILES.getlist('images')
+            for image in image_files:
+                Image.objects.create(car = new_car, image=image)
             new_car.save()
             car_add_form = CarAddForm() # clearing form
-            # for file in files:
-            #     Image.objects.create(car=new_car, image=file)
-            # messages.success(request, 'New car added')
             print("-------request.car")
             # print(request.body)
             # return render(request, 'cars/car_add.html')W
@@ -138,4 +138,4 @@ def dashboard(request):
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
                                                         'car_add_form': car_add_form})
-#                                                         # 'image_form':image_form})
+                                                        # 'image_form':image_form})

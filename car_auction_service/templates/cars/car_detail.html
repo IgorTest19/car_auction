@@ -21,6 +21,9 @@
 	{% endif %}
 	
 	{% if car.photo %}
+		{% for photo in car.photo %}
+			<p> {{ photo.url }}</p>
+		{% endfor %}
 		<img src = "{{ car.get_image}}" width="500px" height="500px" alt="img">
 		<p> {{ car.photo }}</p>
 		<p> {{ car.photo.url }}</p>

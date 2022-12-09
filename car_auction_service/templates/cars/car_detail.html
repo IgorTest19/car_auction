@@ -32,7 +32,9 @@
 	{% endif %}
 	{% if car_images %}
 		{% for car_image in car_images %}
-			<p>{{ car_image.url }}</p>
+			<p>{{ car_image.image.url }}</p>
+			<p>{{ car_image.image.get_image }}</p>
+			<img src = "{{ car_image.get_image}}" width="500px" height="500px" alt="img">
 		{% endfor %}
 	{% else %}
 		<p>No cars images here from CarImage class</p>

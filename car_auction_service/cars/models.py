@@ -52,3 +52,8 @@ class CarImage(models.Model):
 
     # def __str__(self):
     #     return self.car.__str__
+    def get_image(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        else:
+            return None

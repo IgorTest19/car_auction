@@ -45,6 +45,21 @@ class Car(models.Model):
         else:
             return None
 
+    def get_first_image(self):
+        first_image = self.carimage_set.all()[0]
+        if first_image.image and hasattr(first_image.image, 'url'):
+            return first_image.image.url
+        else:
+            return None
+
+    def get_all_images(self):
+        return self.carimage_set.all()
+
+
+
+
+
+
 
 class CarImage(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
@@ -57,3 +72,4 @@ class CarImage(models.Model):
             return self.image.url
         else:
             return None
+

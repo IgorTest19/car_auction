@@ -34,7 +34,11 @@
 		{% for car_image in car_images %}
 			<p>{{ car_image.image.url }}</p>
 			<p>{{ car_image.image.get_image }}</p>
-			<img src = "{{ car_image.get_image}}" width="500px" height="500px" alt="img">
+			<img src = "{{ car_image.get_image }}" width="500px" height="500px" alt="img">
+		{% endfor %}
+		{% for car_image_2 in car.get_all_images %}
+			<p><img src = "{{ car_image_2.get_image }}" width="500px" height="500px" alt="img"></p>
+			<p>{{ car_image_2.get_image }}</p>
 		{% endfor %}
 	{% else %}
 		<p>No cars images here from CarImage class</p>

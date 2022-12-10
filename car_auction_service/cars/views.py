@@ -60,7 +60,7 @@ def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     print(get_list_or_404(CarImage, car=car))
     print(type(get_list_or_404(CarImage, car=car)))
-    car_images = get_list_or_404(CarImage, car=car)
+    car_images = reversed(get_list_or_404(CarImage, car=car))
     return render(request, 'cars/car_detail.html', {'car':car,
                                                     'car_images':car_images})
 

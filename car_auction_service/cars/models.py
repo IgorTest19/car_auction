@@ -46,7 +46,7 @@ class Car(models.Model):
             return None
 
     def get_first_image(self):
-        first_image = self.carimage_set.all()[0]
+        first_image = (self.carimage_set.all()[::-1])[0]
         if first_image.image and hasattr(first_image.image, 'url'):
             return first_image.image.url
         else:

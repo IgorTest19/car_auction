@@ -31,11 +31,13 @@
 		<p>No car picture 2</p>
 	{% endif %}
 	{% if car_images %}
+		<!--wyświetlanie obrazów z poziomu modelu CarImage-->
 		{% for car_image in car_images %}
 			<p>{{ car_image.image.url }}</p>
 			<p>{{ car_image.image.get_image }}</p>
 			<img src = "{{ car_image.get_image }}" width="500px" height="500px" alt="img">
 		{% endfor %}
+		<!--wyświetlanie obrazków w poziomu modelu Car-->
 		{% for car_image_2 in car.get_all_images %}
 			<p><img src = "{{ car_image_2.get_image }}" width="500px" height="500px" alt="img"></p>
 			<p>{{ car_image_2.get_image }}</p>

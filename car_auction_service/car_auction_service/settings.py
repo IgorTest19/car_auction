@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "cars.apps.CarsConfig",
     "users.apps.UsersConfig",
+    "maps.apps.MapsConfig",
     "debug_toolbar",
 
 ]

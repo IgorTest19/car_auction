@@ -40,12 +40,22 @@ class Car(models.Model):
         return f'{self.brand} {self.model}'
 
     def get_image(self):
+        """
+        Get the url of image
+        :return: value of photo filed in url from.
+        :rtype: str
+        """
         if self.photo and hasattr(self.photo, 'url'):
             return self.photo.url
         else:
             return None
 
     def get_first_image(self):
+        """
+        Get the first image of specified car's image set.
+        :return: url of the first image.
+        :rtype: str
+        """
         first_image = (self.carimage_set.all()[::-1])[0]
         if first_image.image and hasattr(first_image.image, 'url'):
             return first_image.image.url
@@ -53,6 +63,11 @@ class Car(models.Model):
             return None
 
     def get_all_images(self):
+        """
+        Get all the images of specified car
+        :return: set of CarImage objects.
+        :rtype: set
+        """
         return self.carimage_set.all()
 
 
@@ -68,6 +83,11 @@ class CarImage(models.Model):
     # def __str__(self):
     #     return self.car.__str__
     def get_image(self):
+        """
+        Get the image.
+        :return: url of the image
+        :rtype: str
+        """
         if self.image and hasattr(self.image, 'url'):
             return self.image.url
         else:

@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils import timezone
 # Create your models here.
 
-
+#TODO: add brand and choices as choice filed to brand and model
 class Car(models.Model):
 
     # BRAND_CHOICES = (

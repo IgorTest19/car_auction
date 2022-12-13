@@ -71,17 +71,13 @@ class Car(models.Model):
         return self.carimage_set.all()
 
 
-
-
-
-
-
 class CarImage(models.Model):
+    """
+    Image class for Car class.
+    """
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
 
-    # def __str__(self):
-    #     return self.car.__str__
     def get_image(self):
         """
         Get the image.

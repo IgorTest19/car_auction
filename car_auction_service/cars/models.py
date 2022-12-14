@@ -20,7 +20,8 @@ class Car(models.Model):
     #     ('3 series', '3 Series'),
     # )
 
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_owner') # modify relation to onetoone field
+    users_observing = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_observer', blank=True, null=True)
     brand = models.CharField(max_length=250, blank=False, null=False)
     model = models.CharField(max_length=250, blank=False, null=False)
     year = models.IntegerField()

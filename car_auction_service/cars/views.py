@@ -72,9 +72,14 @@ def car_delete(request, pk):
 
 
 def car_observe(request, pk):
-    car = get_object_or_404(Car, pk)
+    car = get_object_or_404(Car, pk=pk)
+    print("==============CAR OBSERVE")
+    print(car)
+    print("================request.user")
+    print(request.user)
     if request.method == 'POST':
         car.users_observing = request.user
+    return redirect('cars/user_dashboard.html')
 
 
 # for single image

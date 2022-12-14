@@ -71,6 +71,14 @@ class Car(models.Model):
         """
         return self.carimage_set.all()
 
+    def observe_car(self):
+        """
+        Car is added to observed by user
+        :return:
+        :rtype:
+        """
+        pass
+
 
 class CarImage(models.Model):
     """

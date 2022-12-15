@@ -141,7 +141,8 @@ def car_observe(request, pk):
 # https://www.youtube.com/watch?v=psOQBoAmMhA&ab_channel=CodingEntrepreneurs
 @login_required
 def dashboard(request):
-    cars = Car.objects.all()
+    # cars = Car.objects.all() # zrobić tutaj pobieranie obiektów po użytkwoniku
+    cars = Car.objects.filter(owner=request.user) # tak działa wyświetlanie listy aut w dashboardzie tylko swoich dodanych aut :)
     cars = CarSearchFilter(request.GET, queryset=cars)
     car_add_form = CarAddForm()
     images_add_gorm = ImageForm()

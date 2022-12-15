@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Car, CarImage
 from .forms import CarAddForm, ImageForm
@@ -73,12 +74,22 @@ def car_delete(request, pk):
 
 def car_observe(request, pk):
     car = get_object_or_404(Car, pk=pk)
+    user = User.objects.get(username=request.user.username)
+    print("==============user")
+    print(user)
     print("==============CAR OBSERVE")
     print(car)
     print("================request.user")
     print(request.user)
-    if request.method == 'POST':
-        car.users_observing = request.user
+    print("================car.users_observing")
+    print(car.users_observing)
+    print("================== ADDING USER DO OBSERVING USERS")
+    car.users_observing.add(user)
+    print('==========car.users_observing.add(request.user)')
+    print("=============car.observers()")
+    print(car.observers())
+    car.save()
+
     return redirect('cars/user_dashboard.html')
 
 

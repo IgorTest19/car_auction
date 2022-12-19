@@ -1,3 +1,14 @@
 from django.db import models
+from car_auction_service.cars.models import Car
+from django.contrib.auth.models import User
 
 # Create your models here.
+
+# https://stackoverflow.com/questions/58794639/how-to-make-follower-following-system-with-django-model
+# https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html
+
+# utworzyć model użytkownica rozszerzająćy domyślny mdoel i dać onetoonefiled z Carmodel
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    cars_observed = models.ManyToManyField(Car, related_name='cars_observed', blank=True, null=True)

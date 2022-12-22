@@ -1,1 +1,1 @@
-defualt_app_config = 'users.apps.UsersConfig'
+default_app_config = 'users.apps.UsersConfig'

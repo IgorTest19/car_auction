@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from users.models import UserProfile
 from django.contrib import messages
 from .models import Car, CarImage
 from .forms import CarAddForm, ImageForm
@@ -74,9 +75,9 @@ def car_delete(request, pk):
 
 def car_observe(request, pk):
     car = get_object_or_404(Car, pk=pk)
-    user = User.objects.get(username=request.user.username)
-    car.users_observing.add(user)
-    car.save()
+    user_profile = UserProfile.objects.get(user=request.user.id)
+    user_profile.cars_observed.add(car)
+    user_profile.save()
 
     return redirect('cars/user_dashboard.html')
 
@@ -132,6 +133,7 @@ def dashboard(request):
     # cars = Car.objects.all() # zrobić tutaj pobieranie obiektów po użytkwoniku
     cars = Car.objects.filter(owner=request.user) # tak działa wyświetlanie listy aut w dashboardzie tylko swoich dodanych aut :)
     cars = CarSearchFilter(request.GET, queryset=cars)
+    user_profile = UserProfile.objects.get(user=request.user)
     car_add_form = CarAddForm()
     images_add_gorm = ImageForm()
     # cars = CarSearchFilter(request.GET, queryset=cars) data=request.POST, request
@@ -175,4 +177,5 @@ def dashboard(request):
 
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
                                                         'car_add_form': car_add_form,
-                                                        'images_add_form': images_add_form})
+                                                        'images_add_form': images_add_form,
+                                                        'user_profile':user_profile})

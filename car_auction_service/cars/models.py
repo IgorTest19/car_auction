@@ -80,6 +80,7 @@ class Car(models.Model):
         return ','.join([str(user) for user in self.users_observing.all()])
 
 
+
 class CarImage(models.Model):
     """
     Image class for Car class.

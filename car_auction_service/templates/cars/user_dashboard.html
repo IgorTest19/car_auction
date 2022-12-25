@@ -7,6 +7,8 @@ My auction service
 {% block content %}
 
 <!--	{% include 'cars/car_filter_form.html' %}-->
+	<p>user_profile: {{ user_profile.id }} </p>
+	<p>user_profile.cars_observed_by_user:{{ user_profile.cars_observed_by_user }}</p>
 	{% include 'cars/car_add.html' %}
 	<h1>My Listed cars</h1>
 

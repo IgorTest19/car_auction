@@ -9,7 +9,3 @@ class CarSearchFilter(django_filters.FilterSet):
     class Meta:
         model = Car
         fields = ['brand', 'model']
-        # fields = {
-        #     'brand': ['icontains'],
-        #     'model': ['icontains'],
-        # }

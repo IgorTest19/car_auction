@@ -2,23 +2,9 @@ from django.db import models
 from django.conf import settings
 
 from django.utils import timezone
-# Create your models here.
 
-#TODO: add brand and choices as choice filed to brand and model
+
 class Car(models.Model):
-
-    # BRAND_CHOICES = (
-    #     ('audi', 'Audi'),
-    #     ('bmw', 'BMW'),
-    #     ('volvo', 'Volvo'),
-    #     ('volkswagen', 'Volkswagen'),
-    # )
-    #
-    # MODEL_CHOICES = (
-    #     ('cc', 'CC'),
-    #     ('v60', 'V60'),
-    #     ('3 series', '3 Series'),
-    # )
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_owner') # modify relation to onetoone field
     users_observing = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='car_observer', blank=True)
@@ -28,9 +14,8 @@ class Car(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    # photo = models.ImageField(upload_to='images/', blank=True, null=True)
-    # photo = models.ImageField(blank=True, null=True)
     valid = models.BooleanField(default=True)
+
 
     class Meta:
         verbose_name = 'car'
@@ -80,7 +65,6 @@ class Car(models.Model):
         return ','.join([str(user) for user in self.users_observing.all()])
 
 
-
 class CarImage(models.Model):
     """
     Image class for Car class.
@@ -98,4 +82,3 @@ class CarImage(models.Model):
             return self.image.url
         else:
             return None
-

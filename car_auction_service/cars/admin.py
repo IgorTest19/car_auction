@@ -7,10 +7,8 @@ from .models import Car, CarImage
 class CarAdmin(admin.ModelAdmin):
     list_display = ['id', 'owner', 'brand', 'model', 'year', 'publish', 'created', 'update']
 
-
 @admin.register(CarImage)
 class CarImage(admin.ModelAdmin):
-
 
     list_display = ['image_id', 'car_id', 'car', 'image']
 

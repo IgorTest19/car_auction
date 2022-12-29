@@ -38,7 +38,6 @@ def user_login(request):
         login_form = UserLoginForm()
     return render(request, 'users/login2.html', {'login_form': login_form})
 
-
 def user_logout(request):
     logout(request)
     return redirect('cars:cars_main')

@@ -31,7 +31,6 @@ def car_observe(request, pk):
 
 @login_required
 def dashboard(request):
-
     cars = Car.objects.filter(owner=request.user)
     cars = CarSearchFilter(request.GET, queryset=cars)
     user_profile = UserProfile.objects.get(user=request.user)
@@ -57,4 +56,4 @@ def dashboard(request):
     return render(request, 'cars/user_dashboard.html', {'cars': cars,
                                                         'car_add_form': car_add_form,
                                                         'images_add_form': images_add_form,
-                                                        'user_profile':user_profile})
+                                                        'user_profile': user_profile})

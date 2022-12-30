@@ -6,23 +6,28 @@ from .models import Car, CarImage
 from .forms import CarAddForm, ImageForm
 from .filters import CarSearchFilter
 
+
 def cars_list(request):
     cars = Car.objects.all()
     cars = CarSearchFilter(request.GET, queryset=cars)
     return render(request, 'cars/cars_main.html', {'cars': cars, })
+
 
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car=car))
     return render(request, 'cars/car_detail.html', {'car': car,
                                                     'car_images': car_images})
-@login_required
+
+
+@login_required(login_url='/users/accounts/login')
 def car_delete(request, pk):
     car = get_object_or_404(Car, pk=pk)
     car.delete()
     return redirect('cars/user_dashboard.html')
 
-@login_required
+
+@login_required(login_url='/users/accounts/login')
 def car_observe(request, pk):
     car = get_object_or_404(Car, pk=pk)
     user_profile = UserProfile.objects.get(user=request.user.id)
@@ -30,7 +35,8 @@ def car_observe(request, pk):
     user_profile.save()
     return redirect('cars/user_dashboard.html')
 
-@login_required
+
+@login_required(login_url='/users/accounts/login')
 def dashboard(request):
     cars = Car.objects.filter(owner=request.user)
     cars = CarSearchFilter(request.GET, queryset=cars)

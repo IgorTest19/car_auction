@@ -22,6 +22,7 @@ def car_delete(request, pk):
     car.delete()
     return redirect('cars/user_dashboard.html')
 
+@login_required
 def car_observe(request, pk):
     car = get_object_or_404(Car, pk=pk)
     user_profile = UserProfile.objects.get(user=request.user.id)

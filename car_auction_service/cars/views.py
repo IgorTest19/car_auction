@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from users.models import UserProfile
 from .models import Car, CarImage
 from .forms import CarAddForm, ImageForm
@@ -42,7 +41,7 @@ def dashboard(request):
     cars = CarSearchFilter(request.GET, queryset=cars)
     user_profile = UserProfile.objects.get(user=request.user)
     car_add_form = CarAddForm()
-    images_add_gorm = ImageForm()
+    images_add_form = ImageForm()
     if request.method == 'POST':
         car_add_form = CarAddForm(request.POST)
         images_add_form = ImageForm(request.POST, request.FILES)
@@ -51,7 +50,8 @@ def dashboard(request):
             brand = car_add_form.cleaned_data['brand']
             model = car_add_form.cleaned_data['model']
             year = car_add_form.cleaned_data['year']
-            car_instance = Car.objects.create(brand=brand, model=model, year=year, owner=request.user)
+            car_instance = Car.objects.create(
+                brand=brand, model=model, year=year, owner=request.user)
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
         else:
@@ -60,7 +60,9 @@ def dashboard(request):
         car_add_form = CarAddForm()
         images_add_form = ImageForm()
 
-    return render(request, 'cars/user_dashboard.html', {'cars': cars,
-                                                        'car_add_form': car_add_form,
-                                                        'images_add_form': images_add_form,
-                                                        'user_profile': user_profile})
+    return render(request,
+                  'cars/user_dashboard.html',
+                  {'cars': cars,
+                   'car_add_form': car_add_form,
+                   'images_add_form': images_add_form,
+                   'user_profile': user_profile})

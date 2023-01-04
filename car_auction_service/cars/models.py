@@ -5,7 +5,6 @@ from django.utils import timezone
 
 
 class Car(models.Model):
-
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_owner') # modify relation to onetoone field
     users_observing = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='car_observer', blank=True)
     brand = models.CharField(max_length=250, blank=False, null=False)

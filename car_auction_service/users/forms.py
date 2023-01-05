@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import SetPasswordForm
 from django import forms
 
 
@@ -19,3 +20,9 @@ class UserRegistrationForm(forms.ModelForm):
 class UserLoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class SetPasswordForm(SetPasswordForm):
+    class Meta:
+        model = User
+        fields = ['new_password1', 'new_password2']

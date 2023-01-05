@@ -10,8 +10,6 @@ class CarAdmin(admin.ModelAdmin):
 
 @admin.register(CarImage)
 class CarImage(admin.ModelAdmin):
-
-
     list_display = ['image_id', 'car_id', 'car', 'image']
 
     def image_id(self, obj):

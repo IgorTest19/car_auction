@@ -47,5 +47,15 @@ def user_logout(request):
 @login_required
 def user_password_change(request):
     user = request.user
-    form = SetPasswordForm(user)
-    return render(request, 'users/user_password_change.html', {'form': form})
+    if request.method == "POST":
+        change_password_form = SetPasswordForm(user, request.POST)
+        if change_password_form.is_valid():
+            change_password_form.save()
+            return redirect('users:login2.html')
+        else:
+            return HttpResponse('Wrong data.')
+
+    change_password_form = SetPasswordForm(user)
+    return render(request, 'users/user_password_change.html', {'change_password_form': change_password_form})
+
+#  k4n7M3ty^7l$T

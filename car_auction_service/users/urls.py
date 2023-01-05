@@ -24,5 +24,7 @@ urlpatterns = [
     path("accounts/register", views.user_register, name='register'),
     # path("accounts/login", auth_views.LoginView.as_view(template_name='users/login.html')), # usunąć to i zrobić nie jako z django auth tylko samemu zaimplementować
     path("accounts/login", views.user_login, name='login'),
-    path("accounts/logout", views.user_logout, name='logout')
+    path("accounts/logout", views.user_logout, name='logout'),
+    path("accounts/password_change", views.user_password_change, name='password_change')
+
 ]

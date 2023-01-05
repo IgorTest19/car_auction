@@ -26,3 +26,8 @@ class UserLoginForm(forms.Form):
 #     class Meta:
 #         model = User
 #         fields = ('username', 'password')
+
+class SetPasswordForm(forms.Form):
+    class Meta:
+        model = User
+        fields = ['new_passwrod1', 'new_password2']

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserRegistrationForm, UserLoginForm
+from django.contrib.auth.decorators import login_required
+from .forms import UserRegistrationForm, UserLoginForm, SetPasswordForm
 from django.http import HttpResponse
 
 
@@ -59,3 +60,10 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('cars:cars_main')
+
+
+@login_required
+def user_password_change(request):
+    user = request.user
+    form = SetPasswordForm(user)
+    return render(request, 'users/user_password_change.html', {'form': form})

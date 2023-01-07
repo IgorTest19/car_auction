@@ -5,8 +5,6 @@ from .forms import UserRegistrationForm, UserLoginForm, SetPasswordForm
 from django.http import HttpResponse
 
 
-# Create your views here.
-
 def user_register(request):
     if request.method == "POST":
         user_form = UserRegistrationForm(request.POST)
@@ -39,12 +37,13 @@ def user_login(request):
         login_form = UserLoginForm()
     return render(request, 'users/login2.html', {'login_form': login_form})
 
+
 def user_logout(request):
     logout(request)
     return redirect('cars:cars_main')
 
 
-@login_required
+@login_required(login_url='/users/accounts/login')
 def user_password_change(request):
     user = request.user
     if request.method == "POST":
@@ -57,5 +56,3 @@ def user_password_change(request):
 
     change_password_form = SetPasswordForm(user)
     return render(request, 'users/user_password_change.html', {'change_password_form': change_password_form})
-
-#  k4n7M3ty^7l$T

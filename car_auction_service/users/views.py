@@ -44,7 +44,7 @@ def user_logout(request):
     return redirect('cars:cars_main')
 
 
-@login_required
+@login_required(login_url='/users/accounts/login')
 def user_password_change(request):
     user = request.user
     if request.method == "POST":

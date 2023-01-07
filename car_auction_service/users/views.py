@@ -57,5 +57,3 @@ def user_password_change(request):
 
     change_password_form = SetPasswordForm(user)
     return render(request, 'users/user_password_change.html', {'change_password_form': change_password_form})
-
-#  k4n7M3ty^7l$T

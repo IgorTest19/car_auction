@@ -5,8 +5,6 @@ from .forms import UserRegistrationForm, UserLoginForm, SetPasswordForm
 from django.http import HttpResponse
 
 
-# Create your views here.
-
 def user_register(request):
     if request.method == "POST":
         user_form = UserRegistrationForm(request.POST)
@@ -38,6 +36,7 @@ def user_login(request):
     else:
         login_form = UserLoginForm()
     return render(request, 'users/login2.html', {'login_form': login_form})
+
 
 def user_logout(request):
     logout(request)

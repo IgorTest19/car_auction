@@ -9,6 +9,16 @@
 </head>
 <body class="bg-teal-600">
 	{% include 'navbar.html' %}
+	{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li class="{{ message.tags }}">
+				{{ message|safe }}
+					<a href="#" class="close">x</a>
+			</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
 	<div id="content">
 		{% block content %}
 		{% endblock %}

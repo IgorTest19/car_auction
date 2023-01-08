@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from users.models import UserProfile
 from .models import Car, CarImage
 from .forms import CarAddForm, ImageForm
@@ -54,8 +55,10 @@ def dashboard(request):
                 brand=brand, model=model, year=year, owner=request.user)
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
+            messages.success(request, "Adding car was successful")
         else:
             print(car_add_form.errors)
+            messages.error(request, "Failed to add a car")
     else:
         car_add_form = CarAddForm()
         images_add_form = ImageForm()

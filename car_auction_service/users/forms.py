@@ -17,6 +17,7 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Passwords are not the same!')
         return cd['password2']
 
+
 class UserLoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)

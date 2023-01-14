@@ -23,5 +23,6 @@ urlpatterns = [
     path("accounts/register", views.user_register, name='register'),
     path("accounts/login", views.user_login, name='login'),
     path("accounts/logout", views.user_logout, name='logout'),
-    path("accounts/password_change", views.user_password_change, name='password_change')
+    path("accounts/password_change", views.user_password_change, name='password_change'),
+    path("users/user_settings", views.user_settings, name='user_settings')
 ]

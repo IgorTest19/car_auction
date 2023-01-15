@@ -4,5 +4,7 @@
 
 {% block content %}
   <p>Settings template.</p>
+  <p>Password management:</p>
+  <a href = "{% url 'users:password_change' %}" class="text-white hover:text-gray-400">Change password</a>
 {% endblock %}
 

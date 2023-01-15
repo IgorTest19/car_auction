@@ -55,3 +55,8 @@ def user_password_change(request):
             return HttpResponse('Wrong data.')
     change_password_form = SetPasswordForm(user)
     return render(request, 'users/user_password_change.html', {'change_password_form': change_password_form})
+
+
+def user_settings(request):
+    content = None
+    return render(request, 'users/user_settings.html', {'content': content})

@@ -59,5 +59,4 @@ def user_password_change(request):
 
 def user_settings(request):
     content = None
-    # return redirect('users/user_settings.html')
     return render(request, 'users/user_settings.html', {'content': content})

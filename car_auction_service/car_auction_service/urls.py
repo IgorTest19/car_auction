@@ -23,7 +23,7 @@ urlpatterns = [
     path('users/', include('users.urls', namespace='users')), # users app
     path('', include('cars.urls', namespace='cars')), # cars app
     path('__debug__/', include('debug_toolbar.urls')), # django debug panel
-    path('maps/', include('maps.urls', namespace='cars')) # maps app
+    path('maps/', include('maps.urls', namespace='maps')) # maps app
 ]
 
 if settings.DEBUG:

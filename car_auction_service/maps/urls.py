@@ -19,5 +19,5 @@ from . import views
 app_name = 'cars'
 
 urlpatterns = [
-    path('maps/', views.maps_main, name='map_main')
+    path('maps/', views.maps_main, name='maps_main')
 ]

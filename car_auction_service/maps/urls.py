@@ -16,7 +16,7 @@ Including another URLconf
 from django.urls import path
 from . import views
 
-app_name = 'cars'
+app_name = 'maps'
 
 urlpatterns = [
     path('maps/', views.maps_main, name='maps_main')

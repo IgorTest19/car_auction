@@ -1,13 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %} User password change {% endblock %}
+{% block title %} Map {% endblock %}
 
 {% block content %}
-    <h2>Password change form</h2>
-    <form method="POST">
-      {% csrf_token %}
-      {{ change_password_form.as_p }}
-      <button type="submit">Change password</button>
-    </form>
+    <h2>Map template/h2>
+    <p>{{map_main}}</p>
 {% endblock %}
 

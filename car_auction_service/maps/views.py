@@ -6,4 +6,4 @@ def maps_main(request):
     # Create a map object
     cars_map = folium.Map()
     cars_map = cars_map._repr_html_()
-    return render(request, 'map_main.html', {'cars_map': cars_map})
+    return render(request, 'maps/map_main.html', {'cars_map': cars_map})

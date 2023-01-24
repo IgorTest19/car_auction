@@ -5,7 +5,7 @@ from users.models import UserProfile
 from .models import Car, CarImage
 from .forms import CarAddForm, ImageForm
 from .filters import CarSearchFilter
-
+import folium
 
 def cars_list(request):
     cars = Car.objects.all()
@@ -16,8 +16,11 @@ def cars_list(request):
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car=car))
+    cars_map = folium.Map()
+    cars_map = cars_map._repr_html_()
     return render(request, 'cars/car_detail.html', {'car': car,
-                                                    'car_images': car_images})
+                                                    'car_images': car_images,
+                                                    'cars_map': cars_map})
 
 
 @login_required(login_url='/users/accounts/login')

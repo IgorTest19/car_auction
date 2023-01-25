@@ -19,6 +19,8 @@ def car_detail(request, pk):
     # adding map component
     # Creating Map Object
     cars_map = folium.Map(location=[50, 20], zoom_start=6)
+    # Adding map marker
+    folium.Marker([52, 20]).add_to(cars_map)
     # Getting HTML representation of Map Object
     cars_map = cars_map._repr_html_()
     return render(request, 'cars/car_detail.html', {'car': car,

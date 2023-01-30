@@ -1,6 +1,7 @@
-from django.forms.widgets import TextInput
-from .models import Car
 import django_filters
+from django.forms.widgets import TextInput
+
+from .models import Car
 
 
 class CarSearchFilter(django_filters.FilterSet):

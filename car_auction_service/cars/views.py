@@ -6,6 +6,7 @@ from .models import Car, CarImage
 from .forms import CarAddForm, ImageForm
 from .filters import CarSearchFilter
 import folium
+import geocoder
 
 def cars_list(request):
     cars = Car.objects.all()
@@ -16,7 +17,10 @@ def cars_list(request):
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car=car))
-    # adding map component
+    # Adding map component
+    # Getting location
+    location = geocoder.osm('Mrągowo,Poland')
+    print(f'-------- {location.latlng}')
     # Creating Map Object
     cars_map = folium.Map(location=[50, 20], zoom_start=6)
     # Adding map marker

@@ -1,12 +1,14 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from users.models import UserProfile
-from .models import Car, CarImage
-from .forms import CarAddForm, ImageForm
-from .filters import CarSearchFilter
 import folium
 import geocoder
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+
+from users.models import UserProfile
+from .filters import CarSearchFilter
+from .forms import CarAddForm, ImageForm
+from .models import Car, CarImage
+
 
 def cars_list(request):
     cars = Car.objects.all()

@@ -1,6 +1,7 @@
-from django.db import models
-from cars.models import Car
 from django.contrib.auth.models import User
+from django.db import models
+
+from cars.models import Car
 
 
 class UserProfile(models.Model):

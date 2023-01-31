@@ -1,5 +1,5 @@
-from django.shortcuts import render
 import folium
+from django.shortcuts import render
 
 """
 STANDALONE MAPS

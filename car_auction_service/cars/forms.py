@@ -6,7 +6,7 @@ from .models import Car, CarImage
 class CarAddForm(forms.ModelForm):
     class Meta:
         model = Car
-        fields = ['brand', 'model', 'year']
+        fields = ['brand', 'model', 'year','location']
 
 
 class ImageForm(forms.ModelForm):

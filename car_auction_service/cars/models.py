@@ -13,6 +13,7 @@ class Car(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
     valid = models.BooleanField(default=True)
+    location = models.CharField(max_length=250, blank=True, null=True)
 
 
     class Meta:

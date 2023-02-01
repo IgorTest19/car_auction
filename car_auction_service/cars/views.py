@@ -21,12 +21,12 @@ def car_detail(request, pk):
     car_images = reversed(get_list_or_404(CarImage, car=car))
     # Adding map component
     # Getting location
-    location = geocoder.osm('Mrągowo,Poland')
+    location = geocoder.osm(f'{car.location},Poland')
     print(f'-------- {location.latlng}')
     # Creating Map Object
-    cars_map = folium.Map(location=[50, 20], zoom_start=6)
+    cars_map = folium.Map(location=[52, 20], zoom_start=6)
     # Adding map marker
-    folium.Marker([52, 20], tooltip="Expand", popup=car).add_to(cars_map)
+    folium.Marker(location.latlng, tooltip="Expand", popup=car).add_to(cars_map)
     # Getting HTML representation of Map Object
     cars_map = cars_map._repr_html_()
     return render(request, 'cars/car_detail.html', {'car': car,
@@ -50,6 +50,7 @@ def car_observe(request, pk):
     return redirect('cars/user_dashboard.html')
 
 
+# rozbić dashboard
 @login_required(login_url='/users/accounts/login')
 def dashboard(request):
     cars = Car.objects.filter(owner=request.user)
@@ -65,8 +66,9 @@ def dashboard(request):
             brand = car_add_form.cleaned_data['brand']
             model = car_add_form.cleaned_data['model']
             year = car_add_form.cleaned_data['year']
+            location = car_add_form.cleaned_data['location']
             car_instance = Car.objects.create(
-                brand=brand, model=model, year=year, owner=request.user)
+                brand=brand, model=model, year=year, location=location, owner=request.user)
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
             messages.success(request, "Adding car was successful")

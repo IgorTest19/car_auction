@@ -21,12 +21,13 @@ def car_detail(request, pk):
     car_images = reversed(get_list_or_404(CarImage, car=car))
     # Adding map component
     # Getting location
-    location = geocoder.osm(f'{car.location},Poland')
-    print(f'-------- {location.latlng}')
+    get_car_location = car.location
+    location_values = geocoder.osm(f'{get_car_location},Poland')
+    print(f'-------- {location_values.latlng}')
     # Creating Map Object
     cars_map = folium.Map(location=[52, 20], zoom_start=6)
     # Adding map marker
-    folium.Marker(location.latlng, tooltip="Expand", popup=car).add_to(cars_map)
+    folium.Marker(location_values.latlng, tooltip=get_car_location, popup=car).add_to(cars_map)
     # Getting HTML representation of Map Object
     cars_map = cars_map._repr_html_()
     return render(request, 'cars/car_detail.html', {'car': car,

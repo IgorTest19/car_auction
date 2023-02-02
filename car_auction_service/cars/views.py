@@ -20,7 +20,7 @@ def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car=car))
     # Adding map component
-    # Getting location
+    # Getting location from car model
     get_car_location = car.location
     location_values = geocoder.osm(f'{get_car_location},Poland')
     print(f'-------- {location_values.latlng}')

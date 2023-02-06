@@ -73,6 +73,7 @@ def dashboard(request):
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
             messages.success(request, "Adding car was successful")
+            car_add_form = CarAddForm()
         else:
             print(car_add_form.errors)
             messages.error(request, "Failed to add a car")

@@ -6,6 +6,6 @@ class UsersConfig(AppConfig):
     name = "users"
 
     def ready(self):
-        pass
+        import users.signals
 
 #checkout signals tutorial from pyplane

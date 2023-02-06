@@ -13,3 +13,7 @@ class UserProfile(models.Model):
 
     def cars_observed_by_user(self):
         return ','.join([str(user) for user in self.cars_observed.all()])
+
+    def cars_observed_by_user2(self):
+        list1 = [user for user in self.cars_observed.all()]
+        return list1

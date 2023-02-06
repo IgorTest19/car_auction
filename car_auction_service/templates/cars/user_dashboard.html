@@ -8,7 +8,12 @@ My auction service
 
 	{% include 'cars/car_filter_form.html' %}
 	<p>user_profile: {{ user_profile.id }} </p>
-	<p>user_profile.cars_observed_by_user:{{ user_profile.cars_observed_by_user }}</p>
+	<p>user_profile.cars_observed_by_user:{{ user_profile.cars_observed_by_user}}</p>
+	{% for car in user_profile.cars_observed_by_user2 %}
+		<a href = '{% url "cars:car_detail" pk=car.pk %}'><img src = "{{ car.get_first_image }}" width="250px" height="250px" alt="img"></a>
+	{% endfor %}
+	<p>user_profile.cars_observed</p>
+	{% include 'cars/cars_observed.html' %}
 	{% include 'cars/car_add.html' %}
 	<h1>My Listed cars</h1>
 

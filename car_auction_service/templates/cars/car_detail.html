@@ -6,7 +6,9 @@
 
 {% block content %}
 	<p>To jest samochód {{ car }}</p>
-	<p>Observers: {{ car.observers }} </p>
+	{% if car.owner == request.user %}
+		<p>Observers: {{ car.observers }} </p>
+	{% endif %}
 	<p>Data opublikowania: {{ car.publish }}</p>
 	<a href="{% url 'cars:car_observe' pk=car.pk %}"><button class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add car do observed</button></a>
 

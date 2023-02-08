@@ -48,6 +48,10 @@ def car_observe(request, pk):
     user_profile = UserProfile.objects.get(user=request.user.id)
     user_profile.cars_observed.add(car)
     user_profile.save()
+    car.users_observing.add(request.user.id)
+    car.save()
+    print("-----------car.users_observing")
+    print(car.users_observing)
     return redirect('cars/user_dashboard.html')
 
 

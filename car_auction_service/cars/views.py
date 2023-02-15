@@ -11,9 +11,23 @@ from .models import Car, CarImage
 
 
 def cars_list(request):
+    """
+    Display list of all cars in form of filter to make available operation of filtering.
+
+    **Context**
+
+    ''cars''
+        An instance of FilterSet :django_filters: 'cars.CarSearchFilter',
+        containing instances of :model: 'cars.Car'.
+
+    **Template**
+
+    :template: 'cars/cars_main.html'
+    """
     cars = Car.objects.all()
     cars = CarSearchFilter(request.GET, queryset=cars)
-    return render(request, 'cars/cars_main.html', {'cars': cars, })
+    context = {'cars': cars}
+    return render(request, 'cars/cars_main.html', context)
 
 
 def car_detail(request, pk):

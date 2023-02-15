@@ -4,6 +4,10 @@ from django.utils import timezone
 
 
 class Car(models.Model):
+    """
+    Stores a single car. Related to:
+    :model: 'auth.User'
+    """
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_owner') # modify relation to onetoone field
     users_observing = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='car_observer', blank=True)
     brand = models.CharField(max_length=250, blank=False, null=False)
@@ -17,11 +21,13 @@ class Car(models.Model):
 
 
     class Meta:
+        """Metadata class."""
         verbose_name = 'car'
         verbose_name_plural = 'cars'
         ordering = ('-publish',)
 
     def __str__(self):
+        """String representation of the car class object."""
         return f'{self.brand} {self.model}'
 
     def get_image(self):
@@ -66,7 +72,8 @@ class Car(models.Model):
 
 class CarImage(models.Model):
     """
-    Image class for Car class.
+    Image class for Car class. Related to:
+    :model: 'cars.Car'
     """
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', blank=True, null=True)

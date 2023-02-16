@@ -31,6 +31,23 @@ def cars_list(request):
 
 
 def car_detail(request, pk):
+    """
+    Display an individual :model: 'cars.Car'.
+
+    **Context**
+
+    ''cars''
+        An instance of :model: 'cars.Car'.
+    ''car_images''
+        A list of instaces of :model: 'cars.CarImage'.
+    ''cars_maps''
+        A string representation of instance of :model: 'folium.Map'
+
+
+    **Template**
+
+    :template: 'cars/car_detail.html'
+    """
     car = get_object_or_404(Car, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car=car))
     # Adding map component
@@ -44,9 +61,8 @@ def car_detail(request, pk):
     folium.Marker(location_values.latlng, tooltip=get_car_location, popup=car).add_to(cars_map)
     # Getting HTML representation of Map Object
     cars_map = cars_map._repr_html_()
-    return render(request, 'cars/car_detail.html', {'car': car,
-                                                    'car_images': car_images,
-                                                    'cars_map': cars_map})
+    context = {'car': car, 'car_images': car_images, 'cars_map': cars_map}
+    return render(request, 'cars/car_detail.html', context)
 
 
 @login_required(login_url='/users/accounts/login')

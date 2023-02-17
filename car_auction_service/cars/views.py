@@ -12,7 +12,7 @@ from .models import Car, CarImage
 
 def cars_list(request):
     """
-    Display list of all cars in form of filter to make available operation of filtering.
+    Display a list of all cars in form of filter to make available operation of filtering.
 
     **Context**
 
@@ -67,6 +67,13 @@ def car_detail(request, pk):
 
 @login_required(login_url='/users/accounts/login')
 def car_delete(request, pk):
+    """
+    Delete a single instance of :model: 'cars.Car'.
+
+    **Template**
+
+    :template: 'cars/user_dashboard.html'
+    """
     car = get_object_or_404(Car, pk=pk)
     car.delete()
     return redirect('cars/user_dashboard.html')
@@ -74,6 +81,14 @@ def car_delete(request, pk):
 
 @login_required(login_url='/users/accounts/login')
 def car_observe(request, pk):
+    """
+    Add single instance of :model: 'cars.Car' to observed filed
+    of :model: 'users.UserProfile'
+
+    **Template**
+
+    :template: 'cars/user_dashboard.html'
+    """
     car = get_object_or_404(Car, pk=pk)
     user_profile = UserProfile.objects.get(user=request.user.id)
     user_profile.cars_observed.add(car)
@@ -88,11 +103,31 @@ def car_observe(request, pk):
 # rozbić dashboard
 @login_required(login_url='/users/accounts/login')
 def dashboard(request):
+    """
+    Display user-specific view of functionalities.
+    Display a list of all cars added by user in the form of filter to make available operation of filtering.
+    Display a list of cars that are observed by the user.
+    Adding new cars to the database.
+
+    **Context**
+
+    ''cars''
+        An instance of :model: 'cars.Car'.
+    ''car_add_form''
+        An instance of :form: 'cars.CarAddForm'
+    ''images_add_form''
+        An instance of :filter: '.cars.ImageForm'
+    ''user_profile''
+        An instance of :model: 'users.UserProfile'
+
+
+    **Template**
+
+    :template: 'cars/user_dashboard.html'
+    """
     cars = Car.objects.filter(owner=request.user)
     cars = CarSearchFilter(request.GET, queryset=cars)
     user_profile = UserProfile.objects.get(user=request.user)
-    car_add_form = CarAddForm()
-    images_add_form = ImageForm()
     if request.method == 'POST':
         car_add_form = CarAddForm(request.POST)
         images_add_form = ImageForm(request.POST, request.FILES)
@@ -115,9 +150,8 @@ def dashboard(request):
         car_add_form = CarAddForm()
         images_add_form = ImageForm()
 
-    return render(request,
-                  'cars/user_dashboard.html',
-                  {'cars': cars,
+    context = {'cars': cars,
                    'car_add_form': car_add_form,
                    'images_add_form': images_add_form,
-                   'user_profile': user_profile})
+                   'user_profile': user_profile}
+    return render(request, 'cars/user_dashboard.html', context)

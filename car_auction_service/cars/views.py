@@ -95,8 +95,6 @@ def car_observe(request, pk):
     user_profile.save()
     car.users_observing.add(request.user.id)
     car.save()
-    print("-----------car.users_observing")
-    print(car.users_observing)
     return redirect('cars/user_dashboard.html')
 
 

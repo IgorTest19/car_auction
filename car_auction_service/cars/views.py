@@ -114,7 +114,7 @@ def dashboard(request):
     ''car_add_form''
         An instance of :form: 'cars.CarAddForm'
     ''images_add_form''
-        An instance of :filter: '.cars.ImageForm'
+        An instance of :filter: 'cars.ImageForm'
     ''user_profile''
         An instance of :model: 'users.UserProfile'
 

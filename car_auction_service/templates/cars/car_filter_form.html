@@ -1,9 +1,11 @@
+{% load crispy_forms_tags %}
+
 <div class="car_filter_form">
 	<h2>Search car</h2>
 	<form method="GET">
-		<p> Brand contains 22 {{ cars.form.brand }}</p>
-		<p> Model contains  22 {{ cars.form.model }}</p>
-		<p> City contains 22 {{ cars.form.location }}</p>
+		<p> Brand contains 22 {{ cars.form.brand|as_crispy_field }}</p>
+		<p> Model contains  22 {{ cars.form.model|as_crispy_field  }}</p>
+		<p> City contains 22 {{ cars.form.location|as_crispy_field  }}</p>
 		{% csrf_token %}
 		<button type="submit">Search</button>
 	</form>

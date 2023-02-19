@@ -61,7 +61,11 @@ def car_detail(request, pk):
     folium.Marker(location_values.latlng, tooltip=get_car_location, popup=car).add_to(cars_map)
     # Getting HTML representation of Map Object
     cars_map = cars_map._repr_html_()
-    context = {'car': car, 'car_images': car_images, 'cars_map': cars_map}
+    context = {
+        'car': car,
+        'car_images': car_images,
+        'cars_map': cars_map
+    }
     return render(request, 'cars/car_detail.html', context)
 
 
@@ -149,7 +153,7 @@ def dashboard(request):
         images_add_form = ImageForm()
 
     context = {'cars': cars,
-                   'car_add_form': car_add_form,
-                   'images_add_form': images_add_form,
-                   'user_profile': user_profile}
+               'car_add_form': car_add_form,
+               'images_add_form': images_add_form,
+               'user_profile': user_profile}
     return render(request, 'cars/user_dashboard.html', context)

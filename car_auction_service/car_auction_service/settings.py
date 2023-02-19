@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "maps.apps.MapsConfig",
     "debug_toolbar",
     "crispy_forms",
+    "crispy_bootstrap5",
 
 ]
 
@@ -145,3 +146,6 @@ LOGOUT_REDIRECT_URL = "/cars"
 INTERNAL_IPS = [
     "127.0.0.1"
 ]
+
+# Crispy forms tempalte pack
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

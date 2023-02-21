@@ -49,6 +49,7 @@ def user_login(request):
 
     :template: 'users/login2.html'
     """
+    #TODO ADD messages and crispy forms
     if request.method == "POST":
         login_form = UserLoginForm(request.POST)
         if login_form.is_valid():
@@ -57,11 +58,14 @@ def user_login(request):
                                 password=cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                return HttpResponse('Authentication was successful.')
+                # return HttpResponse('Authentication was successful.')
+                return redirect('cars:cars_main')
             else:
-                return HttpResponse('Logging failed.')
+                # return HttpResponse('Logging failed.')
+                return redirect('users:login')
         else:
-            return HttpResponse('Wrong logging data.')
+            # return HttpResponse('Wrong logging data.')
+            return redirect('users:login')
     else:
         login_form = UserLoginForm()
     context = {'login_form': login_form}

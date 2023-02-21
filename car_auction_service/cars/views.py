@@ -39,7 +39,7 @@ def car_detail(request, pk):
     ''cars''
         An instance of :model: 'cars.Car'.
     ''car_images''
-        A list of instaces of :model: 'cars.CarImage'.
+        A list of instances of :model: 'cars.CarImage'.
     ''cars_maps''
         A string representation of instance of :model: 'folium.Map'
 

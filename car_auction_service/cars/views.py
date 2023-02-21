@@ -139,8 +139,10 @@ def dashboard(request):
             model = car_add_form.cleaned_data['model']
             year = car_add_form.cleaned_data['year']
             location = car_add_form.cleaned_data['location']
+            # creating car objects based on provided data
             car_instance = Car.objects.create(
                 brand=brand, model=model, year=year, location=location, owner=request.user)
+            # creating car's images as related to it objects
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
             messages.success(request, "Adding car was successful")

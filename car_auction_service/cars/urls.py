@@ -20,7 +20,7 @@ from . import views
 app_name = 'cars'
 
 urlpatterns = [
-    path('cars', views.cars_list, name='cars_main'),
+    path('', views.cars_list, name='cars_main'),
     path('car/<int:pk>', views.car_detail, name='car_detail'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('car/<int:pk>/delete', views.car_delete, name='car_delete'),

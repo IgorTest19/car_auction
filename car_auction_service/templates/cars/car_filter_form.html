@@ -4,16 +4,15 @@
 	<h2>Search car</h2>
 	<form method="GET">
 		{% csrf_token %}
-		<divs class="row">
+		<div class="row">
 			<div class="form-group col-md-5 mb-2">
 				<p> Brand contains 22 {{ cars.form.brand|as_crispy_field }}</p>
 			</div>
 			<div class="form-group col-md-5 mb-0">
 				<p> Model contains  22 {{ cars.form.model|as_crispy_field  }}</p>
 			</div>
-		</divs>
+		</div>
 		<p> City contains 22 {{ cars.form.location|as_crispy_field  }}</p>
-		
 		<button type="submit">Search</button>
 	</form>
 </div>

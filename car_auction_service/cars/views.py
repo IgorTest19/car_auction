@@ -80,7 +80,7 @@ def car_delete(request, pk):
     """
     car = get_object_or_404(Car, pk=pk)
     car.delete()
-    return redirect('cars:user_dashboard')
+    return redirect('/')
 
 
 @login_required(login_url='/users/accounts/login')
@@ -103,7 +103,7 @@ def car_observe(request, pk):
     user_profile.save()
     car.users_observing.add(request.user.id)
     car.save()
-    return redirect('cars:user_dashboard')
+    return redirect('/')
 
 
 # rozbić dashboard
@@ -162,4 +162,4 @@ def dashboard(request):
                'car_add_form': car_add_form,
                'images_add_form': images_add_form,
                'user_profile': user_profile}
-    return render(request, 'cars:user_dashboard', context)
+    return render(request, '/', context)

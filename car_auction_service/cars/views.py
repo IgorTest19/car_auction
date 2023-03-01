@@ -80,7 +80,7 @@ def car_delete(request, pk):
     """
     car = get_object_or_404(Car, pk=pk)
     car.delete()
-    return redirect('cars/user_dashboard.html')
+    return redirect('cars:user_dashboard')
 
 
 @login_required(login_url='/users/accounts/login')
@@ -94,12 +94,16 @@ def car_observe(request, pk):
     :template: 'cars/user_dashboard.html'
     """
     car = get_object_or_404(Car, pk=pk)
+    print('-----------car')
+    print(car)
     user_profile = UserProfile.objects.get(user=request.user.id)
+    print('----------user_profile')
+    print(user_profile)
     user_profile.cars_observed.add(car)
     user_profile.save()
     car.users_observing.add(request.user.id)
     car.save()
-    return redirect('cars/user_dashboard.html')
+    return redirect('cars:user_dashboard')
 
 
 # rozbić dashboard
@@ -158,4 +162,4 @@ def dashboard(request):
                'car_add_form': car_add_form,
                'images_add_form': images_add_form,
                'user_profile': user_profile}
-    return render(request, 'cars/user_dashboard.html', context)
+    return render(request, 'cars:user_dashboard', context)

@@ -54,7 +54,7 @@ def car_detail(request, pk):
     # Adding map component
     # Getting location from car model
     get_car_location = car.location
-    location_values = geocoder.osm(f'{get_car_location},Poland')
+    location_values = geocoder.osm(f'{get_car_location}, Poland')
     print(f'-------- {location_values.latlng}')
     # Creating Map Object
     cars_map = folium.Map(location=[52, 20], zoom_start=6)

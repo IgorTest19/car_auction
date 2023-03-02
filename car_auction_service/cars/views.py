@@ -2,6 +2,7 @@ import folium
 import geocoder
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 
 from users.models import UserProfile
@@ -76,7 +77,7 @@ def car_delete(request, pk):
 
     **Template**
 
-    :template: 'cars/user_dashboard.html'
+    :template: 'cars/car_detail.html'
     """
     car = get_object_or_404(Car, pk=pk)
     car.delete()
@@ -103,7 +104,8 @@ def car_observe(request, pk):
     user_profile.save()
     car.users_observing.add(request.user.id)
     car.save()
-    return redirect('/')
+    # return redirect('/')
+    return HttpResponse(status=204)
 
 
 # rozbić dashboard
@@ -162,4 +164,4 @@ def dashboard(request):
                'car_add_form': car_add_form,
                'images_add_form': images_add_form,
                'user_profile': user_profile}
-    return render(request, '/', context)
+    return render(request, 'cars/user_dashboard.html', context)

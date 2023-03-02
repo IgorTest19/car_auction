@@ -2,8 +2,9 @@ import folium
 import geocoder
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from django.urls import reverse, reverse_lazy
 
 from users.models import UserProfile
 from .filters import CarSearchFilter
@@ -95,18 +96,33 @@ def car_observe(request, pk):
     :template: 'cars/user_dashboard.html'
     """
     car = get_object_or_404(Car, pk=pk)
-    print('-----------car')
     print(car)
     user_profile = UserProfile.objects.get(user=request.user.id)
-    print('----------user_profile')
-    print(user_profile)
-    user_profile.cars_observed.add(car)
-    user_profile.save()
-    car.users_observing.add(request.user.id)
-    car.save()
-    # return redirect('/')
-    return HttpResponse(status=204)
+    cars_ob = user_profile.cars_observed.all()
+    if car not in cars_ob:
+        user_profile.cars_observed.add(car)
+        user_profile.save()
+        car.users_observing.add(request.user.id)
+        car.save()
+    else:
+        user_profile.cars_observed.remove(car)
+        user_profile.save()
+        car.users_observing.remove(request.user.id)
+        car.save()
 
+    # context = {
+    #     'car': car,
+    #     'car_images': car_images,
+    #     'cars_map': cars_map
+    # }
+    # return redirect(request.path)
+    # return HttpResponseRedirect(request.path_info)
+    # return redirect(reverse_lazy('cars:car_detail'))
+    # return render(request, 'cars/car_detail.html', context)
+    # return redirect('cars/car_detail.html')
+    # return redirect('/')
+    # return HttpResponse(status=204)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 # rozbić dashboard
 @login_required(login_url='/users/accounts/login')

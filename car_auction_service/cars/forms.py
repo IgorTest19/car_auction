@@ -8,7 +8,7 @@ class CarAddForm(forms.ModelForm):
     class Meta:
         """Metadata class."""
         model = Car
-        fields = ['brand', 'model', 'year','location']
+        fields = ['brand', 'model', 'year', 'location', 'price', 'fuel_type', 'engine_capacity']
 
 
 class ImageForm(forms.ModelForm):

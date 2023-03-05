@@ -9,8 +9,9 @@ class CarSearchFilter(django_filters.FilterSet):
     brand = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'Volvo'}))
     model = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'V60'}))
     location = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'Wrocław'}))
+    price = django_filters.NumericRangeFilter(widget=TextInput(attrs={'placeholder': '50 000'}))
 
     class Meta:
         """Metadata class."""
         model = Car
-        fields = ['brand', 'model','location']
+        fields = ['brand', 'model','location', 'price']

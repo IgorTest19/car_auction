@@ -109,19 +109,6 @@ def car_observe(request, pk):
         user_profile.save()
         car.users_observing.remove(request.user.id)
         car.save()
-
-    # context = {
-    #     'car': car,
-    #     'car_images': car_images,
-    #     'cars_map': cars_map
-    # }
-    # return redirect(request.path)
-    # return HttpResponseRedirect(request.path_info)
-    # return redirect(reverse_lazy('cars:car_detail'))
-    # return render(request, 'cars/car_detail.html', context)
-    # return redirect('cars/car_detail.html')
-    # return redirect('/')
-    # return HttpResponse(status=204)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 # rozbić dashboard
@@ -161,9 +148,12 @@ def dashboard(request):
             model = car_add_form.cleaned_data['model']
             year = car_add_form.cleaned_data['year']
             location = car_add_form.cleaned_data['location']
+            price = car_add_form.cleaned_data['price']
+            fuel_type = car_add_form.cleaned_data['fuel_type']
+            engine_capacity = car_add_form.cleaned_data['engine_capacity']
             # creating car objects based on provided data
             car_instance = Car.objects.create(
-                brand=brand, model=model, year=year, location=location, owner=request.user)
+                brand=brand, model=model, year=year, location=location, price=price, fuel_type=fuel_type, engine_capacity=engine_capacity, owner=request.user)
             # creating car's images as related to it objects
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
@@ -179,5 +169,6 @@ def dashboard(request):
     context = {'cars': cars,
                'car_add_form': car_add_form,
                'images_add_form': images_add_form,
-               'user_profile': user_profile}
+               'user_profile': user_profile
+               }
     return render(request, 'cars/user_dashboard.html', context)

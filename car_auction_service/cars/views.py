@@ -58,7 +58,7 @@ def car_detail(request, pk):
     location_values = geocoder.osm(f'{get_car_location}, Poland')
     print(f'-------- {location_values.latlng}')
     # Creating Map Object
-    cars_map = folium.Map(location=[52, 20], zoom_start=6)
+    cars_map = folium.Map(location=[52, 20], zoom_start=8)
     # Adding map marker
     folium.Marker(location_values.latlng, tooltip=get_car_location, popup=car).add_to(cars_map)
     # Getting HTML representation of Map Object

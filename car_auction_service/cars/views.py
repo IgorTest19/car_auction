@@ -144,6 +144,7 @@ def dashboard(request):
         images_add_form = ImageForm(request.POST, request.FILES)
         images = request.FILES.getlist('image')
         if car_add_form.is_valid() and images_add_form.is_valid():
+            # getting all needed data values from the form
             brand = car_add_form.cleaned_data['brand']
             model = car_add_form.cleaned_data['model']
             year = car_add_form.cleaned_data['year']
@@ -153,12 +154,15 @@ def dashboard(request):
             engine_capacity = car_add_form.cleaned_data['engine_capacity']
             # creating car objects based on provided data
             car_instance = Car.objects.create(
-                brand=brand, model=model, year=year, location=location, price=price, fuel_type=fuel_type, engine_capacity=engine_capacity, owner=request.user)
+                brand=brand, model=model, year=year, location=location, price=price, fuel_type=fuel_type,
+                engine_capacity=engine_capacity, owner=request.user)
             # creating car's images as related to it objects
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
             messages.success(request, "Adding car was successful")
-            car_add_form = CarAddForm()
+            # car_add_form = CarAddForm()
+            # images_add_form = ImageForm()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             print(car_add_form.errors)
             messages.error(request, "Failed to add a car")

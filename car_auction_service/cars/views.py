@@ -82,6 +82,7 @@ def car_delete(request, pk):
     """
     car = get_object_or_404(Car, pk=pk)
     car.delete()
+    messages.add_message(request, messages.INFO, 'Car was deleted')
     return redirect('/')
 
 
@@ -104,11 +105,13 @@ def car_observe(request, pk):
         user_profile.save()
         car.users_observing.add(request.user.id)
         car.save()
+        messages.add_message(request, messages.INFO, 'Car added to observed')
     else:
         user_profile.cars_observed.remove(car)
         user_profile.save()
         car.users_observing.remove(request.user.id)
         car.save()
+        messages.add_message(request, messages.INFO, 'Car removed from observed')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 # rozbić dashboard
@@ -159,13 +162,13 @@ def dashboard(request):
             # creating car's images as related to it objects
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
-            messages.success(request, "Adding car was successful")
+            messages.add_message(request, messages.INFO, 'Car added')
             # car_add_form = CarAddForm()
             # images_add_form = ImageForm()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             print(car_add_form.errors)
-            messages.error(request, "Failed to add a car")
+            messages.add_message(request, messages.INFO, "Failed to add a car")
     else:
         car_add_form = CarAddForm()
         images_add_form = ImageForm()

@@ -10,31 +10,7 @@
 </head>
 <body class="bg-teal-600 mt-10 mb-20">
 	{% include 'navbar.html' %}
-	{% if messages %}
-		{% for message in messages %}
-		<div id="defaultModal" aria-hidden="true" class="relative z-0" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-		  <div class="fixed inset-0 z-2 overflow-x-auto">
-		    <div class="flex items-end justify-center p-4 text-center sm:items-center sm:p-0">
-		      <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-		        <div class="bg-white px-5 pt-5 pb-4 sm:p-6 sm:pb-4">
-		          <div class="sm:flex sm:items-start">
-		            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-		              <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">{{ message|safe }}</h3>
-		            </div>
-		          </div>
-		        </div>
-		        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-		            <a href="/" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">x</a>
-			        <button data-modal-hide="defaultModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
-		        </div>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-			<div class="inline-flex items-baseline {{ message.tags }}">
-			</div>
-		{% endfor %}
-	{% endif %}
+	{% include 'messages.html' %}
 	<div id="content">
 		{% block content %}
 		{% endblock %}

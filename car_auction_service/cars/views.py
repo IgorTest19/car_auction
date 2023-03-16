@@ -177,7 +177,7 @@ def dashboard(request):
 
 
 @login_required(login_url='/users/accounts/login')
-def edit_car(request, pk):
+def car_edit(request, pk):
     """
     Allows user to edit car details and images.
 
@@ -225,4 +225,4 @@ def edit_car(request, pk):
                'car_edit_form': car_edit_form,
                'images_add_form': images_add_form,
                }
-    return render(request, 'cars/car_edit.html', context)
+    return render(request, 'cars/car_edit2.html', context)

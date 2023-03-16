@@ -174,3 +174,55 @@ def dashboard(request):
                'user_profile': user_profile
                }
     return render(request, 'cars/user_dashboard.html', context)
+
+
+@login_required(login_url='/users/accounts/login')
+def edit_car(request, pk):
+    """
+    Allows user to edit car details and images.
+
+    **Context**
+
+    ''car''
+        An instance of :model: 'cars.Car'.
+    ''car_add_form''
+        An instance of :form: 'cars.CarAddForm'
+    ''images_add_form''
+        An instance of :filter: 'cars.ImageForm'
+    ''user_profile''
+        An instance of :model: 'users.UserProfile'
+
+
+    **Template**
+
+    :template: 'cars/user_dashboard.html'
+    """
+    car = get_object_or_404(Car, pk=pk)
+    if request.method == 'POST':
+        car_edit_form = CarAddForm(request.POST, instance=car)
+        images_edit_form = ImageForm(request.POST, request.FILES)
+        if car_edit_form.is_valid() and images_edit_form.is_valid():
+
+            # create car instance
+            car_instance = car_edit_form.save(commit=False)
+            car_instance.owner = request.user
+            car_instance.save()
+
+            # create car images as being related to car object
+            images = request.FILES.getlist('image')
+            for car_image in images:
+                CarImage.objects.create(car=car_instance, image=car_image)
+            messages.add_message(request, messages.INFO, 'Car added')
+            # Form with no data after adding a car
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.add_message(request, messages.INFO, "Failed to modify a car")
+    else:
+        car_edit_form = CarAddForm(instance=car)
+        images_add_form = ImageForm()
+
+    context = {'car': car,
+               'car_edit_form': car_edit_form,
+               'images_add_form': images_add_form,
+               }
+    return render(request, 'cars/car_edit.html', context)

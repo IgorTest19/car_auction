@@ -2,6 +2,7 @@ import folium
 import geocoder
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.forms import formset_factory
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.urls import reverse, reverse_lazy
@@ -143,25 +144,18 @@ def dashboard(request):
     cars = CarSearchFilter(request.GET, queryset=cars)
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
-
     if request.method == 'POST':
         car_add_form = CarAddForm(request.POST)
         images_add_form = ImageForm(request.POST, request.FILES)
-        images = request.FILES.getlist('image')
         if car_add_form.is_valid() and images_add_form.is_valid():
-            # getting all needed data values from the form
-            brand = car_add_form.cleaned_data['brand']
-            model = car_add_form.cleaned_data['model']
-            year = car_add_form.cleaned_data['year']
-            location = car_add_form.cleaned_data['location']
-            price = car_add_form.cleaned_data['price']
-            fuel_type = car_add_form.cleaned_data['fuel_type']
-            engine_capacity = car_add_form.cleaned_data['engine_capacity']
-            # creating car objects based on provided data
-            car_instance = Car.objects.create(
-                brand=brand, model=model, year=year, location=location, price=price, fuel_type=fuel_type,
-                engine_capacity=engine_capacity, owner=request.user)
-            # creating car's images as related to it objects
+
+            # create car instance
+            car_instance = car_add_form.save(commit=False)
+            car_instance.owner = request.user
+            car_instance.save()
+
+            # create car images as being related to car object
+            images = request.FILES.getlist('image')
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
             messages.add_message(request, messages.INFO, 'Car added')

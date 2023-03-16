@@ -1,5 +1,8 @@
+{% extends "base.html" %}
+
 {% load crispy_forms_tags %}
 
+{% block content %}
 <div class="car_edit_form">
 	<h2>Add new car</h2>
 	<form method="POST" enctype="multipart/form-data" class="post-form">
@@ -15,9 +18,10 @@
 				<p>{{ images_add_form.image }}</p>
 			</div>
 		</div>
-		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-		<button type="submit" class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>
+		<button type="submit" class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>
 		<p><input type="submit" value="Edit car" multiple></p>
 		<button type="reset" class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Reset Form</button>
 	</form>
 </div>
+{% endblock %}

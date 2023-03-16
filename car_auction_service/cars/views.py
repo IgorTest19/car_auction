@@ -98,7 +98,7 @@ def car_observe(request, pk):
     """
     car = get_object_or_404(Car, pk=pk)
     print(car)
-    user_profile = UserProfile.objects.get(user=request.user.id)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
     cars_ob = user_profile.cars_observed.all()
     if car not in cars_ob:
         user_profile.cars_observed.add(car)
@@ -141,7 +141,9 @@ def dashboard(request):
     """
     cars = Car.objects.filter(owner=request.user)
     cars = CarSearchFilter(request.GET, queryset=cars)
-    user_profile = UserProfile.objects.get(user=request.user)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+
+
     if request.method == 'POST':
         car_add_form = CarAddForm(request.POST)
         images_add_form = ImageForm(request.POST, request.FILES)
@@ -163,8 +165,7 @@ def dashboard(request):
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
             messages.add_message(request, messages.INFO, 'Car added')
-            # car_add_form = CarAddForm()
-            # images_add_form = ImageForm()
+            # Form with no data after adding a car
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             print(car_add_form.errors)

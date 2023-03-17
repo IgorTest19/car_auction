@@ -98,20 +98,16 @@ def car_observe(request, pk):
     :template: 'cars/user_dashboard.html'
     """
     car = get_object_or_404(Car, pk=pk)
-    print(car)
     user_profile = get_object_or_404(UserProfile, user=request.user)
-    cars_ob = user_profile.cars_observed.all()
-    if car not in cars_ob:
+    cars_observed = user_profile.cars_observed.all()
+
+    if car not in cars_observed:
         user_profile.cars_observed.add(car)
-        user_profile.save()
-        car.users_observing.add(request.user.id)
-        car.save()
+        car.users_observing.add(request.user)
         messages.add_message(request, messages.INFO, 'Car added to observed')
     else:
         user_profile.cars_observed.remove(car)
-        user_profile.save()
-        car.users_observing.remove(request.user.id)
-        car.save()
+        car.users_observing.remove(request.user)
         messages.add_message(request, messages.INFO, 'Car removed from observed')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

@@ -95,7 +95,7 @@ def car_observe(request, pk):
 
     **Template**
 
-    :template: 'cars/user_dashboard.html'
+    :template: 'cars/car_detail.html'
     """
     car = get_object_or_404(Car, pk=pk)
     user_profile = get_object_or_404(UserProfile, user=request.user)
@@ -109,6 +109,7 @@ def car_observe(request, pk):
         user_profile.cars_observed.remove(car)
         car.users_observing.remove(request.user)
         messages.add_message(request, messages.INFO, 'Car removed from observed')
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 # rozbić dashboard

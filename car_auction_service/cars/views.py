@@ -104,11 +104,11 @@ def car_observe(request, pk):
     if car not in cars_observed:
         user_profile.cars_observed.add(car)
         car.users_observing.add(request.user)
-        messages.add_message(request, messages.INFO, 'Car added to observed')
+        messages.success(request, 'Car added to observed')
     else:
         user_profile.cars_observed.remove(car)
         car.users_observing.remove(request.user)
-        messages.add_message(request, messages.INFO, 'Car removed from observed')
+        messages.success(request, 'Car removed from observed')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

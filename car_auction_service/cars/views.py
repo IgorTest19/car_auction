@@ -88,7 +88,7 @@ def car_delete(request, pk):
 
 
 @login_required(login_url='/users/accounts/login')
-def image_delete(request, pk):
+def delete_car_image(request, car_id, image_id):
     """
     Delete a single instance of :model: 'cars.CarImage'.
 
@@ -96,10 +96,12 @@ def image_delete(request, pk):
 
     :template: 'cars/car_edit2.html'
     """
-    car_image = get_object_or_404(CarImage, pk=pk)
-    car_image.delete()
+    car = get_object_or_404(Car, pk=car_id)
+    car_image = get_object_or_404(CarImage, pk=image_id, car=car)
+    if request.method == 'POST':
+        car_image.delete()
     messages.add_message(request, messages.INFO, 'Car image was deleted')
-    # return redirect('/')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required(login_url='/users/accounts/login')

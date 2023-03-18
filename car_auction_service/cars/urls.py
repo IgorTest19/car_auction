@@ -25,5 +25,6 @@ urlpatterns = [
     path('car/<int:pk>/car_edit', views.car_edit, name='car_edit'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('car/<int:pk>/delete', views.car_delete, name='car_delete'),
-    path('car/<int:pk>/car_observe', views.car_observe, name='car_observe')
+    path('car/<int:pk>/car_observe', views.car_observe, name='car_observe'),
+    path('car/<int:car_id>/delete_car_image//<int:image_id>', views.delete_car_image, name='delete_car_image')
 ]

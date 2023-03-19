@@ -88,6 +88,23 @@ def car_delete(request, pk):
 
 
 @login_required(login_url='/users/accounts/login')
+def delete_car_image(request, car_id, image_id):
+    """
+    Delete a single instance of :model: 'cars.CarImage'.
+
+    **Template**
+
+    :template: 'cars/car_edit2.html'
+    """
+    car = get_object_or_404(Car, pk=car_id)
+    car_image = get_object_or_404(CarImage, pk=image_id, car=car)
+    if request.method == 'POST':
+        car_image.delete()
+    messages.add_message(request, messages.INFO, 'Car image was deleted')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required(login_url='/users/accounts/login')
 def car_observe(request, pk):
     """
     Add single instance of :model: 'cars.Car' to observed filed
@@ -209,7 +226,7 @@ def car_edit(request, pk):
             images = request.FILES.getlist('image')
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
-            messages.add_message(request, messages.INFO, 'Car added')
+            messages.add_message(request, messages.INFO, 'Car modified')
             # Form with no data after adding a car
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
@@ -223,3 +240,54 @@ def car_edit(request, pk):
                'images_add_form': images_add_form,
                }
     return render(request, 'cars/car_edit2.html', context)
+
+
+# @login_required(login_url='/users/accounts/login')
+# def car_edit(request, pk):
+#     """
+#     TODO:
+#     :param request:
+#     :type request:
+#     :param pk:
+#     :type pk:
+#     :return:
+#     :rtype:
+#     """
+#
+#     car = get_object_or_404(Car, pk=pk, owner=request.user)
+#
+#     if request.method == 'POST':
+#         car_edit_form = CarAddForm(request.POST, instance=car)
+#         image_edit_form = ImageForm(request.POST, request.FILES)
+#         if car_edit_form.is_valid() and image_edit_form.is_valid():
+#
+#             # create car instance
+#             car_instance = car_edit_form.save(commit=False)
+#             car_instance.owner = request.user
+#             car_instance.save()
+#
+#             # create car images as being related to car object
+#             images = request.FILES.getlist('image')
+#             car_images = CarImage.objects.filter(car=car_instance)
+#             for car_image in car_images:
+#                 car_image.delete()
+#             for car_image in images:
+#                 CarImage.objects.create(car=car_instance, image=car_image)
+#
+#
+#             for car_image in images:
+#                 CarImage.objects.create(car=car_instance, image=car_image)
+#             messages.success(request, 'Car added')
+#             # Form with no data after adding a car
+#             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+#         else:
+#             messages.add_message(request, messages.INFO, "Failed to modify a car")
+#     else:
+#         car_edit_form = CarAddForm(instance=car)
+#         image_edit_form = ImageForm()
+#
+#     context = {'car': car,
+#                'car_edit_form': car_edit_form,
+#                'images_add_form': image_edit_form,
+#                }
+#     return render(request, 'cars/car_edit2.html', context)

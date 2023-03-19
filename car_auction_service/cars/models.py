@@ -50,7 +50,11 @@ class Car(models.Model):
         :return: url of the first image.
         :rtype: str
         """
-        first_image = (self.carimage_set.all()[::-1])[0]
+
+        if len(self.carimage_set.all()) != 0:
+            first_image = (self.carimage_set.all()[::-1])[0]
+        else:
+            return None
         if first_image.image and hasattr(first_image.image, 'url'):
             return first_image.image.url
         else:

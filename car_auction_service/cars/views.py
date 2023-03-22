@@ -98,10 +98,18 @@ def delete_car_image(request, car_id, image_id):
     """
     car = get_object_or_404(Car, pk=car_id)
     car_image = get_object_or_404(CarImage, pk=image_id, car=car)
+    print("----------------------------- car")
+    print(car)
+    print("------------------------------- car id")
+    print(car.pk)
+    print('------------------------car image')
+    print(car_image)
+    print('-----------------------')
+    print(car_image.pk)
     if request.method == 'POST':
         car_image.delete()
     if len(car.get_all_images()) == 0:
-        CarImage.objects.create(car=car, image='/images/no_car_image.png')
+        CarImage.objects.create(car=car, image='images/no_car_image.png')
     messages.add_message(request, messages.INFO, 'Car image was deleted')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -214,6 +222,8 @@ def car_edit(request, pk):
     :template: 'cars/user_dashboard.html'
     """
     car = get_object_or_404(Car, pk=pk)
+    car_image_default = CarImage.objects.filter(car=car).first()
+
     if request.method == 'POST':
         car_edit_form = CarAddForm(request.POST, instance=car)
         images_edit_form = ImageForm(request.POST, request.FILES)
@@ -223,6 +233,10 @@ def car_edit(request, pk):
             car_instance = car_edit_form.save(commit=False)
             car_instance.owner = request.user
             car_instance.save()
+
+            # deleting default car image:
+            if car_image_default is not None:
+                car_image_default.delete()
 
             # create car images as being related to car object
             images = request.FILES.getlist('image')

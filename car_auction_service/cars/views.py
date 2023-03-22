@@ -52,6 +52,7 @@ def car_detail(request, pk):
     :template: 'cars/car_detail.html'
     """
     car = get_object_or_404(Car, pk=pk)
+    # car_images = reversed(get_list_or_404(CarImage, car=car))
     car_images = reversed(get_list_or_404(CarImage, car=car))
     # Adding map component
     # Getting location from car model
@@ -98,14 +99,7 @@ def delete_car_image(request, car_id, image_id):
     """
     car = get_object_or_404(Car, pk=car_id)
     car_image = get_object_or_404(CarImage, pk=image_id, car=car)
-    print("----------------------------- car")
-    print(car)
-    print("------------------------------- car id")
-    print(car.pk)
-    print('------------------------car image')
-    print(car_image)
-    print('-----------------------')
-    print(car_image.pk)
+
     if request.method == 'POST':
         car_image.delete()
     if len(car.get_all_images()) == 0:
@@ -138,6 +132,7 @@ def car_observe(request, pk):
         messages.success(request, 'Car removed from observed')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 # rozbić dashboard
 @login_required(login_url='/users/accounts/login')
@@ -234,12 +229,18 @@ def car_edit(request, pk):
             car_instance.owner = request.user
             car_instance.save()
 
-            # deleting default car image:
-            if car_image_default is not None:
+            # deleting default car image
+            images_empty = len(request.FILES.getlist('image'))
+            # if there is car image object and it's image is default and there are added images through form
+            # deleting default image only when images added are added through form
+            if car_image_default is not None and car_image_default.image == 'images/no_car_image.png' and images_empty != 0:
                 car_image_default.delete()
 
             # create car images as being related to car object
             images = request.FILES.getlist('image')
+            # print(f'--------------- len(images): {len(images)}')
+            # if len(images) > 0:
+            #     print('-------------- adding images')
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
             messages.add_message(request, messages.INFO, 'Car modified')

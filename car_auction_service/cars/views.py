@@ -52,13 +52,12 @@ def car_detail(request, pk):
     :template: 'cars/car_detail.html'
     """
     car = get_object_or_404(Car, pk=pk)
-    # car_images = reversed(get_list_or_404(CarImage, car=car))
     car_images = reversed(get_list_or_404(CarImage, car=car))
+
     # Adding map component
     # Getting location from car model
     get_car_location = car.location
     location_values = geocoder.osm(f'{get_car_location}, Poland')
-    print(f'-------- {location_values.latlng}')
     # Creating Map Object
     cars_map = folium.Map(location=location_values.latlng, zoom_start=8)
     # Adding map marker
@@ -238,9 +237,7 @@ def car_edit(request, pk):
 
             # create car images as being related to car object
             images = request.FILES.getlist('image')
-            # print(f'--------------- len(images): {len(images)}')
-            # if len(images) > 0:
-            #     print('-------------- adding images')
+
             for car_image in images:
                 CarImage.objects.create(car=car_instance, image=car_image)
             messages.add_message(request, messages.INFO, 'Car modified')

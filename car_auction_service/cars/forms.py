@@ -16,6 +16,7 @@ class ImageForm(forms.ModelForm):
     image = forms.ImageField(
         label='Image',
         widget=forms.ClearableFileInput(attrs={"multiple": True}),
+        required=False,
     )
 
     class Meta:

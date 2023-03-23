@@ -83,7 +83,7 @@ class CarImage(models.Model):
     :model: 'cars.Car'
     """
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/', blank=True, null=True)
+    image = models.ImageField(upload_to='images/', default='images/no_car_image.png', blank=True, null=True)
 
     def get_image(self):
         """

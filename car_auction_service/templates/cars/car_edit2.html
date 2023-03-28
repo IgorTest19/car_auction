@@ -25,12 +25,18 @@
     </form>
     <div>
         {% for car_image_2 in car.get_all_images %}
-        <p><img src = "{{ car_image_2.get_image }}" width="500px" height="500px" alt="img"></p>
-        <p>{{ car_image_2.get_image }}</p>
-        <form method="POST" action="{% url 'cars:delete_car_image' car.id car_image_2.id %}">
-            {% csrf_token %}
-            <button type="submit" class="save btn bg-orange-500 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded">DELETE IMAGE</button>
-        </form>
+            <p><img src = "{{ car_image_2.get_image }}" width="500px" height="500px" alt="img"></p>
+            <p>{{ car_image_2.get_image }}</p>
+            <form method="POST" action="{% url 'cars:delete_car_image' car.id car_image_2.id %}">
+                {% csrf_token %}
+                <button type="submit" class="save btn bg-orange-500 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded">DELETE IMAGE</button>
+            </form>
+            {% if car_image_2 %}
+                <form method="POST" action="{% url 'cars:car_image_set_main' car.id car_image_2.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="save btn bg-yellow-500 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded">SET AS MAIN</button>
+                </form>
+            {% endif %}
         {% endfor %}
     </div>
 </div>

@@ -52,7 +52,7 @@ class Car(models.Model):
         """
 
         if len(self.carimage_set.all()) != 0:
-            first_image = (self.carimage_set.all()[0])
+            first_image = (self.carimage_set.first())
         else:
             return None
         if first_image.image and hasattr(first_image.image, 'url'):

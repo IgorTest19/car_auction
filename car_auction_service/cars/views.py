@@ -69,6 +69,7 @@ def car_detail(request, pk):
         'car_images': car_images,
         'cars_map': cars_map
     }
+
     return render(request, 'cars/car_detail.html', context)
 
 
@@ -103,8 +104,39 @@ def delete_car_image(request, car_id, image_id):
         car_image.delete()
     if len(car.get_all_images()) == 0:
         CarImage.objects.create(car=car, image='images/no_car_image.png')
+
     messages.add_message(request, messages.INFO, 'Car image was deleted')
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required(login_url='/users/accounts/login')
+def car_image_set_main(request, car_id, image_id):
+    """
+    Delete a single instance of :model: 'cars.CarImage'.
+
+    **Template**
+
+    :template: 'cars/car_edit2.html'
+    """
+    car = get_object_or_404(Car, pk=car_id)
+    car_image = get_object_or_404(CarImage, pk=image_id, car=car)
+    car_images = car.carimage_set.all()
+    if request.method == 'POST':
+        if len(car_images) > 1:
+            first_image = car_images.first()
+            first_image_id = first_image.id
+            car_image.id = first_image_id
+            first_image.id = image_id
+
+            first_image.save()
+            car_image.save()
+            car.save()
+
+    messages.add_message(request, messages.INFO, 'Image was set as main')
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 
 @login_required(login_url='/users/accounts/login')
@@ -251,6 +283,6 @@ def car_edit(request, pk):
 
     context = {'car': car,
                'car_edit_form': car_edit_form,
-               'images_add_form': images_add_form,
+               'images_add_form': images_add_form
                }
     return render(request, 'cars/car_edit2.html', context)

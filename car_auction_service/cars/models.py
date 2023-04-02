@@ -95,3 +95,10 @@ class CarImage(models.Model):
             return self.image.url
         else:
             return None
+
+
+class CarAd(models.Model):
+    """
+    Car advertisement class for Car class. Related to:
+    :model: 'cars.car
+    """

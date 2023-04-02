@@ -77,7 +77,7 @@ class CarImage(models.Model):
     Image class for Car class. Related to:
     :model: 'cars.Car'
     """
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_image')
     image = models.ImageField(upload_to='images/', default='images/no_car_image.png', blank=True, null=True)
 
     def get_image(self):
@@ -94,11 +94,31 @@ class CarImage(models.Model):
 
 class CarAd(models.Model):
     """
-    Car advertisement class for Car class. Related to:
+    Stores a single car advertisement. Related to:
     :model: 'cars.car
     """
-    price = models.FloatField(blank=True, null=True)
+    CURRENCY_CHOICES = (
+        ('pln', 'PLN'),
+        ('eur', 'EURO')
+    )
+    PRICE_TYPE_CHOICES = (
+        ('gross', 'GROSS'),
+        ('net', 'NET')
+    )
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_ad_owner')  # modify relation to onetoone field
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_ad')
+    description = models.TextField(blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='pln')
+    price_type = models.CharField(max_length=10, choices=PRICE_TYPE_CHOICES, defailt='gross')
     published = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    valid = models.BooleanField(default=True)
+    valid_unitl = models.DateTimeField()
+    is_valid = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['-published']
+
+    def __str__(self):
+        return f'{self.car.brand} {self.car.model} ({self.price} {self.currency} {self.price_type}'

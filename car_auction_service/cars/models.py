@@ -15,11 +15,6 @@ class Car(models.Model):
     engine_capacity = models.FloatField(blank=True, null=True)
     fuel_type = models.CharField(max_length=50, blank=True, null=True)
     year = models.IntegerField()
-    price = models.FloatField(blank=True, null=True)
-    publish = models.DateTimeField(default=timezone.now)
-    created = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True)
-    valid = models.BooleanField(default=True)
     location = models.CharField(max_length=250, blank=True, null=True)
 
 
@@ -102,3 +97,8 @@ class CarAd(models.Model):
     Car advertisement class for Car class. Related to:
     :model: 'cars.car
     """
+    price = models.FloatField(blank=True, null=True)
+    published = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    valid = models.BooleanField(default=True)

@@ -1,12 +1,12 @@
 from django.contrib import admin
 
-from .models import Car, CarImage
+from .models import CarAdvert, CarImage
 
 
-@admin.register(Car)
+@admin.register(CarAdvert)
 class CarAdmin(admin.ModelAdmin):
     """Car class representation in the admin interface."""
-    list_display = ['id', 'owner', 'brand', 'model', 'year', 'publish', 'created', 'update']
+    list_display = ['id', 'owner', 'brand', 'model', 'year', 'published', 'created', 'updated']
 
 
 @admin.register(CarImage)

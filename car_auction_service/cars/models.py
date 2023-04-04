@@ -8,6 +8,14 @@ class Car(models.Model):
     Stores a single car. Related to:
     :model: 'auth.User'
     """
+    CURRENCY_CHOICES = (
+        ('pln', 'PLN'),
+        ('eur', 'EURO')
+    )
+    PRICE_TYPE_CHOICES = (
+        ('gross', 'GROSS'),
+        ('net', 'NET')
+    )
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_owner') # modify relation to onetoone field
     users_observing = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='car_observer', blank=True)
     brand = models.CharField(max_length=250, blank=False, null=False)
@@ -16,13 +24,23 @@ class Car(models.Model):
     fuel_type = models.CharField(max_length=50, blank=True, null=True)
     year = models.IntegerField()
     location = models.CharField(max_length=250, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='pln')
+    price_type = models.CharField(max_length=10, choices=PRICE_TYPE_CHOICES, defailt='gross')
+    published = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    valid_unitl = models.DateTimeField()
+    is_valid = models.BooleanField(default=True)
+
 
 
     class Meta:
         """Metadata class."""
-        verbose_name = 'car'
-        verbose_name_plural = 'cars'
-        ordering = ('-publish',)
+        verbose_name = 'car advertisement'
+        verbose_name_plural = 'car advertisements'
+        ordering = ['-published']
 
     def __str__(self):
         """String representation of the car class object."""
@@ -90,35 +108,3 @@ class CarImage(models.Model):
             return self.image.url
         else:
             return None
-
-
-class CarAd(models.Model):
-    """
-    Stores a single car advertisement. Related to:
-    :model: 'cars.car
-    """
-    CURRENCY_CHOICES = (
-        ('pln', 'PLN'),
-        ('eur', 'EURO')
-    )
-    PRICE_TYPE_CHOICES = (
-        ('gross', 'GROSS'),
-        ('net', 'NET')
-    )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_ad_owner')  # modify relation to onetoone field
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_ad')
-    description = models.TextField(blank=True, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='pln')
-    price_type = models.CharField(max_length=10, choices=PRICE_TYPE_CHOICES, defailt='gross')
-    published = models.DateTimeField(default=timezone.now)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    valid_unitl = models.DateTimeField()
-    is_valid = models.BooleanField(default=True)
-
-    class Meta:
-        ordering = ['-published']
-
-    def __str__(self):
-        return f'{self.car.brand} {self.car.model} ({self.price} {self.currency} {self.price_type}'

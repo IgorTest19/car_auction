@@ -31,8 +31,8 @@ class CarAdvert(models.Model):
     published = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    valid_unitl = models.DateTimeField()
-    is_valid = models.BooleanField(default=True)
+    valid_unitl = models.DateTimeField(blank=True, null=True)
+    is_valid = models.BooleanField(default=True, blank=True, null=True)
 
 
 

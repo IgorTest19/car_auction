@@ -3,9 +3,9 @@ from django.db import models
 from django.utils import timezone
 
 
-class Car(models.Model):
+class CarAdvert(models.Model):
     """
-    Stores a single car. Related to:
+    Stores a single caradvert. Related to:
     :model: 'auth.User'
     """
     CURRENCY_CHOICES = (
@@ -16,8 +16,8 @@ class Car(models.Model):
         ('gross', 'GROSS'),
         ('net', 'NET')
     )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_owner') # modify relation to onetoone field
-    users_observing = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='car_observer', blank=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_ad_owner') # modify relation to onetoone field
+    users_observing = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='car_ad_observer', blank=True)
     brand = models.CharField(max_length=250, blank=False, null=False)
     model = models.CharField(max_length=250, blank=False, null=False)
     engine_capacity = models.FloatField(blank=True, null=True)
@@ -27,7 +27,7 @@ class Car(models.Model):
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='pln')
-    price_type = models.CharField(max_length=10, choices=PRICE_TYPE_CHOICES, defailt='gross')
+    price_type = models.CharField(max_length=10, choices=PRICE_TYPE_CHOICES, default='gross')
     published = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -43,7 +43,7 @@ class Car(models.Model):
         ordering = ['-published']
 
     def __str__(self):
-        """String representation of the car class object."""
+        """String representation of the caradvert class object."""
         return f'{self.brand} {self.model}'
 
     def get_image(self):
@@ -59,7 +59,7 @@ class Car(models.Model):
 
     def get_first_image(self):
         """
-        Get the first image of specified car's image set.
+        Get the first image of specified caradvert's image set.
         :return: url of the first image.
         :rtype: str
         """
@@ -75,7 +75,7 @@ class Car(models.Model):
 
     def get_all_images(self):
         """
-        Get all the images of specified car
+        Get all the images of specified caradvert
         :return: set of CarImage objects.
         :rtype: set
         """
@@ -83,7 +83,7 @@ class Car(models.Model):
 
     def observers(self):
         """
-        Show users observing this car
+        Show users observing this caradvert,
         :return:
         :rtype:
         """
@@ -92,10 +92,10 @@ class Car(models.Model):
 
 class CarImage(models.Model):
     """
-    Image class for Car class. Related to:
-    :model: 'cars.Car'
+    Image class for CarAd class. Related to:
+    :model: 'cars.CarAdvert'
     """
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_image')
+    car = models.ForeignKey(CarAdvert, on_delete=models.CASCADE, related_name='car_image')
     image = models.ImageField(upload_to='images/', default='images/no_car_image.png', blank=True, null=True)
 
     def get_image(self):

@@ -51,21 +51,21 @@ def car_detail(request, pk):
 
     :template: 'cars/car_detail.html'
     """
-    car = get_object_or_404(CarAdvert, pk=pk)
-    car_images = reversed(get_list_or_404(CarImage, car=car))
+    caradvert = get_object_or_404(CarAdvert, pk=pk)
+    car_images = reversed(get_list_or_404(CarImage, caradvert=caradvert))
 
     # Adding map component
     # Getting location from car model
-    get_car_location = car.location
+    get_car_location = caradvert.location
     location_values = geocoder.osm(f'{get_car_location}, Poland')
     # Creating Map Object
     cars_map = folium.Map(location=location_values.latlng, zoom_start=8)
     # Adding map marker
-    folium.Marker(location_values.latlng, tooltip=get_car_location, popup=car).add_to(cars_map)
+    folium.Marker(location_values.latlng, tooltip=get_car_location, popup=caradvert).add_to(cars_map)
     # Getting HTML representation of Map Object
     cars_map = cars_map._repr_html_()
     context = {
-        'car': car,
+        'car': caradvert,
         'car_images': car_images,
         'cars_map': cars_map
     }
@@ -89,7 +89,7 @@ def car_delete(request, pk):
 
 
 @login_required(login_url='/users/accounts/login')
-def delete_car_image(request, car_id, image_id):
+def delete_car_image(request, caradvert_id, image_id):
     """
     Delete a single instance of :model: 'cars.CarImage'.
 
@@ -97,7 +97,7 @@ def delete_car_image(request, car_id, image_id):
 
     :template: 'cars/car_edit2.html'
     """
-    car_advert = get_object_or_404(CarAdvert, pk=car_id)
+    car_advert = get_object_or_404(CarAdvert, pk=caradvert_id)
     car_image = get_object_or_404(CarImage, pk=image_id, caradvert=car_advert)
 
     if request.method == 'POST':

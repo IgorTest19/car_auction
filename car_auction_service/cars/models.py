@@ -60,7 +60,7 @@ class CarAdvert(models.Model):
     def get_first_image(self):
         """
         Get the first image of specified caradvert's image set.
-        :return: url of the first image.
+        :return url of the first image.
         :rtype: str
         """
 
@@ -95,7 +95,7 @@ class CarImage(models.Model):
     Image class for CarAd class. Related to:
     :model: 'cars.CarAdvert'
     """
-    car = models.ForeignKey(CarAdvert, on_delete=models.CASCADE, related_name='car_image')
+    car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE, related_name='car_image')
     image = models.ImageField(upload_to='images/', default='images/no_car_image.png', blank=True, null=True)
 
     def get_image(self):

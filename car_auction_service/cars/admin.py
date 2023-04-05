@@ -12,7 +12,7 @@ class CarAdmin(admin.ModelAdmin):
 @admin.register(CarImage)
 class CarImage(admin.ModelAdmin):
     """Image class representation in the admin interface."""
-    list_display = ['image_id', 'car_id', 'car', 'image']
+    list_display = ['image_id', 'car_advert_id', 'car_advert', 'image']
 
     def image_id(self, obj):
         """Returning Car's ID to display it alongside with other Car's fields."""

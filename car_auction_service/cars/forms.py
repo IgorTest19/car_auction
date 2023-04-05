@@ -1,14 +1,14 @@
 from django import forms
 
-from .models import CarAdvert, CarImage
+from .models import Car, CarImage
 
 
-class CarAdvertAddForm(forms.ModelForm):
+class CarAddForm(forms.ModelForm):
     """Form class for adding a new car."""
     class Meta:
         """Metadata class."""
-        model = CarAdvert
-        fields = ['brand', 'model', 'year', 'location', 'price', 'currency', 'fuel_type', 'engine_capacity']
+        model = Car
+        fields = ['brand', 'model', 'year', 'location', 'price', 'fuel_type', 'engine_capacity']
 
 
 class ImageForm(forms.ModelForm):

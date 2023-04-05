@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from cars.models import CarAdvert
+from cars.models import Car
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    cars_observed = models.ManyToManyField(CarAdvert, related_name='cars_observed', blank=True)
+    cars_observed = models.ManyToManyField(Car, related_name='cars_observed', blank=True)
 
     def __str__(self):
         return str(self.user.username)

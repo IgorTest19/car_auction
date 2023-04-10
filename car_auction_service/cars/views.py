@@ -8,9 +8,9 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404, redirec
 from django.urls import reverse, reverse_lazy
 
 from users.models import UserProfile
-from .filters import CarSearchFilter
-from .forms import CarAddForm, ImageForm
-from .models import Car, CarImage
+from .filters import CarAdvertSearchFilter
+from .forms import CarAdvertAddForm, ImageForm
+from .models import CarAdvert, CarImage
 
 
 def cars_list(request):
@@ -27,9 +27,9 @@ def cars_list(request):
 
     :template: 'cars/cars_main.html'
     """
-    cars = Car.objects.all()
-    cars = CarSearchFilter(request.GET, queryset=cars)
-    context = {'cars': cars}
+    car_adverts = CarAdvert.objects.all()
+    cars_filter = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
+    context = {'cars': cars_filter}
     return render(request, 'cars/cars_main.html', context)
 
 
@@ -51,21 +51,21 @@ def car_detail(request, pk):
 
     :template: 'cars/car_detail.html'
     """
-    car = get_object_or_404(Car, pk=pk)
-    car_images = reversed(get_list_or_404(CarImage, car=car))
+    car_advert = get_object_or_404(CarAdvert, pk=pk)
+    car_images = reversed(get_list_or_404(CarImage, car_advert=car_advert))
 
     # Adding map component
     # Getting location from car model
-    get_car_location = car.location
+    get_car_location = car_advert.location
     location_values = geocoder.osm(f'{get_car_location}, Poland')
     # Creating Map Object
     cars_map = folium.Map(location=location_values.latlng, zoom_start=8)
     # Adding map marker
-    folium.Marker(location_values.latlng, tooltip=get_car_location, popup=car).add_to(cars_map)
+    folium.Marker(location_values.latlng, tooltip=get_car_location, popup=car_advert).add_to(cars_map)
     # Getting HTML representation of Map Object
     cars_map = cars_map._repr_html_()
     context = {
-        'car': car,
+        'car': car_advert,
         'car_images': car_images,
         'cars_map': cars_map
     }
@@ -82,14 +82,14 @@ def car_delete(request, pk):
 
     :template: 'cars/car_detail.html'
     """
-    car = get_object_or_404(Car, pk=pk)
-    car.delete()
+    car_advert = get_object_or_404(CarAdvert, pk=pk)
+    car_advert.delete()
     messages.add_message(request, messages.INFO, 'Car was deleted')
     return redirect('/')
 
 
 @login_required(login_url='/users/accounts/login')
-def delete_car_image(request, car_id, image_id):
+def delete_car_image(request, car_advert_id, image_id):
     """
     Delete a single instance of :model: 'cars.CarImage'.
 
@@ -97,13 +97,13 @@ def delete_car_image(request, car_id, image_id):
 
     :template: 'cars/car_edit2.html'
     """
-    car = get_object_or_404(Car, pk=car_id)
-    car_image = get_object_or_404(CarImage, pk=image_id, car=car)
+    car_advert = get_object_or_404(CarAdvert, pk=car_advert_id)
+    car_image = get_object_or_404(CarImage, pk=image_id, car_advert=car_advert)
 
     if request.method == 'POST':
         car_image.delete()
-    if len(car.get_all_images()) == 0:
-        CarImage.objects.create(car=car, image='images/no_car_image.png')
+    if len(car_advert.get_all_images()) == 0:
+        CarImage.objects.create(car_advert=car_advert, image='images/no_car_image.png')
 
     messages.add_message(request, messages.INFO, 'Car image was deleted')
 
@@ -119,9 +119,9 @@ def car_image_set_main(request, car_id, image_id):
 
     :template: 'cars/car_edit2.html'
     """
-    car = get_object_or_404(Car, pk=car_id)
-    car_image = get_object_or_404(CarImage, pk=image_id, car=car)
-    car_images = car.carimage_set.all()
+    car_advert = get_object_or_404(CarAdvert, pk=car_id)
+    car_image = get_object_or_404(CarImage, pk=image_id, car_advert=car_advert)
+    car_images = car_advert.carimage_set.all()
     if request.method == 'POST':
         if len(car_images) > 1:
             first_image = car_images.first()
@@ -131,7 +131,7 @@ def car_image_set_main(request, car_id, image_id):
 
             first_image.save()
             car_image.save()
-            car.save()
+            car_advert.save()
 
     messages.add_message(request, messages.INFO, 'Image was set as main')
 
@@ -149,17 +149,17 @@ def car_observe(request, pk):
 
     :template: 'cars/car_detail.html'
     """
-    car = get_object_or_404(Car, pk=pk)
+    car_advert = get_object_or_404(CarAdvert, pk=pk)
     user_profile = get_object_or_404(UserProfile, user=request.user)
     cars_observed = user_profile.cars_observed.all()
 
-    if car not in cars_observed:
-        user_profile.cars_observed.add(car)
-        car.users_observing.add(request.user)
+    if car_advert not in cars_observed:
+        user_profile.cars_observed.add(car_advert)
+        car_advert.users_observing.add(request.user)
         messages.success(request, 'Car added to observed')
     else:
-        user_profile.cars_observed.remove(car)
-        car.users_observing.remove(request.user)
+        user_profile.cars_observed.remove(car_advert)
+        car_advert.users_observing.remove(request.user)
         messages.success(request, 'Car removed from observed')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -190,36 +190,36 @@ def dashboard(request):
 
     :template: 'cars/user_dashboard.html'
     """
-    cars = Car.objects.filter(owner=request.user)
-    cars = CarSearchFilter(request.GET, queryset=cars)
+    car_adverts = CarAdvert.objects.filter(owner=request.user)
+    car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
-        car_add_form = CarAddForm(request.POST)
+        car_advert_add_form = CarAdvertAddForm(request.POST)
         images_add_form = ImageForm(request.POST, request.FILES)
-        if car_add_form.is_valid() and images_add_form.is_valid():
+        if car_advert_add_form.is_valid() and images_add_form.is_valid():
 
             # create car instance
-            car_instance = car_add_form.save(commit=False)
-            car_instance.owner = request.user
-            car_instance.save()
+            car_advert_instance = car_advert_add_form.save(commit=False)
+            car_advert_instance.owner = request.user
+            car_advert_instance.save()
 
             # create car images as being related to car object
             images = request.FILES.getlist('image')
             for car_image in images:
-                CarImage.objects.create(car=car_instance, image=car_image)
+                CarImage.objects.create(car_advert=car_advert_add_form, image=car_image)
             messages.add_message(request, messages.INFO, 'Car added')
             # Form with no data after adding a car
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
-            print(car_add_form.errors)
+            print(car_advert_add_form.errors)
             messages.add_message(request, messages.INFO, "Failed to add a car")
     else:
-        car_add_form = CarAddForm()
+        car_add_form = CarAdvertAddForm()
         images_add_form = ImageForm()
 
-    context = {'cars': cars,
-               'car_add_form': car_add_form,
+    context = {'cars': car_adverts,
+               'car_add_form': car_advert_add_form,
                'images_add_form': images_add_form,
                'user_profile': user_profile
                }
@@ -247,18 +247,18 @@ def car_edit(request, pk):
 
     :template: 'cars/user_dashboard.html'
     """
-    car = get_object_or_404(Car, pk=pk)
-    car_image_default = CarImage.objects.filter(car=car).first()
+    car_advert = get_object_or_404(CarAdvert, pk=pk)
+    car_image_default = CarImage.objects.filter(car_advert=car_advert).first()
 
     if request.method == 'POST':
-        car_edit_form = CarAddForm(request.POST, instance=car)
+        car_advert_edit_form = CarAdvertAddForm(request.POST, instance=car_advert)
         images_edit_form = ImageForm(request.POST, request.FILES)
-        if car_edit_form.is_valid() and images_edit_form.is_valid():
+        if car_advert_edit_form.is_valid() and images_edit_form.is_valid():
 
             # create car instance
-            car_instance = car_edit_form.save(commit=False)
-            car_instance.owner = request.user
-            car_instance.save()
+            car_advert_instance = car_advert_edit_form.save(commit=False)
+            car_advert_instance.owner = request.user
+            car_advert_instance.save()
 
             # deleting default car image
             images_empty = len(request.FILES.getlist('image'))
@@ -271,18 +271,18 @@ def car_edit(request, pk):
             images = request.FILES.getlist('image')
 
             for car_image in images:
-                CarImage.objects.create(car=car_instance, image=car_image)
+                CarImage.objects.create(car=car_advert_instance, image=car_image)
             messages.add_message(request, messages.INFO, 'Car modified')
             # Form with no data after adding a car
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             messages.add_message(request, messages.INFO, "Failed to modify a car")
     else:
-        car_edit_form = CarAddForm(instance=car)
+        car_edit_form = CarAdvertAddForm(instance=car_advert)
         images_add_form = ImageForm()
 
-    context = {'car': car,
-               'car_edit_form': car_edit_form,
+    context = {'car': car_advert,
+               'car_edit_form': car_advert_edit_form,
                'images_add_form': images_add_form
                }
     return render(request, 'cars/car_edit2.html', context)

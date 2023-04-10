@@ -15,13 +15,13 @@ from .models import CarAdvert, CarImage
 
 def cars_list(request):
     """
-    Display a list of all cars in form of filter to make available operation of filtering.
+    Display a list of all cars advertisements in form of filter to make available operation of filtering.
 
     **Context**
 
     ''cars''
-        An instance of FilterSet :django_filters: 'cars.CarSearchFilter',
-        containing instances of :model: 'cars.Car'.
+        An instance of FilterSet :django_filters: 'cars.CarAdvertSearchFilter',
+        containing instances of :model: 'cars.CarAdvert'.
 
     **Template**
 
@@ -35,12 +35,12 @@ def cars_list(request):
 
 def car_detail(request, pk):
     """
-    Display an individual :model: 'cars.Car'.
+    Display an individual :model: 'cars.CarAdvert'.
 
     **Context**
 
     ''cars''
-        An instance of :model: 'cars.Car'.
+        An instance of :model: 'cars.CarAdvert'.
     ''car_images''
         A list of instances of :model: 'cars.CarImage'.
     ''cars_maps''
@@ -76,7 +76,7 @@ def car_detail(request, pk):
 @login_required(login_url='/users/accounts/login')
 def car_delete(request, pk):
     """
-    Delete a single instance of :model: 'cars.Car'.
+    Delete a single instance of :model: 'cars.CarAdvert'.
 
     **Template**
 
@@ -111,7 +111,7 @@ def delete_car_image(request, car_advert_id, image_id):
 
 
 @login_required(login_url='/users/accounts/login')
-def car_image_set_main(request, car_id, image_id):
+def car_image_set_main(request, car_advert_id, image_id):
     """
     Delete a single instance of :model: 'cars.CarImage'.
 
@@ -119,7 +119,7 @@ def car_image_set_main(request, car_id, image_id):
 
     :template: 'cars/car_edit2.html'
     """
-    car_advert = get_object_or_404(CarAdvert, pk=car_id)
+    car_advert = get_object_or_404(CarAdvert, pk=car_advert_id)
     car_image = get_object_or_404(CarImage, pk=image_id, car_advert=car_advert)
     car_images = car_advert.carimage_set.all()
     if request.method == 'POST':
@@ -142,7 +142,7 @@ def car_image_set_main(request, car_id, image_id):
 @login_required(login_url='/users/accounts/login')
 def car_observe(request, pk):
     """
-    Add single instance of :model: 'cars.Car' to observed filed
+    Add single instance of :model: 'cars.CarAdvert' to observed filed
     of :model: 'users.UserProfile'
 
     **Template**
@@ -170,16 +170,16 @@ def car_observe(request, pk):
 def dashboard(request):
     """
     Display user-specific view of functionalities.
-    Display a list of all cars added by user in the form of filter to make available operation of filtering.
-    Display a list of cars that are observed by the user.
+    Display a list of all car advertisements added by user in the form of filter to make available operation of filtering.
+    Display a list of car advertisements that are observed by the user.
     Adding new cars to the database.
 
     **Context**
 
     ''cars''
-        An instance of :model: 'cars.Car'.
+        An instance of :model: 'cars.CarAdvert'.
     ''car_add_form''
-        An instance of :form: 'cars.CarAddForm'
+        An instance of :form: 'cars.CarAdvertAddForm'
     ''images_add_form''
         An instance of :filter: 'cars.ImageForm'
     ''user_profile''
@@ -234,9 +234,9 @@ def car_edit(request, pk):
     **Context**
 
     ''car''
-        An instance of :model: 'cars.Car'.
+        An instance of :model: 'cars.CarAdvert'.
     ''car_add_form''
-        An instance of :form: 'cars.CarAddForm'
+        An instance of :form: 'cars.CarAdvertAddForm'
     ''images_add_form''
         An instance of :filter: 'cars.ImageForm'
     ''user_profile''

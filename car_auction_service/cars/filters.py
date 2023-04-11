@@ -1,10 +1,10 @@
 import django_filters
 from django.forms.widgets import TextInput
 
-from .models import Car
+from .models import CarAdvert
 
 
-class CarSearchFilter(django_filters.FilterSet):
+class CarAdvertSearchFilter(django_filters.FilterSet):
     """Search filter form class for cars queryset."""
     brand = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'Volvo'}))
     model = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'V60'}))
@@ -15,5 +15,5 @@ class CarSearchFilter(django_filters.FilterSet):
 
     class Meta:
         """Metadata class."""
-        model = Car
+        model = CarAdvert
         fields = ['brand', 'model','location', 'min_price', 'max_price']

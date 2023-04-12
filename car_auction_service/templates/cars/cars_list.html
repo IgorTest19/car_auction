@@ -2,7 +2,7 @@
 			{% for car in cars.qs %}
 				<div class="grid grid-cols-4 gap-1 m-3.5">
 					<div>
-						<a href='{% url "cars:car_detail" pk=car.pk %}'><img src="{{ car.get_first_image }}" width="250px" height="250px" alt="img"></a>
+						<a href='{% url "cars:car_detail" pk=car.pk %}'><img src="{{ caradvert.get_first_image }}" width="250px" height="250px" alt="img"></a>
 					</div>
 					<div>
 						<div class="grid grid-cols-2 gap-2">

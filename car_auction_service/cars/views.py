@@ -28,8 +28,8 @@ def cars_list(request):
     :template: 'cars/cars_main.html'
     """
     car_adverts = CarAdvert.objects.all()
-    cars_filter = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
-    context = {'cars': cars_filter}
+    car_adverts_filter = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
+    context = {'cars': car_adverts_filter}
     return render(request, 'cars/cars_main.html', context)
 
 
@@ -201,13 +201,19 @@ def dashboard(request):
 
             # create car instance
             car_advert_instance = car_advert_add_form.save(commit=False)
+            print(f'---------------- car_advert_add_form')
+            print(car_advert_add_form)
             car_advert_instance.owner = request.user
             car_advert_instance.save()
+            print(f'---------------- car_advert_instance')
+            print(car_advert_instance)
+            print(f'----------------type(car_advert_instance)')
+            print(type(car_advert_instance))
 
             # create car images as being related to car object
             images = request.FILES.getlist('image')
             for car_image in images:
-                CarImage.objects.create(car_advert=car_advert_add_form, image=car_image)
+                CarImage.objects.create(car_advert=car_advert_instance, image=car_image)
             messages.add_message(request, messages.INFO, 'Car added')
             # Form with no data after adding a car
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -215,7 +221,7 @@ def dashboard(request):
             print(car_advert_add_form.errors)
             messages.add_message(request, messages.INFO, "Failed to add a car")
     else:
-        car_add_form = CarAdvertAddForm()
+        car_advert_add_form = CarAdvertAddForm()
         images_add_form = ImageForm()
 
     context = {'cars': car_adverts,

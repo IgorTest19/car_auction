@@ -29,7 +29,7 @@ def cars_list(request):
     """
     car_adverts = CarAdvert.objects.all()
     car_adverts_filter = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
-    context = {'cars': car_adverts_filter}
+    context = {'car_adverts_filter': car_adverts_filter}
     return render(request, 'cars/cars_main.html', context)
 
 
@@ -65,7 +65,7 @@ def car_detail(request, pk):
     # Getting HTML representation of Map Object
     cars_map = cars_map._repr_html_()
     context = {
-        'car': car_advert,
+        'car_advert': car_advert,
         'car_images': car_images,
         'cars_map': cars_map
     }
@@ -224,8 +224,8 @@ def dashboard(request):
         car_advert_add_form = CarAdvertAddForm()
         images_add_form = ImageForm()
 
-    context = {'cars': car_adverts,
-               'car_add_form': car_advert_add_form,
+    context = {'car_adverts': car_adverts,
+               'car_advert_add_form': car_advert_add_form,
                'images_add_form': images_add_form,
                'user_profile': user_profile
                }
@@ -287,8 +287,8 @@ def car_edit(request, pk):
         car_edit_form = CarAdvertAddForm(instance=car_advert)
         images_add_form = ImageForm()
 
-    context = {'car': car_advert,
-               'car_edit_form': car_advert_edit_form,
+    context = {'car_advert': car_advert,
+               'car_advert_edit_form': car_advert_edit_form,
                'images_add_form': images_add_form
                }
     return render(request, 'cars/car_edit2.html', context)

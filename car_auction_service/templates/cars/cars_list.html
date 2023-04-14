@@ -2,12 +2,12 @@
 			{% for car_advert in car_adverts.qs %}
 				<div class="grid grid-cols-4 gap-1 m-3.5">
 					<div>
-						<a href='{% url "cars:car_detail" pk=car_advert.pk %}'><img src="{{ car.get_first_image }}" width="250px" height="250px" alt="img"></a>
+						<a href='{% url "cars:car_advert_detail" pk=car_advert.pk %}'><img src="{{ car.get_first_image }}" width="250px" height="250px" alt="img"></a>
 					</div>
 					<div>
 						<div class="grid grid-cols-2 gap-2">
 							<div>
-								<a href='{% url "cars:car_detail" pk=car_advert.pk %}'>{{car_advert.id}} {{ car_advert }}</a>
+								<a href='{% url "cars:car_advert_detail" pk=car_advert.pk %}'>{{car_advert.id}} {{ car_advert }}</a>
 							</div>
 							<div>
 								<p>{{ car_advert.year }}</p>

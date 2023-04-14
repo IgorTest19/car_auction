@@ -29,11 +29,11 @@ def cars_list(request):
     """
     car_adverts = CarAdvert.objects.all()
     car_adverts_filter = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
-    context = {'car_adverts_filter': car_adverts_filter}
+    context = {'car_adverts': car_adverts_filter}
     return render(request, 'cars/cars_main.html', context)
 
 
-def car_detail(request, pk):
+def car_advert_detail(request, pk):
     """
     Display an individual :model: 'cars.CarAdvert'.
 
@@ -74,7 +74,7 @@ def car_detail(request, pk):
 
 
 @login_required(login_url='/users/accounts/login')
-def car_delete(request, pk):
+def car_advert_delete(request, pk):
     """
     Delete a single instance of :model: 'cars.CarAdvert'.
 
@@ -140,7 +140,7 @@ def car_image_set_main(request, car_advert_id, image_id):
 
 
 @login_required(login_url='/users/accounts/login')
-def car_observe(request, pk):
+def car_advert_observe(request, pk):
     """
     Add single instance of :model: 'cars.CarAdvert' to observed filed
     of :model: 'users.UserProfile'
@@ -233,7 +233,7 @@ def dashboard(request):
 
 
 @login_required(login_url='/users/accounts/login')
-def car_edit(request, pk):
+def car_advert_edit(request, pk):
     """
     Allows user to edit car details and images.
 

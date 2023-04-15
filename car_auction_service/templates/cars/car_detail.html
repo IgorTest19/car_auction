@@ -33,13 +33,13 @@
 
 	<p>CARS PHOTOS</p>
 	<p> car images: {{ car_images}}</p>
-	{% if car_images %}
-		wyświetlanie obrazów z poziomu modelu CarImage
-		{% for car_image in car_images %}
-			<p>{{ car_image.image.url }}</p>
-			<p>{{ car_image.image.get_image }}</p>
-			<img src = "{{ car_advert_image.get_image }}" width="500px" height="500px" alt="img">
-		{% endfor %}
+<!--	{% if car_images %}-->
+<!--		wyświetlanie obrazów z poziomu modelu CarImage-->
+<!--		{% for car_image in car_images %}-->
+<!--			<p>{{ car_image.image.url }}</p>-->
+<!--			<p>{{ car_image.image.get_image }}</p>-->
+<!--			<img src = "{{ car_advert_image.get_image }}" width="500px" height="500px" alt="img">-->
+<!--		{% endfor %}-->
 		wyświetlanie obrazków w poziomu modelu CarAdvert
 		{% for car_image_2 in car_advert.get_all_images %}
 			<p><img src = "{{ car_image_2.get_image }}" width="500px" height="500px" alt="img"></p>

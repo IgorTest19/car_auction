@@ -286,7 +286,7 @@ def car_advert_edit(request, pk):
         else:
             messages.add_message(request, messages.INFO, "Failed to modify a car")
     else:
-        car_edit_form = CarAdvertAddForm(instance=car_advert)
+        car_advert_edit_form = CarAdvertAddForm(instance=car_advert)
         images_add_form = ImageForm()
 
     context = {'car_advert': car_advert,

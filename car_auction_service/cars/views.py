@@ -53,6 +53,8 @@ def car_advert_detail(request, pk):
     """
     car_advert = get_object_or_404(CarAdvert, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car_advert=car_advert))
+    print('------------car_images')
+    print(car_images)
 
     # Adding map component
     # Getting location from car model

@@ -79,6 +79,7 @@ class CarAdvert(models.Model):
         :return: set of CarImage objects.
         :rtype: set
         """
+        # return self.carimage_set.all()
         return self.carimage_set.all()
 
     def observers(self):
@@ -95,7 +96,7 @@ class CarImage(models.Model):
     Image class for CarAd class. Related to:
     :model: 'cars.CarAdvert'
     """
-    car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE, related_name='car_image')
+    car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', default='images/no_car_image.png', blank=True, null=True)
 
     def get_image(self):

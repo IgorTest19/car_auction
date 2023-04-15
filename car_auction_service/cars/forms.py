@@ -9,6 +9,7 @@ class CarAdvertAddForm(forms.ModelForm):
         """Metadata class."""
         model = CarAdvert
         fields = ['brand', 'model', 'year', 'location', 'price', 'fuel_type', 'engine_capacity']
+        # fields = ['brand', 'model', 'year', 'location', 'price', 'currency','price_type', 'fuel_type', 'engine_capacity']
 
 
 class ImageForm(forms.ModelForm):

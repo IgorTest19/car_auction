@@ -9,8 +9,8 @@ My auction service
 	{% include 'cars/car_filter_form.html' %}
 	<p>user_profile: {{ user_profile.id }} </p>
 	<p>user_profile.cars_observed_by_user:{{ user_profile.cars_observed_by_user}}</p>
-	{% for car in user_profile.cars_observed_by_user2 %}
-		<a href = '{% url "cars:car_detail" pk=car.pk %}'><img src = "{{ car.get_first_image }}" width="250px" height="250px" alt="img"></a>
+	{% for car_advert in user_profile.cars_observed_by_user2 %}
+		<a href = '{% url "cars:car_advert_detail" pk=car_advert.pk %}'><img src ="{{ car_advert.get_first_image }}" width="250px" height="250px" alt="img"></a>
 	{% endfor %}
 	<p>user_profile.cars_observed</p>
 	{% include 'cars/car_add.html' %}

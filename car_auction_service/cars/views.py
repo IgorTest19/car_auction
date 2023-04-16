@@ -279,7 +279,7 @@ def car_advert_edit(request, pk):
             images = request.FILES.getlist('image')
 
             for car_image in images:
-                CarImage.objects.create(car=car_advert_instance, image=car_image)
+                CarImage.objects.create(car_advert=car_advert_instance, image=car_image)
             messages.add_message(request, messages.INFO, 'Car modified')
             # Form with no data after adding a car
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

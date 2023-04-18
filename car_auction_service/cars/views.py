@@ -203,14 +203,8 @@ def dashboard(request):
 
             # create car instance
             car_advert_instance = car_advert_add_form.save(commit=False)
-            print(f'---------------- car_advert_add_form')
-            print(car_advert_add_form)
             car_advert_instance.owner = request.user
             car_advert_instance.save()
-            print(f'---------------- car_advert_instance')
-            print(car_advert_instance)
-            print(f'----------------type(car_advert_instance)')
-            print(type(car_advert_instance))
 
             # create car images as being related to car object
             images = request.FILES.getlist('image')

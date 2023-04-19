@@ -21,11 +21,11 @@ app_name = 'cars'
 
 urlpatterns = [
     path('', views.cars_list, name='cars_main'),
-    path('car/<int:pk>', views.car_detail, name='car_detail'),
-    path('car/<int:pk>/car_edit', views.car_edit, name='car_edit'),
+    path('car_advert/<int:pk>', views.car_advert_detail, name='car_advert_detail'),
+    path('car_advert/<int:pk>/car_advert_edit', views.car_advert_edit, name='car_advert_edit'),
     path('dashboard', views.dashboard, name='dashboard'),
-    path('car/<int:pk>/delete', views.car_delete, name='car_delete'),
-    path('car/<int:pk>/car_observe', views.car_observe, name='car_observe'),
-    path('car/<int:car_id>/delete_car_image//<int:image_id>', views.delete_car_image, name='delete_car_image'),
-    path('car/<int:car_id>/car_image_set_main//<int:image_id>', views.car_image_set_main, name='car_image_set_main')
+    path('car_advert/<int:pk>/delete', views.car_advert_delete, name='car_advert_delete'),
+    path('car_advert/<int:pk>/car_advert_observe', views.car_advert_observe, name='car_advert_observe'),
+    path('car_advert/<int:car_advert_id>/delete_car_image//<int:image_id>', views.delete_car_image, name='delete_car_image'),
+    path('car_advert/<int:car_advert_id>/car_image_set_main//<int:image_id>', views.car_image_set_main, name='car_image_set_main')
 ]

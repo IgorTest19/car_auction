@@ -16,12 +16,23 @@ class CarAdvert(models.Model):
         ('gross', 'GROSS'),
         ('net', 'NET')
     )
+    FUEL_TYPE_CHOICES = (
+        ('petrol', 'Petrol'),
+        ('diesel', 'Diesel'),
+        ('hybrid_petrol', 'Hybrid (petrol/electric)'),
+        ('hybrid_diesel', 'Hybrid (diesel/electric)'),
+        ('hybrid_plug_in', 'Hybrid-plug-in'),
+        ('electric', 'Electric'),
+        ('petrol_lpg', 'Petrol-LPG'),
+        ('petrol_lng', 'Petrol-LNG'),
+        ('hydrogen', 'Hydroge')
+    )
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='car_ad_owner') # modify relation to onetoone field
     users_observing = models.ManyToManyField(settings.AUTH_USER_MODEL, symmetrical=False, related_name='car_ad_observer', blank=True)
     brand = models.CharField(max_length=250, blank=False, null=False)
     model = models.CharField(max_length=250, blank=False, null=False)
     engine_capacity = models.FloatField(blank=True, null=True)
-    fuel_type = models.CharField(max_length=50, blank=True, null=True)
+    fuel_type = models.CharField(max_length=20, choices=FUEL_TYPE_CHOICES, blank=True, null=True, default='petrol')
     year = models.IntegerField()
     location = models.CharField(max_length=250, blank=True, null=True)
     description = models.TextField(blank=True, null=True)

@@ -150,7 +150,10 @@ def car_advert_observe(request, pk):
     user_profile = get_object_or_404(UserProfile, user=request.user)
     cars_observed = user_profile.cars_observed.all()
 
-    if car_advert not in cars_observed:
+    print(f'---------------------------- user_profile: {user_profile}')
+    print(f'---------------------------- request.user: {request.user}')
+    print(f'---------------------------- car_advert.owner: {car_advert.owner}')
+    if car_advert not in cars_observed or user_profile is not car_advert.owner:
         user_profile.cars_observed.add(car_advert)
         car_advert.users_observing.add(request.user)
         messages.success(request, 'Car added to observed')

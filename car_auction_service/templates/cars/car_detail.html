@@ -11,8 +11,8 @@
 	{% endif %}
 	<p>Data opublikowania: {{ car_advert.publish }}</p>
 	
-	{% if car.owner != request.user %}
-		{% if request.user not in car.users_observing.all %}
+	{% if car_advert.owner != request.user %}
+		{% if request.user not in car_advert.users_observing.all %}
 			<a href="{% url 'cars:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add car do observed</button></a>
 		{% else %}
 			<a href="{% url 'cars:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove car from observed</button></a>
@@ -48,7 +48,8 @@
 	{% else %}
 		<p>No cars images here from CarImage class</p>
 	{% endif %}
-
+	<p>request user: {{ request.user }}</p>
+	<p>car_advert owner: {{ car_advert.owner }}</p>
 	{% if request.user == car_advert.owner %}
 		<a href="{% url 'cars:car_advert_delete' pk=car_advert.pk %}" class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">DELETE CAR</a>
 	{% endif %}

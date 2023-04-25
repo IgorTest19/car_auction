@@ -13,14 +13,14 @@
 	
 	{% if car.owner != request.user %}
 		{% if request.user not in car.users_observing.all %}
-			<a href="{% url 'cars:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add car do observed</button></a>
+			<a href="{% url 'car_auctions:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add car do observed</button></a>
 		{% else %}
-			<a href="{% url 'cars:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove car from observed</button></a>
+			<a href="{% url 'car_auctions:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove car from observed</button></a>
 		{% endif %}
 	{% endif %}
 
 	{% if car_advert.owner == request.user %}
-		<a href='{% url "cars:car_advert_edit" pk=car_advert.pk %}'><button class="save btn bg-yellow-500 hover:yellow text-white font-bold py-2 px-4 rounded">Edit car</button></a>
+		<a href='{% url "car_auctions:car_advert_edit" pk=car_advert.pk %}'><button class="save btn bg-yellow-500 hover:yellow text-white font-bold py-2 px-4 rounded">Edit car</button></a>
 		{% if car_advert.update %}
 			<p>Zaktualizowano {{ car_advert.update }}</p>
 		{% endif %}

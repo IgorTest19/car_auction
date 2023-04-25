@@ -50,7 +50,7 @@
 	{% endif %}
 
 	{% if request.user == car_advert.owner %}
-		<a href="{% url 'cars:car_advert_delete' pk=car_advert.pk %}" class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">DELETE CAR</a>
+		<a href="{% url 'car_auctions:car_advert_delete' pk=car_advert.pk %}" class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">DELETE CAR</a>
 	{% endif %}
 	<p class="rounded-md bg-white w-1/3">{{ car_advert.description }}</p>
 	<p>Więcej treści już w krótce.</p>

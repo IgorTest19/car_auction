@@ -5,7 +5,7 @@ from .models import CarAdvert
 
 
 class CarAdvertSearchFilter(django_filters.FilterSet):
-    """Search filter form class for cars queryset."""
+    """Search filter form class for car_auctions queryset."""
     brand = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'Volvo'}))
     model = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'V60'}))
     location = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'Wrocław'}))

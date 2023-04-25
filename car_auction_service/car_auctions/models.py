@@ -105,7 +105,7 @@ class CarAdvert(models.Model):
 class CarImage(models.Model):
     """
     Image class for CarAd class. Related to:
-    :model: 'cars.CarAdvert'
+    :model: 'car_auctions.CarAdvert'
     """
     car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', default='images/no_car_image.png', blank=True, null=True)

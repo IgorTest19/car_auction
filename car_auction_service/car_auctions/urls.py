@@ -1,4 +1,4 @@
-"""cars URL Configuration
+"""car_auctions URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -17,7 +17,7 @@ from django.urls import path
 
 from . import views
 
-app_name = 'cars'
+app_name = 'car_auctions'
 
 urlpatterns = [
     path('', views.cars_list, name='cars_main'),

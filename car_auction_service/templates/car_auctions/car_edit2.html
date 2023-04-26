@@ -28,12 +28,12 @@
             <p><img src = "{{ car_image_2.get_image }}" width="500px" height="500px" alt="img"></p>
             <p>{{ car_image_2.get_image }}</p>
             <div class="flex justify-left">
-                <form method="POST" action="{% url 'cars:delete_car_image' car_advert.id car_image_2.id %}">
+                <form method="POST" action="{% url 'car_auctions:delete_car_image' car_advert.id car_image_2.id %}">
                     {% csrf_token %}
                     <button type="submit" class="save btn bg-orange-500 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded">DELETE IMAGE</button>
                 </form>
             {% if car_image_2 != car_advert.get_all_images.first %}
-                <form method="POST" action="{% url 'cars:car_image_set_main' car_advert.id car_image_2.id %}">
+                <form method="POST" action="{% url 'car_auctions:car_image_set_main' car_advert.id car_image_2.id %}">
                     {% csrf_token %}
                     <button type="submit" class="save btn bg-yellow-500 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded">SET AS MAIN</button>
                 </form>

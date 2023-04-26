@@ -14,41 +14,41 @@ from .models import Car, CarImage
 
 def cars_list(request):
     """
-    Display a list of all cars in form of filter to make available operation of filtering.
+    Display a list of all car_auctions in form of filter to make available operation of filtering.
 
     **Context**
 
-    ''cars''
-        An instance of FilterSet :django_filters: 'cars.CarSearchFilter',
-        containing instances of :model: 'cars.Car'.
+    ''car_auctions''
+        An instance of FilterSet :django_filters: 'car_auctions.CarSearchFilter',
+        containing instances of :model: 'car_auctions.Car'.
 
     **Template**
 
-    :template: 'cars/cars_main.html'
+    :template: 'car_auctions/cars_main.html'
     """
     cars = Car.objects.all()
     cars = CarSearchFilter(request.GET, queryset=cars)
-    context = {'cars': cars}
-    return render(request, 'cars/cars_main.html', context)
+    context = {'car_auctions': cars}
+    return render(request, 'car_auctions/cars_main.html', context)
 
 
 def car_detail(request, pk):
     """
-    Display an individual :model: 'cars.Car'.
+    Display an individual :model: 'car_auctions.Car'.
 
     **Context**
 
-    ''cars''
-        An instance of :model: 'cars.Car'.
+    ''car_auctions''
+        An instance of :model: 'car_auctions.Car'.
     ''car_images''
-        A list of instances of :model: 'cars.CarImage'.
+        A list of instances of :model: 'car_auctions.CarImage'.
     ''cars_maps''
         A string representation of instance of :model: 'folium.Map'
 
 
     **Template**
 
-    :template: 'cars/car_detail.html'
+    :template: 'car_auctions/car_detail.html'
     """
     car = get_object_or_404(Car, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car=car))
@@ -68,17 +68,17 @@ def car_detail(request, pk):
         'car_images': car_images,
         'cars_map': cars_map
     }
-    return render(request, 'cars/car_detail.html', context)
+    return render(request, 'car_auctions/car_detail.html', context)
 
 
 @login_required(login_url='/users/accounts/login')
 def car_delete(request, pk):
     """
-    Delete a single instance of :model: 'cars.Car'.
+    Delete a single instance of :model: 'car_auctions.Car'.
 
     **Template**
 
-    :template: 'cars/car_detail.html'
+    :template: 'car_auctions/car_detail.html'
     """
     car = get_object_or_404(Car, pk=pk)
     car.delete()
@@ -88,12 +88,12 @@ def car_delete(request, pk):
 @login_required(login_url='/users/accounts/login')
 def car_observe(request, pk):
     """
-    Add single instance of :model: 'cars.Car' to observed filed
+    Add single instance of :model: 'car_auctions.Car' to observed filed
     of :model: 'users.UserProfile'
 
     **Template**
 
-    :template: 'cars/user_dashboard.html'
+    :template: 'car_auctions/user_dashboard.html'
     """
     car = get_object_or_404(Car, pk=pk)
     print(car)
@@ -117,9 +117,9 @@ def car_observe(request, pk):
     # }
     # return redirect(request.path)
     # return HttpResponseRedirect(request.path_info)
-    # return redirect(reverse_lazy('cars:car_detail'))
-    # return render(request, 'cars/car_detail.html', context)
-    # return redirect('cars/car_detail.html')
+    # return redirect(reverse_lazy('car_auctions:car_detail'))
+    # return render(request, 'car_auctions/car_detail.html', context)
+    # return redirect('car_auctions/car_detail.html')
     # return redirect('/')
     # return HttpResponse(status=204)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -129,25 +129,25 @@ def car_observe(request, pk):
 def dashboard(request):
     """
     Display user-specific view of functionalities.
-    Display a list of all cars added by user in the form of filter to make available operation of filtering.
-    Display a list of cars that are observed by the user.
-    Adding new cars to the database.
+    Display a list of all car_auctions added by user in the form of filter to make available operation of filtering.
+    Display a list of car_auctions that are observed by the user.
+    Adding new car_auctions to the database.
 
     **Context**
 
-    ''cars''
-        An instance of :model: 'cars.Car'.
+    ''car_auctions''
+        An instance of :model: 'car_auctions.Car'.
     ''car_add_form''
-        An instance of :form: 'cars.CarAddForm'
+        An instance of :form: 'car_auctions.CarAddForm'
     ''images_add_form''
-        An instance of :filter: 'cars.ImageForm'
+        An instance of :filter: 'car_auctions.ImageForm'
     ''user_profile''
         An instance of :model: 'users.UserProfile'
 
 
     **Template**
 
-    :template: 'cars/user_dashboard.html'
+    :template: 'car_auctions/user_dashboard.html'
     """
     cars = Car.objects.filter(owner=request.user)
     cars = CarSearchFilter(request.GET, queryset=cars)
@@ -176,8 +176,8 @@ def dashboard(request):
         car_add_form = CarAddForm()
         images_add_form = ImageForm()
 
-    context = {'cars': cars,
+    context = {'car_auctions': cars,
                'car_add_form': car_add_form,
                'images_add_form': images_add_form,
                'user_profile': user_profile}
-    return render(request, 'cars/user_dashboard.html', context)
+    return render(request, 'car_auctions/user_dashboard.html', context)

@@ -35,7 +35,7 @@ class CarAdvert(models.Model):
     fuel_type = models.CharField(max_length=20, choices=FUEL_TYPE_CHOICES, blank=True, null=True, default='petrol')
     year = models.IntegerField()
     location = models.CharField(max_length=250, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(max_length=1000, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='pln')
     price_type = models.CharField(max_length=10, choices=PRICE_TYPE_CHOICES, default='gross')
@@ -105,7 +105,7 @@ class CarAdvert(models.Model):
 class CarImage(models.Model):
     """
     Image class for CarAd class. Related to:
-    :model: 'cars.CarAdvert'
+    :model: 'car_auctions.CarAdvert'
     """
     car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/', default='images/no_car_image.png', blank=True, null=True)

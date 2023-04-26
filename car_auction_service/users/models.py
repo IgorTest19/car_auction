@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from cars.models import CarAdvert
+from car_auctions.models import CarAdvert
 
 
 class UserProfile(models.Model):

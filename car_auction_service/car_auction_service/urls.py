@@ -21,7 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls), # admin panel
     path('users/', include('users.urls', namespace='users')), # users app
-    path('', include('cars.urls', namespace='cars')), # cars app
+    path('', include('car_auctions.urls', namespace='car_auctions')), # car_auctions app
     path('__debug__/', include('debug_toolbar.urls')), # django debug panel
     path('maps/', include('maps.urls', namespace='maps')) # maps app
 ]

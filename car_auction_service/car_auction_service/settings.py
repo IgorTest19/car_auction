@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    "cars.apps.CarsConfig",
+    "car_auctions.apps.CarsConfig",
     "users.apps.UsersConfig",
     "maps.apps.MapsConfig",
     "debug_toolbar",

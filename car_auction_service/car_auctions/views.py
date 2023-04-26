@@ -17,37 +17,37 @@ def cars_list(request):
 
     **Context**
 
-    ''cars''
-        An instance of FilterSet :django_filters: 'cars.CarAdvertSearchFilter',
-        containing instances of :model: 'cars.CarAdvert'.
+    ''car_adverts''
+        An instance of FilterSet :django_filters: 'car_auctions.CarAdvertSearchFilter',
+        containing instances of :model: 'car_auctions.CarAdvert'.
 
     **Template**
 
-    :template: 'cars/cars_main.html'
+    :template: 'car_auctions/cars_main.html'
     """
     car_adverts = CarAdvert.objects.all()
     car_adverts_filter = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
     context = {'car_adverts': car_adverts_filter}
-    return render(request, 'cars/cars_main.html', context)
+    return render(request, 'car_auctions/cars_main.html', context)
 
 
 def car_advert_detail(request, pk):
     """
-    Display an individual :model: 'cars.CarAdvert'.
+    Display an individual :model: 'car_auctions.CarAdvert'.
 
     **Context**
 
-    ''cars''
-        An instance of :model: 'cars.CarAdvert'.
+    ''car_advert''
+        An instance of :model: 'car_auctions.CarAdvert'.
     ''car_images''
-        A list of instances of :model: 'cars.CarImage'.
+        A list of instances of :model: 'car_auctions.CarImage'.
     ''cars_maps''
         A string representation of instance of :model: 'folium.Map'
 
 
     **Template**
 
-    :template: 'cars/car_detail.html'
+    :template: 'car_auctions/car_detail.html'
     """
     car_advert = get_object_or_404(CarAdvert, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car_advert=car_advert))
@@ -68,17 +68,17 @@ def car_advert_detail(request, pk):
         'cars_map': cars_map
     }
 
-    return render(request, 'cars/car_detail.html', context)
+    return render(request, 'car_auctions/car_detail.html', context)
 
 
 @login_required(login_url='/users/accounts/login')
 def car_advert_delete(request, pk):
     """
-    Delete a single instance of :model: 'cars.CarAdvert'.
+    Delete a single instance of :model: 'car_auctions.CarAdvert'.
 
     **Template**
 
-    :template: 'cars/car_detail.html'
+    :template: 'car_auctions/car_detail.html'
     """
     car_advert = get_object_or_404(CarAdvert, pk=pk)
     car_advert.delete()
@@ -89,11 +89,11 @@ def car_advert_delete(request, pk):
 @login_required(login_url='/users/accounts/login')
 def delete_car_image(request, car_advert_id, image_id):
     """
-    Delete a single instance of :model: 'cars.CarImage'.
+    Delete a single instance of :model: 'car_auctions.CarImage'.
 
     **Template**
 
-    :template: 'cars/car_edit2.html'
+    :template: 'car_auctions/car_edit2.html'
     """
     car_advert = get_object_or_404(CarAdvert, pk=car_advert_id)
     car_image = get_object_or_404(CarImage, pk=image_id, car_advert=car_advert)
@@ -111,11 +111,11 @@ def delete_car_image(request, car_advert_id, image_id):
 @login_required(login_url='/users/accounts/login')
 def car_image_set_main(request, car_advert_id, image_id):
     """
-    Delete a single instance of :model: 'cars.CarImage'.
+    Delete a single instance of :model: 'car_auctions.CarImage'.
 
     **Template**
 
-    :template: 'cars/car_edit2.html'
+    :template: 'car_auctions/car_edit2.html'
     """
     car_advert = get_object_or_404(CarAdvert, pk=car_advert_id)
     car_image = get_object_or_404(CarImage, pk=image_id, car_advert=car_advert)
@@ -139,12 +139,12 @@ def car_image_set_main(request, car_advert_id, image_id):
 @login_required(login_url='/users/accounts/login')
 def car_advert_observe(request, pk):
     """
-    Add single instance of :model: 'cars.CarAdvert' to observed filed
+    Add single instance of :model: 'car_auctions.CarAdvert' to observed filed
     of :model: 'users.UserProfile'
 
     **Template**
 
-    :template: 'cars/car_detail.html'
+    :template: 'car_auctions/car_detail.html'
     """
     car_advert = get_object_or_404(CarAdvert, pk=pk)
     user_profile = get_object_or_404(UserProfile, user=request.user)
@@ -168,23 +168,23 @@ def dashboard(request):
     Display user-specific view of functionalities.
     Display a list of all car advertisements added by user in the form of filter to make available operation of filtering.
     Display a list of car advertisements that are observed by the user.
-    Adding new cars to the database.
+    Adding new car advert to the database.
 
     **Context**
 
-    ''cars''
-        An instance of :model: 'cars.CarAdvert'.
+    ''car_adverts''
+        An instance of :model: 'car_auctions.CarAdvert'.
     ''car_add_form''
-        An instance of :form: 'cars.CarAdvertAddForm'
+        An instance of :form: 'car_auctions.CarAdvertAddForm'
     ''images_add_form''
-        An instance of :filter: 'cars.ImageForm'
+        An instance of :filter: 'car_auctions.ImageForm'
     ''user_profile''
         An instance of :model: 'users.UserProfile'
 
 
     **Template**
 
-    :template: 'cars/user_dashboard.html'
+    :template: 'car_auctions/user_dashboard.html'
     """
     car_adverts = CarAdvert.objects.filter(owner=request.user)
     car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
@@ -218,7 +218,7 @@ def dashboard(request):
                'images_add_form': images_add_form,
                'user_profile': user_profile
                }
-    return render(request, 'cars/user_dashboard.html', context)
+    return render(request, 'car_auctions/user_dashboard.html', context)
 
 
 @login_required(login_url='/users/accounts/login')
@@ -229,18 +229,18 @@ def car_advert_edit(request, pk):
     **Context**
 
     ''car''
-        An instance of :model: 'cars.CarAdvert'.
+        An instance of :model: 'car_auctions.CarAdvert'.
     ''car_add_form''
-        An instance of :form: 'cars.CarAdvertAddForm'
+        An instance of :form: 'car_auctions.CarAdvertAddForm'
     ''images_add_form''
-        An instance of :filter: 'cars.ImageForm'
+        An instance of :filter: 'car_auctions.ImageForm'
     ''user_profile''
         An instance of :model: 'users.UserProfile'
 
 
     **Template**
 
-    :template: 'cars/user_dashboard.html'
+    :template: 'car_auctions/user_dashboard.html'
     """
     car_advert = get_object_or_404(CarAdvert, pk=pk)
     car_image_default = CarImage.objects.filter(car_advert=car_advert).first()
@@ -280,4 +280,4 @@ def car_advert_edit(request, pk):
                'car_advert_edit_form': car_advert_edit_form,
                'images_add_form': images_add_form
                }
-    return render(request, 'cars/car_edit2.html', context)
+    return render(request, 'car_auctions/car_edit2.html', context)

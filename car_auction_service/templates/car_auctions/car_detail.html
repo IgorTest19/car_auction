@@ -10,9 +10,9 @@
 		<p>Observers: {{ car_advert.observers }} </p>
 	{% endif %}
 	<p>Data opublikowania: {{ car_advert.publish }}</p>
-	
-	{% if car.owner != request.user %}
-		{% if request.user not in car.users_observing.all %}
+	<p>car owner: {{ car_advert.owner }}</p>
+	{% if car_advert.owner != request.user %}
+		{% if request.user not in car_advert.users_observing.all %}
 			<a href="{% url 'car_auctions:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add car do observed</button></a>
 		{% else %}
 			<a href="{% url 'car_auctions:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove car from observed</button></a>

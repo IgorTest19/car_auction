@@ -6,6 +6,7 @@
 	<div class="flex items-center space-x-4">
 		{% if user.is_authenticated %}
 			<a href = "{% url 'car_auctions:dashboard' %}" class="text-white hover:text-gray-400">Dashboard</a>
+			<a href = "{% url 'car_auctions:cars_observed' %}" class="text-white hover:text-gray-400">Cars Observed</a>
 			<p><a href="{% url 'users:user_settings' %}" class="text-white hover:text-gray-400">Hello {{ user.username }}</a>
 			<a href = "{% url 'users:logout' %}" class="text-white hover:text-gray-400">Logout</a></p>
 		{% else %}

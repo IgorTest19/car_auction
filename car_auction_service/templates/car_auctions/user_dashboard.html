@@ -7,12 +7,6 @@ My auction service
 {% block content %}
 
 	{% include 'car_auctions/car_filter_form.html' %}
-	<p>user_profile: {{ user_profile.id }} </p>
-	<p>user_profile.cars_observed_by_user:{{ user_profile.cars_observed_by_user}}</p>
-	{% for car_advert in user_profile.cars_observed_by_user2 %}
-		<a href = '{% url "car_auctions:car_advert_detail" pk=car_advert.pk %}'><img src ="{{ car_advert.get_first_image }}" width="250px" height="250px" alt="img"></a>
-	{% endfor %}
-	<p>user_profile.cars_observed</p>
 	{% include 'car_auctions/car_add.html' %}
 	<h1>My Listed cars</h1>
 

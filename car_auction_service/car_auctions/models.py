@@ -120,3 +120,9 @@ class CarImage(models.Model):
             return self.image.url
         else:
             return None
+
+
+class RecentlyViewed(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_viewed')
+    car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE)
+    viewed_at = models.DateTimeField(auto_now_add=True)

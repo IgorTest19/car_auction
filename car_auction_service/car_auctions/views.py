@@ -195,6 +195,10 @@ def cars_observed(request):
                }
     return render(request, 'car_auctions/cars_observed.html', context)
 
+@login_required(login_url='/users/accounts/login')
+def cars_history(request):
+    pass
+
 
 @login_required(login_url='/users/accounts/login')
 def dashboard(request):

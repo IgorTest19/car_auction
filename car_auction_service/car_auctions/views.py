@@ -52,6 +52,9 @@ def car_advert_detail(request, pk):
     car_advert = get_object_or_404(CarAdvert, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car_advert=car_advert))
 
+    # adding viewed car ad to the history of the browsed cars ads by user
+    RecentlyViewed.objects.get_or_create(user=request.user, car_advert=car_advert)
+
     # Adding map component.
     # Getting location from the car model.
     get_car_location = car_advert.location

@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404, redirec
 from users.models import UserProfile
 from .filters import CarAdvertSearchFilter
 from .forms import CarAdvertAddForm, ImageForm
-from .models import CarAdvert, CarImage
+from .models import CarAdvert, CarImage, RecentlyViewed
 
 
 def cars_list(request):
@@ -197,7 +197,17 @@ def cars_observed(request):
 
 @login_required(login_url='/users/accounts/login')
 def cars_history(request):
+    """
     pass
+    :param request:
+    :type request:
+    :return:
+    :rtype:
+    """
+    recently_viewed = RecentlyViewed.objects.filter(user=request.user).order_by('-viewed_at')[:100]
+    adverts = [rv.advert for rv in recently_viewed]
+    context = {'adverts': adverts}
+    return render(request, 'car_auctions/cars_browsed_history.html', context)
 
 
 @login_required(login_url='/users/accounts/login')

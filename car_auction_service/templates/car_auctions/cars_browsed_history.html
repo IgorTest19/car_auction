@@ -5,43 +5,22 @@ My auction service
 {% endblock %}
 
 {% block content %}
-
-	{% for car_advert in user_profile.cars_observed_by_user2 %}
-	<p>car_advert: {{ car_advert }}</p>
-			<p>car_advert first image: {{ car_advert.car}}</p>
-				<div class="grid grid-cols-4 gap-1 m-3.5">
-					<div>
-						<a href='{% url "car_auctions:car_advert_detail" pk=car_advert.pk %}'><img src="{{ car_advert.get_first_image }}" width="250px" height="250px" alt="img"></a>
-					</div>
-					<div>
-						<div class="grid grid-cols-2 gap-2">
-							<div>
-								<a href='{% url "car_auctions:car_advert_detail" pk=car_advert.pk %}'>{{car_advert.id}} {{ car_advert }}</a>
-							</div>
-							<div>
-								<p>{{ car_advert.year }}</p>
-							</div>
-							<div>
-								<p>{{ car_advert.location }}</p>
-							</div>
-							<div>
-								<p>{{ car_advert.price }} {{ car_advert.currency }}</p>
-							</div>
-							<div>
-								{% if car_advert.owner != request.user %}
-									{% if request.user not in car_advert.users_observing.all %}
-										<a href="{% url 'car_auctions:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add car do observed</button></a>
-									{% else %}
-										<a href="{% url 'car_auctions:car_advert_observe' pk=car_advert.pk %}"><button class="save btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Remove car from observed</button></a>
-									{% endif %}
-								{% endif %}
-							</div>
-						</div>
-					</div>
-				</div>
-			{% empty %}
-				<p> No records in cars.qs</p>
-		    {% endfor %}
-	
-
+    <h1>Recently Viewed Adverts</h1>
+    {% if adverts %}
+        <ul>
+            {% for advert in adverts %}
+                <li>
+                    <h3>{{ advert.brand }} {{ advert.model }} ({{ advert.year }})</h3>
+                    {% if advert.description %}
+                        <p>{{ advert.description }}</p>
+                    {% endif %}
+                    {% if advert.price %}
+                        <p>Price: {{ advert.price }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recently viewed adverts.</p>
+    {% endif %}
 {% endblock %}

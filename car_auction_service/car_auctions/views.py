@@ -199,7 +199,7 @@ def cars_observed(request):
     return render(request, 'car_auctions/cars_observed.html', context)
 
 @login_required(login_url='/users/accounts/login')
-def cars_history(request):
+def car_adverts_history(request):
     """
     pass
     :param request:
@@ -208,7 +208,10 @@ def cars_history(request):
     :rtype:
     """
     recently_viewed = RecentlyViewed.objects.filter(user=request.user).order_by('-viewed_at')[:100]
-    adverts = [rv.advert for rv in recently_viewed]
+    print(f'-----------------recently viewwed')
+    print(recently_viewed)
+    # adverts = [rv.advert for rv in recently_viewed]
+    adverts = recently_viewed.all()
     context = {'adverts': adverts}
     return render(request, 'car_auctions/cars_browsed_history.html', context)
 

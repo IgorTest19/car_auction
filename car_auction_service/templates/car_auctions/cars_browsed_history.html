@@ -10,6 +10,7 @@ My auction service
         <ul>
             {% for advert in adverts %}
                 <li>
+                    <p>{{ advert }}</p>
                     <h3>{{ advert.brand }} {{ advert.model }} ({{ advert.year }})</h3>
                     {% if advert.description %}
                         <p>{{ advert.description }}</p>

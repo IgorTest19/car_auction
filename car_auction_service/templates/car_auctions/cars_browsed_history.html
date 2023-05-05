@@ -6,12 +6,15 @@ My auction service
 
 {% block content %}
     <h1>Recently Viewed Adverts</h1>
-    {% if adverts %}
+    {% if recently_viewed %}
         <ul>
-            {% for advert in adverts %}
+            {% for viewed in recently_viewed %}
                 <li>
-                    <p>{{ advert }}</p>
-                    <h3>{{ advert.brand }} {{ advert.model }} ({{ advert.year }})</h3>
+                    <p>{{ viewed.car_advert }}</p>
+                    <div>
+						<a href='{% url "car_auctions:car_advert_detail" pk=viewed.car_advert.pk %}'><img src="{{ viewed.car_advert.get_first_image }}" width="250px" height="250px" alt="img"></a>
+					</div>
+                    <h3>{{ viewed.car_advert.brand }} {{ viewed.car_advert.model }} ({{ viewed.car_advert.year }})</h3>
                     {% if advert.description %}
                         <p>{{ advert.description }}</p>
                     {% endif %}

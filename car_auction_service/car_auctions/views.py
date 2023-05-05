@@ -4,11 +4,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from django.utils import timezone
 
 from users.models import UserProfile
 from .filters import CarAdvertSearchFilter
 from .forms import CarAdvertAddForm, ImageForm
-from .models import CarAdvert, CarImage
+from .models import CarAdvert, CarImage, RecentlyViewed
 
 
 def cars_list(request):
@@ -51,6 +52,13 @@ def car_advert_detail(request, pk):
     """
     car_advert = get_object_or_404(CarAdvert, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car_advert=car_advert))
+
+    # Adding the viewed car advert to the history of viewed car adverts, if it has not been added yet.
+    # Otherwise, update the date it was viewed.
+    recently_viewed, created = RecentlyViewed.objects.get_or_create(user=request.user, car_advert=car_advert)
+    if not created:
+        recently_viewed.viewed_at = timezone.now()
+        recently_viewed.save()
 
     # Adding map component.
     # Getting location from the car model.
@@ -194,6 +202,23 @@ def cars_observed(request):
                'user_profile': user_profile
                }
     return render(request, 'car_auctions/cars_observed.html', context)
+
+@login_required(login_url='/users/accounts/login')
+def car_adverts_history(request):
+    """
+    pass
+    :param request:
+    :type request:
+    :return:
+    :rtype:
+    """
+    recently_viewed = RecentlyViewed.objects.filter(user=request.user).order_by('-viewed_at')[:100]
+    print(f'-----------------recently viewwed')
+    print(recently_viewed)
+    # adverts = [rv.advert for rv in recently_viewed]
+    recently_viewed = recently_viewed.all()
+    context = {'recently_viewed': recently_viewed}
+    return render(request, 'car_auctions/cars_browsed_history.html', context)
 
 
 @login_required(login_url='/users/accounts/login')

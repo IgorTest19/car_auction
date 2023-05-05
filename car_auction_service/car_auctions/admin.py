@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CarAdvert, CarImage
+from .models import CarAdvert, CarImage, RecentlyViewed
 
 
 @admin.register(CarAdvert)
@@ -19,3 +19,8 @@ class CarImage(admin.ModelAdmin):
         return obj.id
 
     image_id.short_description = 'image id'
+
+@admin.register(RecentlyViewed)
+class RecentlyViewed(admin.ModelAdmin):
+    """Viewed car in history class representation in the admin interface."""
+    list_display = ['user', 'car_advert', 'viewed_at']

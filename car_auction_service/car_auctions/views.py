@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.utils import timezone
+from django.views.decorators.cache import cache_control
 
 from users.models import UserProfile
 from .filters import CarAdvertSearchFilter
@@ -204,6 +205,7 @@ def cars_observed(request):
     return render(request, 'car_auctions/cars_observed.html', context)
 
 @login_required(login_url='/users/accounts/login')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def car_adverts_history(request):
     """
     pass
@@ -213,11 +215,17 @@ def car_adverts_history(request):
     :rtype:
     """
     recently_viewed = RecentlyViewed.objects.filter(user=request.user).order_by('-viewed_at')[:100]
+
+    # cache
+    # cache_key = f"recently_viewed_{request.user.pk}"
+    # cache.set(cache_key, recently_viewed, timeout=60 * 5)
+
     print(f'-----------------recently viewwed')
     print(recently_viewed)
     # adverts = [rv.advert for rv in recently_viewed]
     recently_viewed = recently_viewed.all()
     context = {'recently_viewed': recently_viewed}
+    response = render(request, 'car_auctions/cars_browsed_history.html', context)
     return render(request, 'car_auctions/cars_browsed_history.html', context)
 
 

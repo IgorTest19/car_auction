@@ -206,7 +206,7 @@ def cars_observed(request):
 
 @login_required(login_url='/users/accounts/login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def car_adverts_history(request):
+def car_adverts_viewed(request):
     """
     Display a list of recently viewed car advertisements.
     Display an individual :model: 'car_auctions.CarAdvert'.

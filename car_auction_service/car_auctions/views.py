@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.utils import timezone
+from django.views.decorators.cache import cache_control
 
 from users.models import UserProfile
 from .filters import CarAdvertSearchFilter
@@ -204,19 +205,22 @@ def cars_observed(request):
     return render(request, 'car_auctions/cars_observed.html', context)
 
 @login_required(login_url='/users/accounts/login')
-def car_adverts_history(request):
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def car_adverts_viewed(request):
     """
-    pass
-    :param request:
-    :type request:
-    :return:
-    :rtype:
+    Display a list of recently viewed car advertisements.
+    Display an individual :model: 'car_auctions.CarAdvert'.
+
+    **Context**
+
+    ''recently_viewed''
+        An instance of filtered :model: 'car_auctions.RecentlyViewed"
+
+    **Template**
+
+    :template: 'car_auctions/cars_browsed_history.html'
     """
     recently_viewed = RecentlyViewed.objects.filter(user=request.user).order_by('-viewed_at')[:100]
-    print(f'-----------------recently viewwed')
-    print(recently_viewed)
-    # adverts = [rv.advert for rv in recently_viewed]
-    recently_viewed = recently_viewed.all()
     context = {'recently_viewed': recently_viewed}
     return render(request, 'car_auctions/cars_browsed_history.html', context)
 

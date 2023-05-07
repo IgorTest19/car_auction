@@ -208,11 +208,17 @@ def cars_observed(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def car_adverts_history(request):
     """
-    pass
-    :param request:
-    :type request:
-    :return:
-    :rtype:
+    Display a list of recently viewed car advertisements.
+    Display an individual :model: 'car_auctions.CarAdvert'.
+
+    **Context**
+
+    ''recently_viewed''
+        An instance of filtered :model: 'car_auctions.RecentlyViewed"
+
+    **Template**
+
+    :template: 'car_auctions/cars_browsed_history.html'
     """
     recently_viewed = RecentlyViewed.objects.filter(user=request.user).order_by('-viewed_at')[:100]
     context = {'recently_viewed': recently_viewed}

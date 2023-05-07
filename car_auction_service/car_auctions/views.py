@@ -215,17 +215,7 @@ def car_adverts_history(request):
     :rtype:
     """
     recently_viewed = RecentlyViewed.objects.filter(user=request.user).order_by('-viewed_at')[:100]
-
-    # cache
-    # cache_key = f"recently_viewed_{request.user.pk}"
-    # cache.set(cache_key, recently_viewed, timeout=60 * 5)
-
-    print(f'-----------------recently viewwed')
-    print(recently_viewed)
-    # adverts = [rv.advert for rv in recently_viewed]
-    recently_viewed = recently_viewed.all()
     context = {'recently_viewed': recently_viewed}
-    response = render(request, 'car_auctions/cars_browsed_history.html', context)
     return render(request, 'car_auctions/cars_browsed_history.html', context)
 
 

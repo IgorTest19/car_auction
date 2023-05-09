@@ -2,6 +2,7 @@ import folium
 import geocoder
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.utils import timezone
@@ -71,10 +72,17 @@ def car_advert_detail(request, pk):
     folium.Marker(location_values.latlng, tooltip=get_car_location, popup=car_advert).add_to(cars_map)
     # Getting HTML representation of the Map Object
     cars_map = cars_map._repr_html_()
+
+    # Suggested similar car advertisements
+    similar_car_ads = CarAdvert.objects.filter(Q(brand=car_advert.brand) | Q(model=car_advert.model))
+    print('-------------------similar car ads')
+    print(similar_car_ads)
+
     context = {
         'car_advert': car_advert,
         'car_images': car_images,
-        'cars_map': cars_map
+        'cars_map': cars_map,
+        'similar_car_ads': similar_car_ads
     }
 
     return render(request, 'car_auctions/car_detail.html', context)

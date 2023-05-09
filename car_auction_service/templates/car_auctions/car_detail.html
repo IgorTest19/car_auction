@@ -55,4 +55,8 @@
 	<p class="rounded-md bg-white w-1/3">{{ car_advert.description }}</p>
 	<p>Więcej treści już w krótce.</p>
 	{% include 'maps/map_main.html' %}
+	
+	{% for similar_car_ad in similar_car_ads %}
+		<p>{{ similar_car_ad }}</p>
+	{% endfor %}
 {% endblock %}

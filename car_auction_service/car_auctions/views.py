@@ -1,5 +1,7 @@
 import folium
 import geocoder
+from decimal import Decimal
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -74,7 +76,7 @@ def car_advert_detail(request, pk):
     cars_map = cars_map._repr_html_()
 
     # Suggested similar car advertisements
-    similar_car_ads = CarAdvert.objects.filter(Q(brand=car_advert.brand) | Q(model=car_advert.model))
+    similar_car_ads = CarAdvert.objects.filter(Q(brand=car_advert.brand) | Q(model=car_advert.model) | Q(price__range=[car_advert.price*Decimal(0.8), car_advert.price*Decimal(1.2)]))[:5]
     print('-------------------similar car ads')
     print(similar_car_ads)
 

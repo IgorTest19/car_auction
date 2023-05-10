@@ -1,16 +1,17 @@
+from decimal import Decimal
+
 import folium
 import geocoder
-from decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.cache import cache_control
-
 from users.models import UserProfile
+
 from .filters import CarAdvertSearchFilter
 from .forms import CarAdvertAddForm, ImageForm
 from .models import CarAdvert, CarImage, RecentlyViewed

@@ -55,4 +55,28 @@
 	<p class="rounded-md bg-white w-1/3">{{ car_advert.description }}</p>
 	<p>Więcej treści już w krótce.</p>
 	{% include 'maps/map_main.html' %}
+	
+	<div>
+		<p>Similar cars</p>
+	</div>
+	<div class="flex overflow-x-auto">
+		{% for similar_car_ad in similar_car_ads %}
+			<div class="flex-shrink-0 w-64 mx-4 p-4 bg-gray-100 rounded-lg">
+				<div class="grid grid-cols-2 gap-2">
+					<div>
+						<a href='{% url "car_auctions:car_advert_detail" pk=similar_car_ad.pk %}'><img src="{{ similar_car_ad.get_first_image }}" width="250px" height="250px" alt="img"></a>
+					</div>
+					<div>
+						<p>{{ similar_car_ad.year }}</p>
+					</div>
+					<div>
+						<p>{{ similar_car_ad.location }}</p>
+					</div>
+					<div>
+						<p>{{ similar_car_ad.price }} {{ similar_car_ad.currency }}</p>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}

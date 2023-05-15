@@ -61,6 +61,9 @@ def get_similar_cars(car_advert):
     price_range = 100
     similar_car_ads = []
     for percent in range(1, price_range + 1):
+
+        print(f'-----iteration/percent {percent}')
+        print(f'-----similar_car_ads_at_the_beginning {similar_car_ads}')
         # get minimal price range for given percentage
         price_min = car_advert.price * (1 - percent * Decimal(0.01))
 
@@ -68,25 +71,39 @@ def get_similar_cars(car_advert):
         price_max = car_advert.price * (1 + percent * Decimal(0.01))
 
         # get 5 car adverts objects filtered by a price range of price_min and price max, by a car brand and by excluding default car.
-        filtered_car_adverts = CarAdvert.objects.filter(Q(brand=car_advert.brand) & Q(price__gte=price_min, price__lte=price_max))[:5]
+        filtered_car_adverts = CarAdvert.objects.filter(~Q(id=car_advert.id) & Q(brand=car_advert.brand) & Q(price__gte=price_min, price__lte=price_max))
+
+        print(f'------- filtered_car_adverts: {filtered_car_adverts}')
 
         # exclude filtered car adverts if they are already added to the list
 
-        filtered_car_adverts_clean = filtered_car_adverts.exclude(id__in=[car.id for car in similar_car_ads])
+        # filtered_car_adverts_clean = filtered_car_adverts.exclude(id__in=[car.id for car in similar_car_ads])
 
         # filtered_car_adverts_clean = filtered_car_adverts_clean.exclude(id=car_advert.id)
+        print(f'----- for check')
+        for car_advert in filtered_car_adverts:
+            print(f'----car_advert_id: {car_advert}')
+            print(f'----- similar_cars: {similar_car_ads}')
+            if car_advert not in similar_car_ads:
+                similar_car_ads.append(car_advert)
 
-        similar_car_ads += list(filtered_car_adverts_clean)
+                if len(similar_car_ads) == 5:
+                    print(f'-------len(similar_car_ads): {len(similar_car_ads)}')
+                    print(f'------ {similar_car_ads}')
+                    break
+
+
+
+        # similar_car_ads += list(filtered_car_adverts_clean)
 
         if len(similar_car_ads) == 5:
+            print(f'-------len(similar_car_ads): {len(similar_car_ads)}')
+            print(f'------ {similar_car_ads}')
             break
             # return similar_car_ads
 
-        print(f'------------ similar_car_ads: {similar_car_ads}')
-        for car in similar_car_ads:
-            print(car.price)
 
-        return similar_car_ads
+    return similar_car_ads
 
 
 # from django.db.models import Q

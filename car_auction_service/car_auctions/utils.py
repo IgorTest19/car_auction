@@ -4,6 +4,7 @@ from decimal import Decimal
 from django.db.models import Q
 from .models import CarAdvert
 
+# TODO: dodać warnek (zawsze) sprawdzania is_valid.
 
 # def get_similar_cars(car_advert):
 #     price_range = 100
@@ -84,7 +85,7 @@ def get_similar_cars(car_advert):
         for car_advert in filtered_car_adverts:
             print(f'----car_advert_id: {car_advert}')
             print(f'----- similar_cars: {similar_car_ads}')
-            if car_advert not in similar_car_ads:
+            if car_advert not in similar_car_ads and car_advert.is_valid:
                 similar_car_ads.append(car_advert)
 
                 if len(similar_car_ads) == 5:

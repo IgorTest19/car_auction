@@ -43,7 +43,7 @@ class CarAdvert(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     valid_until = models.DateTimeField(blank=True, null=True)
-    is_valid = models.BooleanField(default=True, blank=True, null=True)
+    is_valid = models.BooleanField(default=True, null=False)
 
 
 
@@ -55,7 +55,8 @@ class CarAdvert(models.Model):
 
     def __str__(self):
         """String representation of the caradvert class object."""
-        return f'{self.brand} {self.model}'
+        # return f'{self.brand} {self.model}'
+        return f'{self.id}'
 
     def get_image(self):
         """

@@ -37,7 +37,7 @@ def cars_list(request):
     context = {'car_adverts': car_adverts_filter}
     return render(request, 'car_auctions/cars_main.html', context)
 
-
+@login_required(login_url='/users/accounts/login')
 def car_advert_detail(request, pk):
     """
     Display an individual :model: 'car_auctions.CarAdvert'.

@@ -15,6 +15,7 @@ from users.models import UserProfile
 from .filters import CarAdvertSearchFilter
 from .forms import CarAdvertAddForm, ImageForm
 from .models import CarAdvert, CarImage, RecentlyViewed
+from .utils import get_similar_cars
 
 
 def cars_list(request):
@@ -77,9 +78,7 @@ def car_advert_detail(request, pk):
     cars_map = cars_map._repr_html_()
 
     # Suggested similar car advertisements
-    similar_car_ads = CarAdvert.objects.filter((Q(brand=car_advert.brand) | Q(model=car_advert.model)) & Q(price__range=[car_advert.price*Decimal(0.8), car_advert.price*Decimal(1.2)]))[:5]
-    print('-------------------similar car ads')
-    print(similar_car_ads)
+    similar_car_ads = get_similar_cars(car_advert)
 
     context = {
         'car_advert': car_advert,

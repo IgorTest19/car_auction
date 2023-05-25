@@ -5,17 +5,14 @@ My auction service
 {% endblock %}
 
 {% block content %}
-<div class="flex items-center space-x-4 fixed justify-between px-4 px-6">
-	{% if user.is_authenticated %}
-		<a href = "{% url 'car_auctions:cars_observed' %}" class="text-white hover:text-gray-400">Cars Observed</a>
-		<a href = "{% url 'car_auctions:car_adverts_viewed' %}" class="text-white hover:text-gray-400">Browsed history</a>
-	{% endif %}
+<div class="flex space-y-6">
+	{% include 'car_auctions/user_dashboard_navbar.html' %}
+	<div>
+		{% include 'car_auctions/car_filter_form.html' %}
+		{% include 'car_auctions/car_add.html' %}
+		<h1>My Listed cars</h1>
+	
+		{% include 'car_auctions/cars_list.html' %}
+	</div>
 </div>
-
-	{% include 'car_auctions/car_filter_form.html' %}
-	{% include 'car_auctions/car_add.html' %}
-	<h1>My Listed cars</h1>
-
-	{% include 'car_auctions/cars_list.html' %}
-
 {% endblock %}

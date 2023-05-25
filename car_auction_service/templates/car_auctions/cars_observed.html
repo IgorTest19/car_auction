@@ -5,8 +5,10 @@ My auction service
 {% endblock %}
 
 {% block content %}
-
+	<div class="flex space-y-6">
+	{% include 'car_auctions/user_dashboard_navbar.html' %}
 	{% include 'car_auctions/car_filter_form.html' %}
+		</div>
 	<p>user_profile: {{ user_profile.id }} </p>
 	<p>user_profile.cars_observed_by_user:{{ user_profile.cars_observed_by_user}}</p>
 	{% for car_advert in user_profile.cars_observed_by_user2 %}

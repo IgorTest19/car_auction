@@ -2,12 +2,9 @@
 	<div>
 		<a href="/" class="text-xl text-white">Car Auction</a>
 	</div>
-	
 	<div class="flex items-center space-x-4">
 		{% if user.is_authenticated %}
 			<a href = "{% url 'car_auctions:dashboard' %}" class="text-white hover:text-gray-400">Dashboard</a>
-			<a href = "{% url 'car_auctions:cars_observed' %}" class="text-white hover:text-gray-400">Cars Observed</a>
-			<a href = "{% url 'car_auctions:car_adverts_viewed' %}" class="text-white hover:text-gray-400">Browsed history</a>
 			<p><a href="{% url 'users:user_settings' %}" class="text-white hover:text-gray-400">Hello {{ user.username }}</a>
 			<a href = "{% url 'users:logout' %}" class="text-white hover:text-gray-400">Logout</a></p>
 		{% else %}
@@ -19,3 +16,8 @@
 		{% endblock %}
 	</div>
 </nav>
+<div id="dashboard_navbar">
+	{% if request.path in DASHBOARD_PATHS %}
+			{% include 'car_auctions/user_dashboard_navbar.html' %}
+	{% endif %}
+</div>

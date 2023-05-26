@@ -234,6 +234,63 @@ def car_adverts_viewed(request):
     context = {'recently_viewed': recently_viewed}
     return render(request, 'car_auctions/cars_browsed_history.html', context)
 
+@login_required(login_url='/users/accounts/login')
+def car_advert_add(request):
+    """
+    Display user-specific view of functionalities.
+    Display a list of all car advertisements added by user in the form of filter to make available operation of filtering.
+    Display a list of car advertisements that are observed by the user.
+    Adding new car advert to the database.
+
+    **Context**
+
+    ''car_adverts''
+        An instance of :model: 'car_auctions.CarAdvert'.
+    ''car_add_form''
+        An instance of :form: 'car_auctions.CarAdvertAddForm'
+    ''images_add_form''
+        An instance of :filter: 'car_auctions.ImageForm'
+    ''user_profile''
+        An instance of :model: 'users.UserProfile'
+
+
+    **Template**
+
+    :template: 'car_auctions/user_dashboard.html'
+    """
+    car_adverts = CarAdvert.objects.filter(owner=request.user)
+    car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+
+    if request.method == 'POST':
+        car_advert_add_form = CarAdvertAddForm(request.POST)
+        images_add_form = ImageForm(request.POST, request.FILES)
+        if car_advert_add_form.is_valid() and images_add_form.is_valid():
+
+            # Create a car instance
+            car_advert_instance = car_advert_add_form.save(commit=False)
+            car_advert_instance.owner = request.user
+            car_advert_instance.save()
+
+            # Creating car images as being related to car object.
+            images = request.FILES.getlist('image')
+            for car_image in images:
+                CarImage.objects.create(car_advert=car_advert_instance, image=car_image)
+            messages.add_message(request, messages.INFO, 'Car added')
+            # Form with no data after adding a car.
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.add_message(request, messages.INFO, "Failed to add a car")
+    else:
+        car_advert_add_form = CarAdvertAddForm()
+        images_add_form = ImageForm()
+
+    context = {'car_adverts': car_adverts,
+               'car_advert_add_form': car_advert_add_form,
+               'images_add_form': images_add_form,
+               'user_profile': user_profile
+               }
+    return render(request, 'car_auctions/car_add.html', context)
 
 @login_required(login_url='/users/accounts/login')
 def dashboard(request):

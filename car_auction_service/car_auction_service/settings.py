@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "crispy_forms",
     "crispy_bootstrap5",
-    "django_filters"
-
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -73,6 +72,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "car_auction_service.context_processors.dashboard_paths",
             ],
         },
     },

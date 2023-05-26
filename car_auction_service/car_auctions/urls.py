@@ -26,6 +26,7 @@ urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
     path('cars_observed', views.cars_observed, name='cars_observed'),
     path('cars_history', views.car_adverts_viewed, name='car_adverts_viewed'),
+    path('car_advert_add', views.car_advert_add, name='car_advert_add'),
     path('car_advert/<int:pk>/delete', views.car_advert_delete, name='car_advert_delete'),
     path('car_advert/<int:pk>/car_advert_observe', views.car_advert_observe, name='car_advert_observe'),
     path('car_advert/<int:car_advert_id>/delete_car_image//<int:image_id>', views.delete_car_image, name='delete_car_image'),

@@ -4,27 +4,41 @@
 My auction service
 {% endblock %}
 
+
 {% block content %}
-    <h1>Recently Viewed Adverts</h1>
-    {% if recently_viewed %}
-        <ul>
-            {% for viewed in recently_viewed %}
-                <li>
-                    <p>{{ viewed.car_advert }}</p>
-                    <div>
-						<a href='{% url "car_auctions:car_advert_detail" pk=viewed.car_advert.pk %}'><img src="{{ viewed.car_advert.get_first_image }}" width="250px" height="250px" alt="img"></a>
-					</div>
-                    <h3>{{ viewed.car_advert.brand }} {{ viewed.car_advert.model }} ({{ viewed.car_advert.year }})</h3>
-                    {% if advert.description %}
-                        <p>{{ advert.description }}</p>
-                    {% endif %}
-                    {% if advert.price %}
-                        <p>Price: {{ advert.price }}</p>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No recently viewed adverts.</p>
-    {% endif %}
+<div class="flex space-y-10">
+<!--    <div id="navbar">-->
+<!--        {% include 'car_auctions/user_dashboard_navbar.html' %}-->
+<!--    </div>-->
+    <div id="header_container" class="absolute inset-x-0 top-5 h-16">
+        <h1 id="header_one">Recently Viewed Adverts</h1>
+    </div>
+    <div id="car_list_container" class="relative">
+        {% if recently_viewed %}
+            <ul class="space-y-4">
+                {% for viewed in recently_viewed %}
+                    <li>
+                        <div class="flex items-center space-x-4">
+                            <a href='{% url "car_auctions:car_advert_detail" pk=viewed.car_advert.pk %}'>
+                                <img src="{{ viewed.car_advert.get_first_image }}" width="250px" height="250px" alt="img">
+                            </a>
+                            <div>
+                                <p>Car ID: {{ viewed.car_advert }}</p>
+                                <h3>{{ viewed.car_advert.brand }} {{ viewed.car_advert.model }} ({{ viewed.car_advert.year }})</h3>
+                                {% if car_advert.description %}
+                                    <p>{{ viewed.car_advert.description }}</p>
+                                {% endif %}
+                                {% if viewed.car_advert.price %}
+                                    <p class="text-lg font-bold">Price: {{ viewed.car_advert.price }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No recently viewed adverts.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

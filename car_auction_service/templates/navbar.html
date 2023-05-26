@@ -1,4 +1,3 @@
-{% load constants %}
 <nav class="flex times-center fixed w-full z-10 top-0 justify-between px-4 px-6 bg-teal-800">
 	<div>
 		<a href="/" class="text-xl text-white">Car Auction</a>
@@ -18,9 +17,7 @@
 	</div>
 </nav>
 <div id="dashboard_navbar">
-	<p>REQUEST.PATH  = {{ request.path  }}</p>
-	<p>CONSTANTS DASHBOARD = {{ DASHBOARD_NAVBAR }}</p>
-	{% if request.path in DASHBOARD_NAVBAR %}
-		{% include 'car_auctions/user_dashboard_navbar.html' %}
+	{% if request.path in DASHBOARD_PATHS %}
+			{% include 'car_auctions/user_dashboard_navbar.html' %}
 	{% endif %}
 </div>

@@ -1,4 +1,4 @@
-<nav class="flex center fixed w-full z-10 top-7 justify-between px-4 px-6 bg-teal-800">
+<nav class="flex center fixed w-full my-0 z-10 top-7 justify-between px-4 px-6 bg-teal-800">
 	<div class="flex items-center space-x-4">
 	{% if user.is_authenticated %}
 		<a href = "{% url 'car_auctions:car_advert_add' %}" class="text-white hover:text-gray-400">Add car</a>

@@ -16,7 +16,7 @@
 		{% endblock %}
 	</div>
 </nav>
-<div id="dashboard_navbar">
+<div class="flex mb-4" id="dashboard_navbar">
 	{% if request.path in DASHBOARD_PATHS %}
 			{% include 'car_auctions/user_dashboard_navbar.html' %}
 	{% endif %}

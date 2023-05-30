@@ -34,8 +34,11 @@ def cars_list(request):
     """
     car_adverts = CarAdvert.objects.all()
     car_adverts_filter = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
-    context = {'car_adverts': car_adverts_filter}
+    context = {
+        'car_adverts': car_adverts_filter
+    }
     return render(request, 'car_auctions/cars_main.html', context)
+
 
 @login_required(login_url='/users/accounts/login')
 def car_advert_detail(request, pk):
@@ -180,6 +183,7 @@ def car_advert_observe(request, pk):
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 @login_required(login_url='/users/accounts/login')
 def cars_observed(request):
     """
@@ -208,11 +212,12 @@ def cars_observed(request):
     car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
-
-    context = {'car_adverts': car_adverts,
-               'user_profile': user_profile
-               }
+    context = {
+        'car_adverts': car_adverts,
+        'user_profile': user_profile
+    }
     return render(request, 'car_auctions/cars_observed.html', context)
+
 
 @login_required(login_url='/users/accounts/login')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -234,33 +239,23 @@ def car_adverts_viewed(request):
     context = {'recently_viewed': recently_viewed}
     return render(request, 'car_auctions/cars_browsed_history.html', context)
 
+
 @login_required(login_url='/users/accounts/login')
 def car_advert_add(request):
     """
-    Display user-specific view of functionalities.
-    Display a list of all car advertisements added by user in the form of filter to make available operation of filtering.
-    Display a list of car advertisements that are observed by the user.
     Adding new car advert to the database.
 
     **Context**
 
-    ''car_adverts''
-        An instance of :model: 'car_auctions.CarAdvert'.
     ''car_add_form''
         An instance of :form: 'car_auctions.CarAdvertAddForm'
     ''images_add_form''
         An instance of :filter: 'car_auctions.ImageForm'
-    ''user_profile''
-        An instance of :model: 'users.UserProfile'
-
 
     **Template**
 
-    :template: 'car_auctions/user_dashboard.html'
+    :template: 'car_auctions/car_add.html'
     """
-    car_adverts = CarAdvert.objects.filter(owner=request.user)
-    car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
-    user_profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
         car_advert_add_form = CarAdvertAddForm(request.POST)
@@ -285,12 +280,12 @@ def car_advert_add(request):
         car_advert_add_form = CarAdvertAddForm()
         images_add_form = ImageForm()
 
-    context = {'car_adverts': car_adverts,
-               'car_advert_add_form': car_advert_add_form,
-               'images_add_form': images_add_form,
-               'user_profile': user_profile
-               }
+    context = {
+        'car_advert_add_form': car_advert_add_form,
+        'images_add_form': images_add_form,
+    }
     return render(request, 'car_auctions/car_add.html', context)
+
 
 @login_required(login_url='/users/accounts/login')
 def dashboard(request):
@@ -343,11 +338,12 @@ def dashboard(request):
         car_advert_add_form = CarAdvertAddForm()
         images_add_form = ImageForm()
 
-    context = {'car_adverts': car_adverts,
-               'car_advert_add_form': car_advert_add_form,
-               'images_add_form': images_add_form,
-               'user_profile': user_profile
-               }
+    context = {
+        'car_adverts': car_adverts,
+        'car_advert_add_form': car_advert_add_form,
+        'images_add_form': images_add_form,
+        'user_profile': user_profile
+    }
     return render(request, 'car_auctions/user_dashboard.html', context)
 
 
@@ -406,8 +402,9 @@ def car_advert_edit(request, pk):
         car_advert_edit_form = CarAdvertAddForm(instance=car_advert)
         images_add_form = ImageForm()
 
-    context = {'car_advert': car_advert,
-               'car_advert_edit_form': car_advert_edit_form,
-               'images_add_form': images_add_form
-               }
+    context = {
+        'car_advert': car_advert,
+        'car_advert_edit_form': car_advert_edit_form,
+        'images_add_form': images_add_form
+    }
     return render(request, 'car_auctions/car_edit2.html', context)

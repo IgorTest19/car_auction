@@ -1,7 +1,10 @@
-
-
-DASHBOARD_PATHS = ['/cars_observed', '/cars_history', '/car_advert_add']
-
+"""Custom context processor"""
 
 def dashboard_paths(request):
-    return {'DASHBOARD_PATHS': DASHBOARD_PATHS}
+    """
+    Function returns available urls that are conditioning the rendering of user_dashboard_navbar.html
+
+    """
+    return {
+            'DASHBOARD_PATHS': ['/cars_observed', '/cars_history', '/car_advert_add']
+    }

@@ -6,14 +6,15 @@ from .models import CarAdvert
 
 class CarAdvertSearchFilter(django_filters.FilterSet):
     """Search filter form class for car_auctions queryset."""
+
     brand = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'Volvo'}))
     model = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'V60'}))
     location = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': 'Wrocław'}))
     min_price = django_filters.NumberFilter(field_name="price", lookup_expr='gte', widget=TextInput(attrs={'placeholder': 10000}))
     max_price = django_filters.NumberFilter(field_name="price", lookup_expr='lte', widget=TextInput(attrs={'placeholder': 50000}))
 
-
     class Meta:
         """Metadata class."""
+
         model = CarAdvert
-        fields = ['brand', 'model','location', 'min_price', 'max_price']
+        fields = ["brand", "model", "location", "min_price", "max_price"]

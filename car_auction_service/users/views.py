@@ -25,13 +25,13 @@ def user_register(request):
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
-            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.set_password(user_form.cleaned_data["password"])
             new_user.save()
-            return render(request, 'users/register_done.html', {'new_user': new_user})
+            return render(request, "users/register_done.html", {"new_user": new_user})
     else:
         user_form = UserRegistrationForm()
-    context = {'user_form': user_form}
-    return render(request, 'users/register.html', context)
+    context = {"user_form": user_form}
+    return render(request, "users/register.html", context)
     # TODO: add templates register_done and register
 
 
@@ -49,27 +49,28 @@ def user_login(request):
 
     :template: 'users/login2.html'
     """
-    #TODO ADD messages and crispy forms
+    # TODO ADD messages and crispy forms
     if request.method == "POST":
         login_form = UserLoginForm(request.POST)
         if login_form.is_valid():
             cleaned_data = login_form.cleaned_data
-            user = authenticate(username=cleaned_data['username'],
-                                password=cleaned_data['password'])
+            user = authenticate(
+                username=cleaned_data["username"], password=cleaned_data["password"]
+            )
             if user is not None:
                 login(request, user)
                 # return HttpResponse('Authentication was successful.')
-                return redirect('cars:cars_main')
+                return redirect("car_auctions:cars_main")
             else:
                 # return HttpResponse('Logging failed.')
-                return redirect('users:login')
+                return redirect("users:login")
         else:
             # return HttpResponse('Wrong logging data.')
-            return redirect('users:login')
+            return redirect("users:login")
     else:
         login_form = UserLoginForm()
-    context = {'login_form': login_form}
-    return render(request, 'users/login2.html', context)
+    context = {"login_form": login_form}
+    return render(request, "users/login2.html", context)
 
 
 def user_logout(request):
@@ -78,10 +79,10 @@ def user_logout(request):
 
     """
     logout(request)
-    return redirect('cars:cars_main')
+    return redirect("car_auctions:cars_main")
 
 
-@login_required(login_url='/users/accounts/login')
+@login_required(login_url="/users/accounts/login")
 def user_password_change(request):
     """
     Functionality allowing user to change it's password.
@@ -101,12 +102,12 @@ def user_password_change(request):
         change_password_form = SetPasswordForm(user, request.POST)
         if change_password_form.is_valid():
             change_password_form.save()
-            return redirect('users:login2.html')
+            return redirect("users:login2.html")
         else:
-            return HttpResponse('Wrong data.')
+            return HttpResponse("Wrong data.")
     change_password_form = SetPasswordForm(user)
-    context = {'change_password_form': change_password_form}
-    return render(request, 'users/user_password_change.html', context)
+    context = {"change_password_form": change_password_form}
+    return render(request, "users/user_password_change.html", context)
 
 
 def user_settings(request):
@@ -123,4 +124,4 @@ def user_settings(request):
     :template: 'user_settings.html'
     """
     context = None
-    return render(request, 'users/user_settings.html', context)
+    return render(request, "users/user_settings.html", context)

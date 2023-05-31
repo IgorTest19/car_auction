@@ -9,13 +9,13 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'email')
+        fields = ("username", "first_name", "email")
 
     def clean_password2(self):
         cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            raise forms.ValidationError('Passwords are not the same!')
-        return cd['password2']
+        if cd["password"] != cd["password2"]:
+            raise forms.ValidationError("Passwords are not the same!")
+        return cd["password2"]
 
 
 class UserLoginForm(forms.Form):
@@ -26,4 +26,4 @@ class UserLoginForm(forms.Form):
 class SetPasswordForm(SetPasswordForm):
     class Meta:
         model = User
-        fields = ['new_password1', 'new_password2']
+        fields = ["new_password1", "new_password2"]

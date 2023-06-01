@@ -6,6 +6,7 @@ My auction service
 
 {% block content %}
 <div>
+	{% include 'maps/map_main.html' %}
 	{% include 'car_auctions/car_filter_form.html' %}
 	<p>user_profile: {{ user_profile.id }} </p>
 	<p>user_profile.cars_observed_by_user:{{ user_profile.cars_observed_by_user}}</p>

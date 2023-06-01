@@ -72,6 +72,7 @@ def car_advert_detail(request, pk):
     # Adding map component.
     # Getting location from the car model.
     get_car_location = car_advert.location
+    print(f'-----------get_car_location: {get_car_location}')
     location_values = geocoder.osm(f"{get_car_location}, Poland")
     # Creating a Map Object
     cars_map = folium.Map(location=location_values.latlng, zoom_start=8)
@@ -210,11 +211,32 @@ def cars_observed(request):
 
     :template: 'car_auctions/user_dashboard.html'
     """
+
+    # Observed cars
     car_adverts = CarAdvert.objects.filter(owner=request.user)
     car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
-    context = {"car_adverts": car_adverts, "user_profile": user_profile}
+    # Adding map component
+    #  car_adverts_locations = [car_advert.location for car_advert in user_profile.cars_observed_by_user2()]
+    car_adverts_observed = user_profile.cars_observed_by_user2()
+
+    # Creating a Map Object
+    map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    for car_advert in car_adverts_observed:
+        # Getting location values
+        location_values = geocoder.osm(f'{car_advert.location}, Poland')
+        location_values = geocoder.osm(f'{car_advert.location}, Poland')
+        # Adding a map marker
+        folium.Marker(location_values.latlng, tooltip=car_advert.location, popup=car_advert).add_to(map)
+        # Getting HTML representation of the Map Object
+        cars_map = map._repr_html_()
+
+    context = {
+            "car_adverts": car_adverts,
+            "user_profile": user_profile,
+            "cars_map": cars_map,
+    }
     return render(request, "car_auctions/cars_observed.html", context)
 
 

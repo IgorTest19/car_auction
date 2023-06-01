@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
+from django.shortcuts import (get_list_or_404, get_object_or_404, redirect, render)
 from django.utils import timezone
 from django.views.decorators.cache import cache_control
 from users.models import UserProfile

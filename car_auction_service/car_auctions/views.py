@@ -228,9 +228,9 @@ def cars_observed(request):
         location_values = geocoder.osm(f'{car_advert.location}, Poland')
         location_values = geocoder.osm(f'{car_advert.location}, Poland')
         # Adding a map marker
-        folium.Marker(location_values.latlng, tooltip=car_advert.location, popup=car_advert).add_to(map)
+        folium.Marker(location_values.latlng, tooltip=car_advert.location, popup=f'<img src="{ car_advert.get_first_image() }" width="50px" height="50px" alt="img">').add_to(map)
         # Getting HTML representation of the Map Object
-        cars_map = map._repr_html_()
+    cars_map = map._repr_html_()
 
     context = {
             "car_adverts": car_adverts,

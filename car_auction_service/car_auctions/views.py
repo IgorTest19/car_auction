@@ -15,7 +15,7 @@ from users.models import UserProfile
 from .filters import CarAdvertSearchFilter
 from .forms import CarAdvertAddForm, ImageForm
 from .models import CarAdvert, CarImage, RecentlyViewed
-from .utils import get_similar_cars
+from .utils import get_similar_cars, get_user_location
 
 
 def cars_list(request):
@@ -221,8 +221,18 @@ def cars_observed(request):
     #  car_adverts_locations = [car_advert.location for car_advert in user_profile.cars_observed_by_user2()]
     car_adverts_observed = user_profile.cars_observed_by_user2()
 
-    # Creating a Map Object
-    map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    # Getting user location by IP Address
+    user_ip = request.META.get('REMOTE_ADDR')
+    latitude, longitude = get_user_location((user_ip))
+    print(f'-----latitude: {latitude}')
+    print(f'-----longitude: {longitude}')
+
+    # Creating a Map Object based on the revceived location
+    if latitude and longitude:
+        map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    else:
+        map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+
     for car_advert in car_adverts_observed:
         # Getting location values
         location_values = geocoder.osm(f'{car_advert.location}, Poland')

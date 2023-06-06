@@ -46,7 +46,7 @@ def get_similar_cars(car_advert: object) -> list:
     return similar_car_ads
 
 
-def get_user_location(ip_address):
+def get_user_location(ip_address, attempt=1, max_attempts=200):
     """
 
     :param ip_address: Provided ip_address
@@ -63,4 +63,6 @@ def get_user_location(ip_address):
         else:
             return None
     except GeocoderTimedOut:
-        return None
+        if attempt <= max_attempts:
+            return get_user_location(ip_address, attempt=attempt+1)
+        raise

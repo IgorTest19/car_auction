@@ -222,16 +222,19 @@ def cars_observed(request):
     car_adverts_observed = user_profile.cars_observed_by_user2()
 
     # Getting user location by IP Address
-    user_ip = request.META.get('REMOTE_ADDR')
-    latitude, longitude = get_user_location((user_ip))
-    print(f'-----latitude: {latitude}')
-    print(f'-----longitude: {longitude}')
+    # user_ip = request.META.get('REMOTE_ADDR')
+    # latitude, longitude = get_user_location((user_ip))
+    # print(f'-----latitude: {latitude}')
+    # print(f'-----longitude: {longitude}')
 
     # Creating a Map Object based on the revceived location
-    if latitude and longitude:
-        map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
-    else:
-        map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    # if latitude and longitude:
+    #     map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    # else:
+    #     map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    #
+    # Creating a Map Object based on the revceived location
+    map = folium.Map(location=[52.12, 19.08], zoom_start=6)
 
     for car_advert in car_adverts_observed:
         # Getting location values

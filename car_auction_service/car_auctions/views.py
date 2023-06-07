@@ -214,7 +214,10 @@ def cars_observed(request):
     car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
-    context = {"car_adverts": car_adverts, "user_profile": user_profile}
+    context = {
+            "car_adverts": car_adverts,
+            "user_profile": user_profile
+    }
     return render(request, "car_auctions/cars_observed.html", context)
 
 

@@ -210,9 +210,10 @@ def cars_observed(request):
 
     :template: 'car_auctions/user_dashboard.html'
     """
-    car_adverts = CarAdvert.objects.filter(owner=request.user)
-    car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
+
     user_profile = get_object_or_404(UserProfile, user=request.user)
+    cars_observed = user_profile.cars_observed.all()
+    car_adverts = CarAdvertSearchFilter(request.GET, queryset=cars_observed)
 
     context = {
             "car_adverts": car_adverts,
@@ -315,7 +316,11 @@ def dashboard(request):
     :template: 'car_auctions/user_dashboard.html'
     """
     car_adverts = CarAdvert.objects.filter(owner=request.user)
+    print('CAR_ADVERTS 1')
+    print(car_adverts)
     car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
+    print('CAR_ADVERTS 2')
+    print(car_adverts)
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == "POST":

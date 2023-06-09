@@ -2,6 +2,10 @@
 from decimal import Decimal
 
 from django.db.models import Q
+
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
+
 from .models import CarAdvert
 
 
@@ -44,3 +48,25 @@ def get_similar_cars(car_advert: object) -> list:
             break
 
     return similar_car_ads
+
+
+def get_user_location(ip_address, attempt=1, max_attempts=200):
+    """
+
+    :param ip_address: Provided ip_address
+    :type ip_address:
+    :return:
+    :rtype:
+    """
+
+    geolocator = Nominatim(user_agent='myapp')
+    try:
+        location = geolocator.geocode(ip_address)
+        if location:
+            return location.address
+        else:
+            return None
+    except GeocoderTimedOut:
+        if attempt <= max_attempts:
+            return get_user_location(ip_address, attempt=attempt+1)
+        raise

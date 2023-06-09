@@ -15,7 +15,7 @@ from users.models import UserProfile
 from .filters import CarAdvertSearchFilter
 from .forms import CarAdvertAddForm, ImageForm
 from .models import CarAdvert, CarImage, RecentlyViewed
-from .utils import get_similar_cars
+from .utils import get_similar_cars, get_user_location
 
 
 def cars_list(request):
@@ -221,11 +221,30 @@ def cars_observed(request):
     #  car_adverts_locations = [car_advert.location for car_advert in user_profile.cars_observed_by_user2()]
     car_adverts_observed = user_profile.cars_observed_by_user2()
 
-    # Creating a Map Object
-    map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    print(f'----x_forwarded_for: {x_forwarded_for}')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    print(f'------ iP IS: {ip}')
+    # Getting user location by IP Address
+    # user_ip = request.META.get('REMOTE_ADDR')
+    # latitude, longitude = get_user_location((user_ip))
+    # print(f'-----latitude: {latitude}')
+    # print(f'-----longitude: {longitude}')
+
+    # Creating a Map Object based on the revceived location
+    # if latitude and longitude:
+    #     map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    # else:
+    #     map = folium.Map(location=[53.8643700, 21.3050700], zoom_start=4)
+    #
+    # Creating a Map Object based on the revceived location
+    map = folium.Map(location=[52.12, 19.08], zoom_start=6)
+
     for car_advert in car_adverts_observed:
         # Getting location values
-        location_values = geocoder.osm(f'{car_advert.location}, Poland')
         location_values = geocoder.osm(f'{car_advert.location}, Poland')
         # Adding a map marker
         folium.Marker(location_values.latlng, tooltip=car_advert.location, popup=f'<img src="{ car_advert.get_first_image() }" width="50px" height="50px" alt="img">').add_to(map)

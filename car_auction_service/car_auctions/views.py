@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import (get_list_or_404, get_object_or_404, redirect, render)
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.cache import cache_control
 from users.models import UserProfile
@@ -72,7 +72,6 @@ def car_advert_detail(request, pk):
     # Adding map component.
     # Getting location from the car model.
     get_car_location = car_advert.location
-    print(f'-----------get_car_location: {get_car_location}')
     location_values = geocoder.osm(f"{get_car_location}, Poland")
     # Creating a Map Object
     cars_map = folium.Map(location=location_values.latlng, zoom_start=8)
@@ -213,9 +212,9 @@ def cars_observed(request):
     """
 
     # Observed cars
-    car_adverts = CarAdvert.objects.filter(owner=request.user)
-    car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
     user_profile = get_object_or_404(UserProfile, user=request.user)
+    cars_observed = user_profile.cars_observed.all()
+    car_adverts = CarAdvertSearchFilter(request.GET, queryset=cars_observed)
 
     # Adding map component
     #  car_adverts_locations = [car_advert.location for car_advert in user_profile.cars_observed_by_user2()]

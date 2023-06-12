@@ -11,7 +11,7 @@ My auction service
 	<p>user_profile: {{ user_profile.id }} </p>
 	<p>user_profile.cars_observed_by_user:{{ user_profile.cars_observed_by_user}}</p>
 	<div>
-		{% for car_advert in user_profile.cars_observed_by_user2 %}
+		{% for car_advert in car_adverts.qs %}
 			<p>car_advert: {{ car_advert }}</p>
 			<p>car_advert first image: {{ car_advert.car}}</p>
 				<div class="grid grid-cols-4 gap-1 m-3.5">

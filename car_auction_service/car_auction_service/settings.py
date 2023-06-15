@@ -86,8 +86,12 @@ WSGI_APPLICATION = "car_auction_service.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "car_auction_service",
+        "USER": "car_auction_service",
+        "PASSWORD": "car_auction_service",
+        "HOST": "db",
+        "PORT": "5432",
     }
 }
 

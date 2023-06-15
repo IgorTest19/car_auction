@@ -7,8 +7,10 @@ services:
       - POSTGRES_DB=car_auction_service
       - POSTGRES_USER=car_auction_service
       - POSTGRES_PASSWORD=car_auction_service
+    ports:
+      - "5432:5432"
   web:
-    build: .
+    build: car_auction_service
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code/

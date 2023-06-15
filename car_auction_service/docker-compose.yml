@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=car_auction_service
+      - POSTGRES_USER=car_auction_service
+      - POSTGRES_PASSWORD=car_auction_service
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

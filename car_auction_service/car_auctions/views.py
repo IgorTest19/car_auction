@@ -326,6 +326,21 @@ def car_advert_add(request):
     }
     return render(request, "car_auctions/car_add.html", context)
 
+@login_required(login_url="/users/accounts/login")
+def car_data(request):
+    """
+    User's car adverts data
+
+    **Context**
+
+    **Template**
+
+    :template: 'car_auctions/car_data.html'
+    """
+
+    context = {}
+    return render(request, "car_auctions/car_data.html", context)
+
 
 @login_required(login_url="/users/accounts/login")
 def dashboard(request):

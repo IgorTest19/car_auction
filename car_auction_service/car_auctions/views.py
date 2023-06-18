@@ -338,7 +338,13 @@ def car_advert_data(request):
     :template: 'car_auctions/car_data.html'
     """
 
-    context = {}
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    user_car_adverts = CarAdvert.objects.filter(owner=request.user)
+
+    context = {
+            'user_profile': user_profile,
+            'user_car_adverts': user_car_adverts
+    }
     return render(request, "car_auctions/car_data.html", context)
 
 

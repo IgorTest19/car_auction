@@ -1,4 +1,4 @@
-{% extends "car_auctions\user_dashboard.html" %}
+{% extends "base.html" %}
 
 {% load crispy_forms_tags %}
 
@@ -8,6 +8,7 @@ My auction service
 
 {% block content %}
 <div>
-	<p>CARS DATA</p>
+	<p>User: {{ user_profile }}</p>
+	<p>User's cars: {{ user_car_adverts }}</p>
 </div>
 {% endblock %}

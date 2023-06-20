@@ -284,7 +284,7 @@ def car_adverts_viewed(request):
 @login_required(login_url="/users/accounts/login")
 def car_advert_add(request):
     """
-    Adding new car advert to the database.
+    Adding new car advert to the database. Displaying the list of added cars by the user.
 
     **Context**
 
@@ -297,6 +297,10 @@ def car_advert_add(request):
 
     :template: 'car_auctions/car_add.html'
     """
+
+    car_adverts = CarAdvert.objects.filter(owner=request.user)
+    car_adverts = CarAdvertSearchFilter(request.GET, queryset=car_adverts)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == "POST":
         car_advert_add_form = CarAdvertAddForm(request.POST)
@@ -321,6 +325,8 @@ def car_advert_add(request):
         images_add_form = ImageForm()
 
     context = {
+        "car_adverts": car_adverts,
+        "user_profile": user_profile,
         "car_advert_add_form": car_advert_add_form,
         "images_add_form": images_add_form,
     }

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+My auction service
+{% endblock %}
+
+{% block content %}
+<div>
+	<p>User: {{ user_profile }}</p>
+	<p>User's cars: {{ user_car_adverts }}</p>
+</div>
+{% endblock %}

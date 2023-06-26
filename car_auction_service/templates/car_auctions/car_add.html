@@ -1,4 +1,4 @@
-{% extends "car_auctions\user_dashboard.html" %}
+{% extends "base.html" %}
 
 {% load crispy_forms_tags %}
 
@@ -14,10 +14,10 @@ My auction service
 			{% csrf_token %}
 			<div class="col align-self-start">
 				<div class="grid grid-rows-4 grid-cols-2 gap-5">
-					<p>{{ car_advert_add_form|crispy}}</p>
+					<p>{{ car_advert_add_form|crispy }}</p>
 				</div>
 				<div class="form-group col-md-5 mb-2">
-					<p>{{ images_add_form.image.label_tag}}</p>
+					<p>{{ images_add_form.image.label_tag }}</p>
 				</div>
 				<div class="form-group col-md-5 mb-2">
 					<p>{{ images_add_form.image }}</p>
@@ -30,4 +30,6 @@ My auction service
 		</form>
 	</div>
 </div>
+<p> LIST OF ADDED CARS</p>
+{% include 'car_auctions/cars_list.html' %}
 {% endblock %}

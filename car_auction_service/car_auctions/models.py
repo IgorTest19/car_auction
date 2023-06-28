@@ -122,3 +122,20 @@ class RecentlyViewed(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_viewed")
     car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE)
     viewed_at = models.DateTimeField(auto_now_add=True)
+
+
+class CarAdvertView(models.Model):
+    """
+    Stores data about CarAdvert views by the users. Related to:
+    :model: 'CarAdvert
+    """
+    # dzień
+    # ilość wyświetleń
+    car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE)
+    count = models.IntegerField(default=0)
+
+    @classmethod
+    def increase_count(cls, date):
+        obj, created = cls.object.get_or_create(date=date)
+        obj.count += 1
+        obj.save

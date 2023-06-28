@@ -132,6 +132,7 @@ class CarAdvertView(models.Model):
     # dzień
     # ilość wyświetleń
     car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
     count = models.IntegerField(default=0)
 
     @classmethod
@@ -139,3 +140,11 @@ class CarAdvertView(models.Model):
         obj, created = cls.object.get_or_create(date=date)
         obj.count += 1
         obj.save
+
+
+    def generate_view(cls, car_advert):
+        today = timezone.now.datte()
+        view, created = cls.objects.get_or_create(car_advert=car_advert, date=today)
+        if not created:
+            view.count += 1
+            view.save()

@@ -143,7 +143,7 @@ class CarAdvertView(models.Model):
 
 
     def generate_view(cls, car_advert):
-        today = timezone.now.datte()
+        today = timezone.now().date()
         view, created = cls.objects.get_or_create(car_advert=car_advert, date=today)
         if not created:
             view.count += 1

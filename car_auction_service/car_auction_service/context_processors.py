@@ -6,5 +6,5 @@ def dashboard_paths(request):
 
     """
     return {
-            'DASHBOARD_PATHS': ['/cars_observed', '/cars_history', '/car_advert_add']
+            'DASHBOARD_PATHS': ['/cars_observed', '/cars_history', '/car_advert_add', '/car_advert_data']
     }

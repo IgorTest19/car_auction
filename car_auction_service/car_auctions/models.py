@@ -132,8 +132,8 @@ class CarAdvertView(models.Model):
     # dzień
     # ilość wyświetleń
     car_advert = models.ForeignKey(CarAdvert, on_delete=models.CASCADE)
-    date = models.DateTimeField(default=timezone.now)
-    count = models.IntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
+    count = models.PositiveIntegerField(default=0)
 
     @classmethod
     def increase_count(cls, date):

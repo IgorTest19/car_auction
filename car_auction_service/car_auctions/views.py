@@ -63,7 +63,7 @@ def car_advert_detail(request, pk):
     # Create car advert view object related to the given car advert
     CarAdvertView.objects.get_or_create(car_advert=car_advert)
     # Increase of the amount of the views
-    CarAdvertView.increase_count(date=timezone.now().date())
+    CarAdvertView.increase_count(date=timezone.now().date(), car_advert=car_advert)
 
     # Adding the viewed car advert to the history of viewed car adverts, if it has not been added yet.
     # Otherwise, update the date it was viewed.

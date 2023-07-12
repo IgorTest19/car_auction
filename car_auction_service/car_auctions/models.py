@@ -136,8 +136,8 @@ class CarAdvertView(models.Model):
     count = models.PositiveIntegerField(default=0)
 
     @classmethod
-    def increase_count(cls, date):
-        obj, created = cls.object.get_or_create(date=date)
+    def increase_count(cls, date, car_object):
+        obj, created = cls.object.get_or_create(date=date, car_advert=car_object)
         obj.count += 1
         obj.save
 

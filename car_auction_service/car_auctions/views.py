@@ -14,7 +14,7 @@ from users.models import UserProfile
 
 from .filters import CarAdvertSearchFilter
 from .forms import CarAdvertAddForm, ImageForm
-from .models import CarAdvert, CarImage, RecentlyViewed
+from .models import CarAdvert, CarImage, RecentlyViewed, CarAdvertView
 from .utils import get_similar_cars, get_user_location
 
 
@@ -59,6 +59,11 @@ def car_advert_detail(request, pk):
     """
     car_advert = get_object_or_404(CarAdvert, pk=pk)
     car_images = reversed(get_list_or_404(CarImage, car_advert=car_advert))
+
+    # Create car advert view object related to the given car advert
+    CarAdvertView.objects.get_or_create(car_advert=car_advert)
+    # Increase of the amount of the views
+    CarAdvertView.increase_count(date=timezone.now().date())
 
     # Adding the viewed car advert to the history of viewed car adverts, if it has not been added yet.
     # Otherwise, update the date it was viewed.
@@ -346,6 +351,7 @@ def car_advert_data(request):
 
     user_profile = get_object_or_404(UserProfile, user=request.user)
     user_car_adverts = CarAdvert.objects.filter(owner=request.user)
+    # views = get_object_or_404(CarAdvertView, car_advert =
 
     context = {
             'user_profile': user_profile,

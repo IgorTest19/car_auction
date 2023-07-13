@@ -135,8 +135,16 @@ class CarAdvertView(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     count = models.PositiveIntegerField(default=0)
 
+    """TO POPRAWIC. ZROBIC TO Z CELERY LUB CRON"""
     @classmethod
     def increase_count(cls, date, car_object):
+        """
+        Function creates object it does not exist and increase count value.
+        :param date: The date of the car advert view
+        :type date: datetime.date
+        :param car_object: The car advert object.
+        :type car_object: CarAdvert
+        """
         obj, created = cls.object.get_or_create(date=date, car_advert=car_object)
         obj.count += 1
         obj.save

@@ -137,7 +137,7 @@ class CarAdvertView(models.Model):
 
     """TO POPRAWIC. ZROBIC TO Z CELERY LUB CRON"""
     @classmethod
-    def increase_count(cls, date, car_object):
+    def increase_count(cls, date, car_advert):
         """
         Function creates object it does not exist and increase count value.
         :param date: The date of the car advert view
@@ -145,7 +145,7 @@ class CarAdvertView(models.Model):
         :param car_object: The car advert object.
         :type car_object: CarAdvert
         """
-        obj, created = cls.object.get_or_create(date=date, car_advert=car_object)
+        obj, created = cls.objects.get_or_create(date=date, car_advert=car_advert)
         obj.count += 1
         obj.save
 
@@ -156,3 +156,6 @@ class CarAdvertView(models.Model):
         if not created:
             view.count += 1
             view.save()
+
+    def __str__(self):
+        return f'{self.car_advert} views: {self.count} on the {self.date}'

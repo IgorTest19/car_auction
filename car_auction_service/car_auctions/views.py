@@ -63,7 +63,10 @@ def car_advert_detail(request, pk):
     # Create car advert view object related to the given car advert
     CarAdvertView.objects.get_or_create(car_advert=car_advert)
     # Increase of the amount of the views
+    """ TO POPRAWIC"""
     CarAdvertView.increase_count(date=timezone.now().date(), car_advert=car_advert)
+    # Getting car_advert views
+    car_advert_views = car_advert.caradvertview_set.all()
 
     # Adding the viewed car advert to the history of viewed car adverts, if it has not been added yet.
     # Otherwise, update the date it was viewed.
@@ -95,6 +98,7 @@ def car_advert_detail(request, pk):
         "car_images": car_images,
         "cars_map": cars_map,
         "similar_car_ads": similar_car_ads,
+        "car_advert_views": car_advert_views,
     }
 
     return render(request, "car_auctions/car_detail.html", context)

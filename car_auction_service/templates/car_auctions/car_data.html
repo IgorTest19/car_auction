@@ -13,7 +13,7 @@ My auction service
 	{% for car_advert in user_car_adverts %}
 		<p>ID: {{ car_advert.id }}</p>
 		<p>brand and model: {{ car_advert.brand}} {{ car_advert.model }}</p>
-		<p>Views: {{ car_advert.caradvertview.car_advert }}</p>
+		<p>Views: {{ car_advert_views }}</p>
 	{% endfor %}
 </div>
 {% endblock %}
